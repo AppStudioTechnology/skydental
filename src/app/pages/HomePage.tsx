@@ -6,7 +6,6 @@ import HeroSection from '../components/HeroSection'
 import AboutSection from '../components/AboutSection'
 import ServicesSection from '../components/ServicesSection'
 import WhyChooseSection from '../components/WhyChooseSection'
-import TechnologySection from '../components/TechnologySection'
 import InsurancePartnersSection from '../components/InsurancePartnersSection'
 import ResultsSection from '../components/ResultsSection'
 import TestimonialsSection from '../components/TestimonialsSection'
@@ -32,7 +31,6 @@ export default function HomePage() {
       <ScrollSection><AboutSection /></ScrollSection>
       <ScrollSection><ServicesSection /></ScrollSection>
       <ScrollSection><WhyChooseSection /></ScrollSection>
-      <ScrollSection><TechnologySection /></ScrollSection>
       <ScrollSection><ResultsSection /></ScrollSection>
       <ScrollSection><TestimonialsSection /></ScrollSection>
       <ScrollSection><DoctorsSection /></ScrollSection>
