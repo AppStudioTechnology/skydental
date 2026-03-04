@@ -96,22 +96,22 @@ export default function ResultsSection() {
 
   return (
     <section className="py-[80px] px-0">
-      <div className="w-full">
+      <div className="w-full max-w-[1390px] mx-auto px-[16px] md:px-[20px] lg:px-[25px]">
         <motion.div
           ref={ref}
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
-          className="bg-[#e0edff] rounded-none lg:rounded-[24px] p-[24px] md:p-[36px] lg:px-[48px] lg:py-[48px]"
+          className="bg-[#e0edff] rounded-none p-[24px] md:p-[36px] lg:px-[48px] lg:py-[48px]"
         >
-          <div className="flex flex-col lg:flex-row items-center gap-[24px] md:gap-[32px] lg:gap-[40px]">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-[24px] md:gap-[32px] lg:gap-[40px]">
             {/* Before/After Images */}
             <motion.div
               ref={containerRef}
               initial={{ x: -50, opacity: 0 }}
               animate={isInView ? { x: 0, opacity: 1 } : { x: -50, opacity: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.3, duration: shouldReduceMotion ? 0 : 0.8 }}
-              className="relative w-full lg:w-[600px] h-[400px] md:h-[500px] lg:h-[565px] rounded-[12px] overflow-hidden select-none"
+              className="relative w-full lg:w-[600px] h-[400px] md:h-[500px] lg:h-[565px] rounded-none overflow-hidden select-none"
               onMouseDown={handleMouseDown}
               onTouchStart={handleTouchStart}
               style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
@@ -207,7 +207,7 @@ export default function ResultsSection() {
             >
               <div className="flex flex-col gap-[16px]">
                 <h2
-                  className="text-black text-[32px] md:text-[40px] lg:text-[48px] leading-[1.2] tracking-[-1.44px] capitalize"
+                  className="text-black text-[32px] md:text-[40px] lg:text-[48px] leading-[1.2] tracking-[-1.44px] capitalize whitespace-nowrap"
                   style={{ fontFamily: "'Gilda Display', serif" }}
                 >
                   {t('home', 'excellentResults')}
