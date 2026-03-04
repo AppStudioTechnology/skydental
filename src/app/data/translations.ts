@@ -27,7 +27,7 @@ export const translations = {
     },
     hero: {
       title: 'Sky Dental Center',
-      tagline1: 'Your smile.',
+      tagline1: 'Your smile. ',
       tagline2: 'Your confidence.',
       tagline3: 'Our expert care.',
     },
