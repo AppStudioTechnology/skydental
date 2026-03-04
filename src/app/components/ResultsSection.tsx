@@ -111,7 +111,7 @@ export default function ResultsSection() {
               initial={{ x: -50, opacity: 0 }}
               animate={isInView ? { x: 0, opacity: 1 } : { x: -50, opacity: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.3, duration: shouldReduceMotion ? 0 : 0.8 }}
-              className="relative w-full lg:w-[600px] h-[400px] md:h-[500px] lg:h-[565px] rounded-none overflow-hidden select-none"
+              className="relative w-full lg:w-[600px] h-[400px] md:h-[500px] lg:h-[565px] rounded-[12px] md:rounded-[16px] overflow-hidden select-none"
               onMouseDown={handleMouseDown}
               onTouchStart={handleTouchStart}
               style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
