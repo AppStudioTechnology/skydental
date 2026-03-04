@@ -68,7 +68,7 @@ export default function DoctorsSection() {
             {t('home', 'meetOurTeamSub')}
           </p>
           <Link to="/our-doctors" className="bg-[#CBFF8F] flex items-center gap-4 md:gap-6 pl-4 md:pl-6 pr-[8px] md:pr-[10px] py-2 rounded-[35px] hover:bg-[#B1FF57] transition-colors">
-            <span className="text-[#0C0060] font-bold text-[14px] md:text-[16px] whitespace-nowrap">{t('home', 'viewAllDoctors')}</span>
+            <span className="text-[#0C0060] font-bold text-[14px] md:text-[16px] whitespace-nowrap">{t('common', 'viewAllDoctors')}</span>
             <div className="bg-[#0C0060] w-[32px] h-[32px] md:w-[34px] md:h-[34px] rounded-full flex items-center justify-center flex-shrink-0">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
                 <path 
