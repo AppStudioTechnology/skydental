@@ -176,7 +176,7 @@ export const servicesData: ServiceDetail[] = [
     services: [
       {
         icon: Sparkles,
-        title: 'Teeth whitening',
+        title: 'Teeth Whitening',
         description: 'A safe, effective treatment that brightens your smile and removes deep stains. Achieve noticeable, long-lasting results in a single session.',
         features: [
           'Safe and effective',
@@ -187,7 +187,7 @@ export const servicesData: ServiceDetail[] = [
       },
       {
         icon: Gem,
-        title: 'Veneers',
+        title: 'Veneers & Hollywood Smile',
         description: 'Ultra-thin veneers that refine colour, shape, and symmetry for a naturally stunning smile. Enhance your teeth without compromising comfort or authenticity.',
         features: [
           'Custom ultra-thin veneers',
@@ -197,9 +197,20 @@ export const servicesData: ServiceDetail[] = [
         ]
       },
       {
+        icon: Crown,
+        title: 'Dental Crowns & Bridges',
+        description: 'Durable, aesthetic restorations that replace or strengthen teeth while restoring natural function. Each crown or bridge is custom-made for a perfect fit.',
+        features: [
+          'Strong and long-lasting',
+          'Restores function',
+          'Custom-crafted',
+          'Harmonious appearance'
+        ]
+      },
+      {
         icon: Palette,
-        title: 'Smile design',
-        description: 'A digital planning process that visualizes your ideal smile in harmony with your facial features. Preview your results before treatment begins.',
+        title: 'Smile Design',
+        description: 'A digital planning process that visualizes your ideal smile in harmony with your facial features. Preview your results before treatment begins, giving you full confidence in the outcome.',
         features: [
           'Digital smile visualization',
           'Facial feature analysis',
@@ -208,25 +219,24 @@ export const servicesData: ServiceDetail[] = [
         ]
       },
       {
-        icon: Eye,
-        title: 'Invisalign / clear aligners',
-        description: 'Clear aligner systems that gently adjust teeth with digital precision. Comfortable, removable, and convenient for everyday life.',
-        features: [
-          'Clear, removable aligners',
-          'Advanced digital planning',
-          'Comfortable for daily use',
-          'Highly effective and discreet'
-        ]
-      },
-      {
         icon: Target,
-        title: 'Cosmetic bonding / contouring',
+        title: 'Composite Bonding',
         description: 'A minimally invasive solution to reshape and correct minor imperfections. Quick, precise, and effective, it refines your smile without extensive procedures.',
         features: [
           'Rapid treatment',
           'Minor imperfection correction',
           'Minimally invasive',
           'Refined, natural results'
+        ]
+      },
+      {
+        icon: Sparkles,
+        title: 'Tooth-Coloured Fillings',
+        description: 'Discreet, natural-looking restorations that match your tooth shade while restoring strength and function — an effective solution for treating decay.',
+        features: [
+          'Shade-matched fillings',
+          'Functional and aesthetic restoration',
+          'Subtle, comfortable treatment'
         ]
       }
     ],
