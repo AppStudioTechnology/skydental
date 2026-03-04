@@ -77,11 +77,10 @@ export default function Footer() {
                   {t('footer', 'allServices')}
                 </h3>
                 <div className="flex flex-col gap-2 md:gap-3">
-                  <FooterLink href="/services/general-dentistry">{t('footer', 'generalDentistry')}</FooterLink>
-                  <FooterLink href="/services/cosmetic-dentistry">{t('footer', 'cosmeticDentistry')}</FooterLink>
-                  <FooterLink href="/services/orthodontics">{t('footer', 'orthodontics')}</FooterLink>
+                  <FooterLink href="/services/general-dentistry">{t('footer', 'reliefUrgentCare')}</FooterLink>
+                  <FooterLink href="/services/advanced-restorative">{t('footer', 'protectRestore')}</FooterLink>
+                  <FooterLink href="/services/cosmetic-dentistry">{t('footer', 'smileAesthetics')}</FooterLink>
                   <FooterLink href="/services/pediatric-dentistry">{t('footer', 'pediatricDentistry')}</FooterLink>
-                  <FooterLink href="/services/advanced-restorative">{t('footer', 'implantAdvanced')}</FooterLink>
                 </div>
               </div>
 

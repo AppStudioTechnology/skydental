@@ -181,7 +181,16 @@ export default function Header() {
                           location.pathname === '/services/general-dentistry' ? 'bg-[#CBFF8F] text-[#0C0060] font-bold' : 'text-black hover:bg-[#f8f9fa] hover:text-[#0C0060]'
                         }`}
                       >
-                        {t('nav', 'generalDentistry')}
+                        {t('nav', 'reliefUrgentCare')}
+                      </Link>
+                      <Link
+                        to="/services/advanced-restorative"
+                        onClick={() => setServicesDropdownOpen(false)}
+                        className={`block px-5 py-3 text-[14px] rounded-full transition-colors ${
+                          location.pathname === '/services/advanced-restorative' ? 'bg-[#CBFF8F] text-[#0C0060] font-bold' : 'text-black hover:bg-[#f8f9fa] hover:text-[#0C0060]'
+                        }`}
+                      >
+                        {t('nav', 'protectRestore')}
                       </Link>
                       <Link
                         to="/services/cosmetic-dentistry"
@@ -190,16 +199,7 @@ export default function Header() {
                           location.pathname === '/services/cosmetic-dentistry' ? 'bg-[#CBFF8F] text-[#0C0060] font-bold' : 'text-black hover:bg-[#f8f9fa] hover:text-[#0C0060]'
                         }`}
                       >
-                        {t('nav', 'cosmeticDentistry')}
-                      </Link>
-                      <Link
-                        to="/services/orthodontics"
-                        onClick={() => setServicesDropdownOpen(false)}
-                        className={`block px-5 py-3 text-[14px] rounded-full transition-colors ${
-                          location.pathname === '/services/orthodontics' ? 'bg-[#CBFF8F] text-[#0C0060] font-bold' : 'text-black hover:bg-[#f8f9fa] hover:text-[#0C0060]'
-                        }`}
-                      >
-                        {t('nav', 'orthodontics')}
+                        {t('nav', 'smileAesthetics')}
                       </Link>
                       <Link
                         to="/services/pediatric-dentistry"
@@ -209,15 +209,6 @@ export default function Header() {
                         }`}
                       >
                         {t('nav', 'pediatricDentistry')}
-                      </Link>
-                      <Link
-                        to="/services/advanced-restorative"
-                        onClick={() => setServicesDropdownOpen(false)}
-                        className={`block px-5 py-3 text-[14px] rounded-full transition-colors ${
-                          location.pathname === '/services/advanced-restorative' ? 'bg-[#CBFF8F] text-[#0C0060] font-bold' : 'text-black hover:bg-[#f8f9fa] hover:text-[#0C0060]'
-                        }`}
-                      >
-                        {t('nav', 'implantAdvanced')}
                       </Link>
                       <div className="border-t border-[#0061AF]/10 mt-2 pt-2 px-2">
                         <Link

@@ -55,6 +55,9 @@ export default function DoctorsSection() {
           transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
           className="text-center mb-[20px] md:mb-[28px] flex flex-col items-center gap-[16px] md:gap-[20px]"
         >
+          <p className="text-black/80 text-[18px] md:text-[20px] leading-[1.3] font-medium">
+            {t('home', 'doctorsTagline')}
+          </p>
           <h2
             className="text-black text-[32px] md:text-[40px] lg:text-[48px] leading-[1.2] tracking-[-1.44px] max-w-[900px]"
             style={{ fontFamily: "'Gilda Display', serif" }}

@@ -102,29 +102,16 @@ export default function AboutUsPageNew() {
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-6xl font-['Gilda_Display'] text-black mb-6 tracking-tight leading-tight">
-              The Sky Dental Experience
+              {t('about', 'dentistryLongRun')}
             </h1>
 
             {/* Description */}
             <div className="text-lg text-black/70 font-['Arial'] leading-relaxed max-w-4xl mx-auto space-y-4 text-left">
-              <p>
-                At Sky Dental Center, your appointment is more than a dental visit. It is thoughtfully designed around you. From your first consultation to the final reveal of your smile, every step is handled with care and attention to detail in a calm and welcoming environment.
-              </p>
-              <h3 className="text-xl font-['Gilda_Display'] text-black pt-2">About Sky Dental Center</h3>
-              <p>
-                With over 10 years of experience, Sky Dental Center is one of Abu Dhabi's most trusted dental clinics, offering comprehensive dental care across 13 modern clinics. Each space is equipped with advanced digital technologies that support accurate planning and consistent treatment outcomes.
-              </p>
-              <h3 className="text-xl font-['Gilda_Display'] text-black pt-2">Our Approach to Care</h3>
-              <p>
-                All treatments at Sky Dental Center follow a clear approach: designing results that look natural while maintaining function and long-term comfort. Using advanced digital diagnostics and precise planning, we ensure each case is carefully considered, supporting lasting oral health, confidence, and trust.
-              </p>
-              <h3 className="text-xl font-['Gilda_Display'] text-black pt-2">Our Dental Specialists</h3>
-              <p>
-                Our team consists of globally certified dental specialists with experience across general, restorative, orthodontic, paediatric, and cosmetic dentistry. Working together, we deliver care that is thorough, personalised, and aligned with individual needs.
-              </p>
-              <p>
-                We are committed to delivering smiles that look natural, feel comfortable, and inspire confidence.
-              </p>
+              <p>{t('about', 'aboutIntro')}</p>
+              <p>{t('about', 'aboutClinic')}</p>
+              <p>{t('about', 'aboutExperience')}</p>
+              <p>{t('about', 'aboutBelief')}</p>
+              <p className="font-['Gilda_Display'] text-black text-xl pt-2">{t('about', 'careThatGrows')}</p>
             </div>
           </motion.div>
         </div>
@@ -144,10 +131,7 @@ export default function AboutUsPageNew() {
             >
             <h2 className="text-4xl md:text-5xl font-['Gilda_Display'] text-black mb-4 tracking-tight">
               Vision & Mission
-              </h2>
-              <p className="text-base text-black/60 font-['Arial'] max-w-2xl mx-auto">
-                Our commitment to excellence and patient care guides every smile we create.
-              </p>
+            </h2>
             </motion.div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -161,9 +145,9 @@ export default function AboutUsPageNew() {
                 <div className="w-12 h-12 bg-[#CBFF8F] rounded-xl flex items-center justify-center mb-6">
                   <Award className="w-6 h-6 text-[#0C0060]" />
                 </div>
-                <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">Vision</h3>
+                <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">{t('about', 'ourVision')}</h3>
                 <p className="text-base text-black/70 font-['Arial'] leading-relaxed flex-grow">
-                  To be the UAE's most trusted dental Center, recognised for creating healthy, confident smiles through excellence in patient care, innovation, and outstanding results.
+                  {t('about', 'visionText')}
                 </p>
               </motion.div>
 
@@ -177,9 +161,9 @@ export default function AboutUsPageNew() {
                 <div className="w-12 h-12 bg-[#CBFF8F] rounded-xl flex items-center justify-center mb-6">
                   <Target className="w-6 h-6 text-[#0C0060]" />
                 </div>
-                <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">Mission</h3>
+                <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">{t('about', 'ourMission')}</h3>
                 <p className="text-base text-black/70 font-['Arial'] leading-relaxed flex-grow">
-                  To deliver high-quality dental care that creates healthy, natural, and confident smiles through personalised, safe, and comfortable treatments.
+                  {t('about', 'missionText')}
                 </p>
               </motion.div>
 

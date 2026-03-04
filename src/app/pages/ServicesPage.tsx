@@ -9,18 +9,16 @@ import TestimonialsSection from '../components/TestimonialsSection'
 import { 
   GeneralDentistryIcon, 
   CosmeticDentistryIcon, 
-  OrthodonticsIcon, 
   PediatricDentistryIcon, 
   ImplantAdvancedCareIcon 
 } from '../components/ServiceIcons'
 import ScrollSection from '../components/ScrollSection'
 
 const serviceConfig = [
-  { id: 'general-dentistry', titleKey: 'generalDentistryTitle', descKey: 'generalDentistryDesc', Icon: GeneralDentistryIcon, bgColor: '#CBFF8F' },
-  { id: 'cosmetic-dentistry', titleKey: 'cosmeticDentistryTitle', descKey: 'cosmeticDentistryDesc', Icon: CosmeticDentistryIcon, bgColor: '#CBFF8F' },
-  { id: 'orthodontics', titleKey: 'orthodonticsTitle', descKey: 'orthodonticsDesc', Icon: OrthodonticsIcon, bgColor: '#CBFF8F' },
+  { id: 'general-dentistry', titleKey: 'reliefUrgentCareTitle', descKey: 'reliefUrgentCareDesc', Icon: GeneralDentistryIcon, bgColor: '#CBFF8F' },
+  { id: 'advanced-restorative', titleKey: 'protectRestoreTitle', descKey: 'protectRestoreDesc', Icon: ImplantAdvancedCareIcon, bgColor: '#CBFF8F' },
+  { id: 'cosmetic-dentistry', titleKey: 'smileAestheticsTitle', descKey: 'smileAestheticsDesc', Icon: CosmeticDentistryIcon, bgColor: '#CBFF8F' },
   { id: 'pediatric-dentistry', titleKey: 'pediatricDentistryTitle', descKey: 'pediatricDentistryDesc', Icon: PediatricDentistryIcon, bgColor: '#CBFF8F' },
-  { id: 'advanced-restorative', titleKey: 'implantAdvancedTitle', descKey: 'implantAdvancedDesc', Icon: ImplantAdvancedCareIcon, bgColor: '#CBFF8F' },
 ] as const
 
 // Guest experience images
@@ -160,20 +158,11 @@ export default function ServicesPage() {
             </h2>
           </motion.div>
 
-          {/* Services Grid - First Row (3 cards) */}
-          <div className="max-w-6xl mx-auto mb-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {serviceConfig.slice(0, 3).map((service, index) => (
-                <ServiceCard key={service.id} service={service} title={t('home', service.titleKey)} description={t('home', service.descKey)} learnMore={t('common', 'learnMore')} index={index} />
-              ))}
-            </div>
-          </div>
-
-          {/* Services Grid - Second Row (2 cards centered) */}
-          <div className="max-w-4xl mx-auto">
+          {/* Services Grid - 4 cards (2x2 on md+) */}
+          <div className="max-w-5xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-              {serviceConfig.slice(3).map((service, index) => (
-                <ServiceCard key={service.id} service={service} title={t('home', service.titleKey)} description={t('home', service.descKey)} learnMore={t('common', 'learnMore')} index={index + 3} />
+              {serviceConfig.map((service, index) => (
+                <ServiceCard key={service.id} service={service} title={t('home', service.titleKey)} description={t('home', service.descKey)} learnMore={t('common', 'learnMore')} index={index} />
               ))}
             </div>
           </div>

@@ -8,17 +8,15 @@ import { useLanguage } from '../context/LanguageContext'
 import { 
   GeneralDentistryIcon, 
   CosmeticDentistryIcon, 
-  OrthodonticsIcon, 
   PediatricDentistryIcon, 
   ImplantAdvancedCareIcon 
 } from './ServiceIcons'
 
 const serviceConfig = [
-  { id: 'general-dentistry', titleKey: 'generalDentistryTitle', descKey: 'generalDentistryDesc', Icon: GeneralDentistryIcon, bgColor: '#CBFF8F' },
-  { id: 'cosmetic-dentistry', titleKey: 'cosmeticDentistryTitle', descKey: 'cosmeticDentistryDesc', Icon: CosmeticDentistryIcon, bgColor: '#CBFF8F' },
-  { id: 'orthodontics', titleKey: 'orthodonticsTitle', descKey: 'orthodonticsDesc', Icon: OrthodonticsIcon, bgColor: '#CBFF8F' },
+  { id: 'general-dentistry', titleKey: 'reliefUrgentCareTitle', descKey: 'reliefUrgentCareDesc', Icon: GeneralDentistryIcon, bgColor: '#CBFF8F' },
+  { id: 'advanced-restorative', titleKey: 'protectRestoreTitle', descKey: 'protectRestoreDesc', Icon: ImplantAdvancedCareIcon, bgColor: '#CBFF8F' },
+  { id: 'cosmetic-dentistry', titleKey: 'smileAestheticsTitle', descKey: 'smileAestheticsDesc', Icon: CosmeticDentistryIcon, bgColor: '#CBFF8F' },
   { id: 'pediatric-dentistry', titleKey: 'pediatricDentistryTitle', descKey: 'pediatricDentistryDesc', Icon: PediatricDentistryIcon, bgColor: '#CBFF8F' },
-  { id: 'advanced-restorative', titleKey: 'implantAdvancedTitle', descKey: 'implantAdvancedDesc', Icon: ImplantAdvancedCareIcon, bgColor: '#CBFF8F' },
 ] as const
 
 function ServiceCard({ service, title, description, learnMore, index }: { service: typeof serviceConfig[number]; title: string; description: string; learnMore: string; index: number }) {
@@ -120,7 +118,7 @@ export default function ServicesSection() {
             </h2>
 
             {/* Services Grid - All 5 cards in one row on large screens */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 relative z-10 px-4 md:px-6 lg:px-8 items-stretch">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative z-10 px-4 md:px-6 lg:px-8 items-stretch">
               {serviceConfig.map((service, index) => (
                 <ServiceCard
                   key={service.id}
