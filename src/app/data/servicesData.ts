@@ -41,12 +41,12 @@ export interface ServiceDetail {
 export const servicesData: ServiceDetail[] = [
   {
     id: 'general-dentistry',
-    title: 'General Dentistry',
+    title: 'Relief & Urgent Care',
     icon: '🦷',
     shortDescription: 'Comprehensive dental care for healthy teeth and gums, including checkups, cleanings, and preventive treatments.',
     bgColor: '#CBFF8F',
     hero: {
-      title: 'General Dentistry',
+      title: 'Relief & Urgent Care',
       subtitle: 'Foundation for Lifelong Oral Health',
       description: 'Foundation for Lifelong Oral Health General Dentistry forms the cornerstone of healthy teeth and gums, focusing on early detection, prevention, and treatment of common dental concerns.'
     },
@@ -462,12 +462,12 @@ export const servicesData: ServiceDetail[] = [
   },
   {
     id: 'advanced-restorative',
-    title: 'Implant & Advanced Care',
+    title: 'Protect & Restore',
     icon: '🔬',
     shortDescription: 'Complex treatments for structural and functional restoration including implants and full-mouth restoration.',
     bgColor: '#CBFF8F',
     hero: {
-      title: 'Implant & Advanced Care Dentistry',
+      title: 'Protect & Restore',
       subtitle: 'Confidence and Harmony',
       description: 'Confidence and Harmony Our advanced restorative dentistry combines expert care with thoughtful planning to repair, replace, and restore damaged or missing teeth. Every treatment is designed to bring lasting results while maintaining natural function and aesthetics.'
     },
