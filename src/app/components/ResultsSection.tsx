@@ -96,14 +96,14 @@ export default function ResultsSection() {
 
   return (
     <section className="py-[80px] px-0">
-      <div className="w-full max-w-[1390px] mx-auto px-[16px] md:px-[20px] lg:px-[25px]">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
-          className="bg-[#e0edff] rounded-none p-[24px] md:p-[36px] lg:px-[48px] lg:py-[48px]"
-        >
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: shouldReduceMotion ? 0 : 0.8 }}
+        className="w-full bg-[#e0edff] rounded-none"
+      >
+        <div className="max-w-[1390px] mx-auto px-[16px] md:px-[20px] lg:px-[25px] py-[24px] md:py-[36px] lg:py-[48px]">
           <div className="flex flex-col lg:flex-row items-center justify-center gap-[24px] md:gap-[32px] lg:gap-[40px]">
             {/* Before/After Images */}
             <motion.div
@@ -218,8 +218,8 @@ export default function ResultsSection() {
               </div>
             </motion.div>
           </div>
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   )
 }
