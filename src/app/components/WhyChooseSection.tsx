@@ -76,7 +76,7 @@ export default function WhyChooseSection() {
               animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
               transition={{ delay: 0.8, duration: shouldReduceMotion ? 0 : 0.5 }}
               onClick={() => openBookingSidebar()}
-              className="bg-[#CBFF8F] flex items-center gap-4 md:gap-6 pl-4 md:pl-6 pr-[8px] md:pr-[10px] py-2 rounded-[35px] hover:bg-[#B1FF57] transition-colors z-10 w-fit"
+              className="bg-[#CBFF8F] flex items-center gap-4 md:gap-6 pl-4 md:pl-6 pr-[8px] md:pr-[10px] py-2 rounded-[35px] hover:bg-[#B1FF57] transition-colors z-10 w-fit mt-6 md:mt-8"
             >
               <span className="text-[#0C0060] font-bold text-[14px] md:text-[16px] whitespace-nowrap">{t('common', 'requestAppointment')}</span>
               <div className="bg-[#0C0060] w-[32px] h-[32px] md:w-[34px] md:h-[34px] rounded-full flex items-center justify-center flex-shrink-0">
