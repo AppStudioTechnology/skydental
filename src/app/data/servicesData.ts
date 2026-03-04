@@ -145,12 +145,12 @@ export const servicesData: ServiceDetail[] = [
   },
   {
     id: 'cosmetic-dentistry',
-    title: 'Cosmetic Dentistry',
+    title: 'Smile Aesthetics',
     icon: '✨',
     shortDescription: 'Transform your smile with advanced aesthetic treatments including whitening, veneers, and smile design.',
     bgColor: '#CBFF8F',
     hero: {
-      title: 'Cosmetic Dentistry',
+      title: 'Smile Aesthetics',
       subtitle: 'Enhancing Your Smile, Naturally',
       description: 'Enhancing Your Smile, Naturally Cosmetic dentistry focuses on improving the appearance of your teeth, gums, and smile using advanced aesthetic techniques and materials, tailored to your unique features.'
     },

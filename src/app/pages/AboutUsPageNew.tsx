@@ -53,7 +53,6 @@ export default function AboutUsPageNew() {
   const whyChooseRef = useRef(null)
   const valuesRef = useRef(null)
   const innovationRef = useRef(null)
-  const journeyRef = useRef(null)
   const patientJourneyRef = useRef(null)
   const galleryRef = useRef(null)
   const ctaRef = useRef(null)
@@ -63,7 +62,6 @@ export default function AboutUsPageNew() {
   const whyChooseInView = useInView(whyChooseRef, { once: true })
   const valuesInView = useInView(valuesRef, { once: true })
   const innovationInView = useInView(innovationRef, { once: true })
-  const journeyInView = useInView(journeyRef, { once: true })
   const patientJourneyInView = useInView(patientJourneyRef, { once: true })
   const galleryInView = useInView(galleryRef, { once: true })
   const ctaInView = useInView(ctaRef, { once: true })
@@ -433,80 +431,6 @@ export default function AboutUsPageNew() {
                 </div>
               </motion.div>
             </div>
-          </div>
-        </div>
-      </section>
-      </ScrollSection>
-
-      <ScrollSection>
-      {/* Future Vision Section */}
-      <section ref={journeyRef} className="py-24 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
-              animate={journeyInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl md:text-5xl font-['Gilda_Display'] text-black mb-4 tracking-tight">
-                Future Vision
-              </h2>
-              <p className="text-base text-black/70 font-['Arial'] max-w-3xl mx-auto leading-relaxed mb-8">
-                We are dedicated to growing and innovating so patients enjoy the best dental experience possible. Our plans include:
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-                animate={journeyInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0 * 0.1 }}
-                className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm text-center"
-              >
-                <CheckCircle className="w-6 h-6 text-[#0C0060] mx-auto mb-4" />
-                <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                  Expanding our clinical facilities.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-                animate={journeyInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 1 * 0.1 }}
-                className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm text-center"
-              >
-                <CheckCircle className="w-6 h-6 text-[#0C0060] mx-auto mb-4" />
-                <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                  Attracting top-tier dental specialists.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-                animate={journeyInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 2 * 0.1 }}
-                className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm text-center"
-              >
-                <CheckCircle className="w-6 h-6 text-[#0C0060] mx-auto mb-4" />
-                <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                  Adopting the latest digital technologies.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-                animate={journeyInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 3 * 0.1 }}
-                className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm text-center"
-              >
-                <CheckCircle className="w-6 h-6 text-[#0C0060] mx-auto mb-4" />
-                <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                  Enhancing and diversifying our specialised services
-                </p>
-              </motion.div>
-            </div>
-
           </div>
         </div>
       </section>

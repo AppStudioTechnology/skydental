@@ -139,7 +139,7 @@ export const translations = {
       excellentResultsDesc: 'Every treatment we provide reflects your individuality and our dedication to excellence. Thoughtfully planned and carefully delivered, each result balances effectiveness, comfort, and confidence — leaving you with care you can trust and outcomes that support lasting oral health and wellbeing.',
     },
     about: {
-      pageTitle: 'About Us',
+      pageTitle: 'About Sky Dental',
       heroTitle: 'Sky Dental Center',
       heroSub: 'Dentistry for the Long Run',
       dentistryLongRun: 'Dentistry for the Long Run',
@@ -354,7 +354,7 @@ export const translations = {
       excellentResultsDesc: 'كل علاج نقدمه يعكس فرديتك وتفانينا في التميز. مُخطَّط بعناية ومنفَّذ بدقة، كل نتيجة توازن بين الفعالية والراحة والثقة — لرعاية تثق بها ونتائج تدعم صحة الفم والعافية الدائمة.',
     },
     about: {
-      pageTitle: 'من نحن',
+      pageTitle: 'عن سكاي دينتال',
       heroTitle: 'مركز سكاي لطب الأسنان',
       heroSub: 'طب أسنان للمدى الطويل.',
       dentistryLongRun: 'طب أسنان للمدى الطويل',
