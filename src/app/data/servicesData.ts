@@ -68,66 +68,66 @@ export const servicesData: ServiceDetail[] = [
         description: 'Comprehensive care for all ages'
       }
     ],
-    servicesIntro: 'From routine check-ups to targeted treatments, we deliver care that keeps your smile healthy and resilient.',
+    servicesIntro: 'From emergency care to urgent treatment, we deliver relief and support when you need it most.',
     services: [
       {
         icon: CalendarCheck,
-        title: 'Dental Check-Up & Cleaning',
-        description: 'A thorough examination and professional cleaning to detect early concerns and maintain optimal oral hygiene. Supports prevention of decay and gum disease, leaving your smile refreshed and healthy.',
+        title: 'Emergency exam & pain management',
+        description: 'Same-day assessment and pain relief when you need immediate care. Our team prioritizes your comfort and stabilizes urgent dental issues.',
         features: [
-          'Comprehensive oral exam',
-          'Professional cleaning',
-          'Oral cancer screening',
-          'Personalized care plan'
+          'Same-day emergency appointments',
+          'Pain management',
+          'Urgent assessment',
+          'Stabilization and care plan'
+        ]
+      },
+      {
+        icon: Bandage,
+        title: 'Toothache / infection treatment',
+        description: 'Targeted treatment for toothache and infection to relieve pain and restore oral health. We address the cause and prevent recurrence.',
+        features: [
+          'Pain relief',
+          'Infection control',
+          'Targeted treatment',
+          'Follow-up care'
         ]
       },
       {
         icon: Scissors,
-        title: 'Tooth Extraction',
-        description: 'Gentle removal of damaged or non-restorable teeth, prioritizing comfort and smooth healing. Our careful approach minimizes discomfort and supports ongoing oral health.',
+        title: 'Extractions (simple / surgical)',
+        description: 'Gentle removal of damaged or non-restorable teeth, from simple to surgical extractions. Our approach minimizes discomfort and supports smooth healing.',
         features: [
-          'Comfortable extraction techniques',
+          'Simple and surgical extractions',
           'Pain management',
           'Post-treatment guidance',
           'Healing support'
         ]
       },
       {
+        icon: Shield,
+        title: 'Gum pain / abscess management',
+        description: 'Care for gum pain and abscess to reduce swelling, control infection, and restore comfort. Early intervention protects your teeth and overall wellbeing.',
+        features: [
+          'Abscess drainage and care',
+          'Gum pain relief',
+          'Infection management',
+          'Ongoing oral health support'
+        ]
+      },
+      {
         icon: Sprout,
-        title: 'Root Canal Treatments',
-        description: 'Advanced procedures to remove infection while preserving natural teeth. Performed with modern techniques for comfort and durable outcomes.',
+        title: 'Root canal treatment',
+        description: 'Advanced procedures to remove infection while preserving your natural tooth. Performed with modern techniques for comfort and durable outcomes.',
         features: [
           'Pain-free procedures',
           'Tooth preservation',
           'Long-lasting results',
           'Modern, precise techniques'
         ]
-      },
-      {
-        icon: Bandage,
-        title: 'Gum Disease Treatment',
-        description: 'Specialized care to treat inflammation, prevent disease progression, and restore gum health. Early intervention protects your teeth and overall oral wellbeing.',
-        features: [
-          'Inflammation management',
-          'Disease prevention',
-          'Gum restoration',
-          'Support for long-term oral health'
-        ]
-      },
-      {
-        icon: Shield,
-        title: 'Preventive Dental Care',
-        description: 'Proactive treatments and guidance to protect your smile before issues arise. Prevention is the key to lasting oral health.',
-        features: [
-          'Fluoride treatments',
-          'Personalized hygiene guidance',
-          'Routine monitoring',
-          'Preventive planning'
-        ]
       }
     ],
     whyChoose: {
-      title: 'Why Choose Our General Dentistry Services',
+      title: 'Why Choose Our Relief & Urgent Care',
       description: 'We combine experience, attention, and careful planning to deliver reliable, patient-focused care.',
       features: [
         'Experienced, certified dentists',
@@ -176,7 +176,7 @@ export const servicesData: ServiceDetail[] = [
     services: [
       {
         icon: Sparkles,
-        title: 'Teeth Whitening',
+        title: 'Teeth whitening',
         description: 'A safe, effective treatment that brightens your smile and removes deep stains. Achieve noticeable, long-lasting results in a single session.',
         features: [
           'Safe and effective',
@@ -187,7 +187,7 @@ export const servicesData: ServiceDetail[] = [
       },
       {
         icon: Gem,
-        title: 'Veneers & Hollywood Smile',
+        title: 'Veneers',
         description: 'Ultra-thin veneers that refine colour, shape, and symmetry for a naturally stunning smile. Enhance your teeth without compromising comfort or authenticity.',
         features: [
           'Custom ultra-thin veneers',
@@ -197,20 +197,9 @@ export const servicesData: ServiceDetail[] = [
         ]
       },
       {
-        icon: Crown,
-        title: 'Dental Crowns & Bridges',
-        description: 'Durable, aesthetic restorations that replace or strengthen teeth while restoring natural function. Each crown or bridge is custom-made for a perfect fit.',
-        features: [
-          'Strong and long-lasting',
-          'Restores function',
-          'Custom-crafted',
-          'Harmonious appearance'
-        ]
-      },
-      {
         icon: Palette,
-        title: 'Smile Design',
-        description: 'A digital planning process that visualizes your ideal smile in harmony with your facial features. Preview your results before treatment begins, giving you full confidence in the outcome.',
+        title: 'Smile design',
+        description: 'A digital planning process that visualizes your ideal smile in harmony with your facial features. Preview your results before treatment begins.',
         features: [
           'Digital smile visualization',
           'Facial feature analysis',
@@ -219,8 +208,19 @@ export const servicesData: ServiceDetail[] = [
         ]
       },
       {
+        icon: Eye,
+        title: 'Invisalign / clear aligners',
+        description: 'Clear aligner systems that gently adjust teeth with digital precision. Comfortable, removable, and convenient for everyday life.',
+        features: [
+          'Clear, removable aligners',
+          'Advanced digital planning',
+          'Comfortable for daily use',
+          'Highly effective and discreet'
+        ]
+      },
+      {
         icon: Target,
-        title: 'Composite Bonding',
+        title: 'Cosmetic bonding / contouring',
         description: 'A minimally invasive solution to reshape and correct minor imperfections. Quick, precise, and effective, it refines your smile without extensive procedures.',
         features: [
           'Rapid treatment',
@@ -228,20 +228,10 @@ export const servicesData: ServiceDetail[] = [
           'Minimally invasive',
           'Refined, natural results'
         ]
-      },
-      {
-        icon: Sparkles,
-        title: 'Tooth-Coloured Fillings',
-        description: 'Discreet, natural-looking restorations that match your tooth shade while restoring strength and function — an effective solution for treating decay.',
-        features: [
-          'Shade-matched fillings',
-          'Functional and aesthetic restoration',
-          'Subtle, comfortable treatment'
-        ]
       }
     ],
     whyChoose: {
-      title: 'Why Choose Our Cosmetic Dentistry',
+      title: 'Why Choose Our Smile Aesthetics',
       description: 'We combine artistry, expertise, and a patient-focused approach to create smiles that feel natural, balanced, and uniquely yours.',
       features: [
         'Award-winning cosmetic dentists',
@@ -489,11 +479,33 @@ export const servicesData: ServiceDetail[] = [
         description: 'Full-mouth and multi-disciplinary care for complex needs'
       }
     ],
-    servicesIntro: 'From routine evaluations to complex restorative procedures, we deliver solutions designed to preserve oral health and restore your smile.',
+    servicesIntro: 'From preventive care to full restoration, we help you maintain or rebuild your oral health for the long term.',
     services: [
       {
-        icon: Scissors,
-        title: 'Dental Implants',
+        icon: Shield,
+        title: 'Fillings & restorations',
+        description: 'Tooth-coloured fillings and restorations that repair decay and restore strength and function while matching your natural tooth shade.',
+        features: [
+          'Shade-matched fillings',
+          'Durable restorations',
+          'Decay repair',
+          'Natural appearance'
+        ]
+      },
+      {
+        icon: Crown,
+        title: 'Crowns / bridges',
+        description: 'Durable, aesthetic crowns and bridges that replace or strengthen teeth while restoring natural function. Each restoration is custom-made for a perfect fit.',
+        features: [
+          'Strong and long-lasting',
+          'Restores function',
+          'Custom-crafted',
+          'Harmonious appearance'
+        ]
+      },
+      {
+        icon: Microscope,
+        title: 'Implants',
         description: 'Implants replace missing teeth with stability, function, and a natural appearance. Each case is planned to seamlessly restore your bite and smile.',
         features: [
           'Long-lasting, reliable solutions',
@@ -504,29 +516,29 @@ export const servicesData: ServiceDetail[] = [
       },
       {
         icon: RefreshCw,
-        title: 'Full-Mouth Rehabilitation',
-        description: 'A comprehensive approach to restore oral harmony, function, and aesthetics. Treatments are customized using a multi-disciplinary strategy to achieve balanced, confident results.',
+        title: 'Dentures',
+        description: 'Removable or fixed dentures that restore your smile and chewing ability. Custom-fitted for comfort and a natural look.',
         features: [
-          'Complete oral restoration',
-          'Function and aesthetics enhancement',
-          'Holistic smile harmony',
-          'Personalized, multi-disciplinary planning'
+          'Full and partial options',
+          'Custom-fitted for comfort',
+          'Natural appearance',
+          'Restored function'
         ]
       },
       {
-        icon: AlertCircle,
-        title: 'Emergency Dental Treatment',
-        description: 'Rapid care for urgent situations such as pain, trauma, or dental injury. Our team stabilizes and treats emergencies quickly while prioritizing patient comfort.',
+        icon: ClipboardCheck,
+        title: 'Deep cleaning / gum treatment',
+        description: 'Professional deep cleaning and gum treatment to remove buildup, treat gum disease, and restore gum health for lasting oral wellness.',
         features: [
-          'Immediate relief',
-          'Pain and trauma management',
-          'Stabilization of dental injuries',
-          'Efficient, reassuring care'
+          'Scaling and root planing',
+          'Gum disease treatment',
+          'Prevention of progression',
+          'Long-term gum health'
         ]
       }
     ],
     whyChoose: {
-      title: 'Why Choose Our Implant & Advanced Care',
+      title: 'Why Choose Our Protect & Restore',
       description: 'We combine expertise, advanced technology, and patient-focused planning to deliver restorative solutions with confidence and care.',
       features: [
         'Board-certified restorative specialists',

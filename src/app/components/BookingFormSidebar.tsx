@@ -3,32 +3,44 @@
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 
-// Services list
+// Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [
-  'Tooth extraction',
-  'Dental prosthetics',
+  'Emergency exam & pain management',
+  'Toothache / infection treatment',
+  'Extractions (simple / surgical)',
+  'Gum pain / abscess management',
   'Root canal treatment',
-  '3D research Panoramic shot',
-  'Gum treatment',
-  'Braces, Teeth straightening',
-  'Cosmetic dentistry',
-  'Children\'s Dentistry',
-  'Your Health Care',
-  'Dental Hygiene'
+  'Fillings & restorations',
+  'Crowns / bridges',
+  'Implants',
+  'Dentures',
+  'Deep cleaning / gum treatment',
+  'Teeth whitening',
+  'Veneers',
+  'Smile design',
+  'Invisalign / clear aligners',
+  'Cosmetic bonding / contouring',
+  'Pediatric Dentistry'
 ]
 
 // Service to Doctor mapping
 const serviceToDoctors: Record<string, string[]> = {
-  'Tooth extraction': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi'],
-  'Dental prosthetics': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Emergency exam & pain management': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Toothache / infection treatment': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Elias Hanna'],
+  'Extractions (simple / surgical)': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi'],
+  'Gum pain / abscess management': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi'],
   'Root canal treatment': ['Dr. Elias Hanna'],
-  '3D research Panoramic shot': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Gum treatment': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi'],
-  'Braces, Teeth straightening': ['Dr. Saif Eldin Tawakul'],
-  'Cosmetic dentistry': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
-  'Children\'s Dentistry': ['Dr. Basma Alrawi'],
-  'Your Health Care': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Dental Hygiene': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna']
+  'Fillings & restorations': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Crowns / bridges': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Implants': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Dentures': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Deep cleaning / gum treatment': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
+  'Teeth whitening': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
+  'Veneers': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
+  'Smile design': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
+  'Invisalign / clear aligners': ['Dr. Saif Eldin Tawakul'],
+  'Cosmetic bonding / contouring': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
+  'Pediatric Dentistry': ['Dr. Basma Alrawi']
 }
 
 // Country codes
