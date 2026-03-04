@@ -49,9 +49,9 @@ export default function WhyChooseSection() {
         animate={isInView ? 'visible' : 'hidden'}
         className="max-w-[1390px] mx-auto"
       >
-        <div className="flex flex-col lg:flex-row items-start gap-[20px] md:gap-[28px] lg:gap-[32px] max-w-[1299px] mx-auto relative">
-          {/* Left Content */}
-          <motion.div variants={itemVariants} className="flex flex-col gap-[20px] md:gap-[24px] lg:gap-[28px] flex-1 w-full">
+        <div className="flex flex-col lg:flex-row items-start gap-[20px] md:gap-[28px] lg:gap-[32px] max-w-[1299px] mx-auto relative lg:min-h-0">
+          {/* Left Content - defines section height on lg */}
+          <motion.div variants={itemVariants} className="flex flex-col gap-[20px] md:gap-[24px] lg:gap-[28px] flex-1 w-full lg:flex-shrink-0 lg:pr-[753px]">
             <h2
               className="text-black text-[32px] md:text-[40px] lg:text-[48px] leading-[1.2] tracking-[-1.44px] capitalize"
               style={{ fontFamily: "'Gilda Display', serif" }}
@@ -100,8 +100,11 @@ export default function WhyChooseSection() {
             </motion.button>
           </motion.div>
 
-          {/* Right Image */}
-          <motion.div variants={imageVariants} className="relative w-full lg:w-[721px] h-[400px] md:h-[500px] lg:h-[599px] rounded-[20px] overflow-hidden">
+          {/* Right Image - same height as left content on lg */}
+          <motion.div
+            variants={imageVariants}
+            className="relative w-full h-[400px] md:h-[500px] rounded-[20px] overflow-hidden lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[721px]"
+          >
             <img
               src={imgImage1}
               alt="Dental team"
