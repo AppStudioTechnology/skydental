@@ -246,13 +246,13 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
               className="fixed inset-0 bg-black/50 z-[999]"
             />
 
-            {/* Sidebar - flex so form area scrolls and full form is visible */}
+            {/* Sidebar - viewport height so form area can scroll */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: 'easeInOut' }}
-              className="fixed top-0 right-0 h-full w-full max-w-[600px] bg-white shadow-2xl z-[1000] flex flex-col"
+              className="fixed top-0 right-0 h-screen max-h-[100dvh] w-full max-w-[600px] bg-white shadow-2xl z-[1000] flex flex-col overflow-hidden"
             >
               {/* Header - stays visible */}
               <div className="flex-shrink-0 flex items-center justify-between p-6 md:p-8 pb-4 md:pb-6 border-b border-gray-100">
@@ -270,7 +270,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
               </div>
 
               {/* Form - scrollable area so full form + submit button is visible */}
-              <div className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+              <div
+                className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain"
+                style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+              >
                 <div className="p-6 md:p-8 pt-4 md:pt-6">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-[24px] sm:gap-[30px] pb-8">
                   {/* Patient Information Section */}
