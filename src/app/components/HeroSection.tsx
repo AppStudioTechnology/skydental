@@ -71,7 +71,7 @@ export default function HeroSection() {
             >
               {t('hero', 'title')}
               <br />
-              <span>{t('hero', 'tagline1')}{t('hero', 'tagline2')}</span>
+              <span className="whitespace-nowrap">{t('hero', 'tagline1')}{t('hero', 'tagline2')}</span>
               <br />
               {t('hero', 'tagline3')}
             </motion.h1>
