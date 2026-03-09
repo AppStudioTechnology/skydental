@@ -158,14 +158,14 @@ export default function DoctorDetailPage() {
                 </div>
               </motion.div>
 
-              {/* Image - same proportion as doctor cards (3:4), full width of column */}
+              {/* Image - height capped to align with left column, full width of column */}
               <motion.div
                 initial={shouldReduceMotion ? {} : { opacity: 0, x: 30 }}
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
                 className="relative w-full"
               >
-                <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
+                <div className="relative w-full h-[420px] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
                   <img
                     src={doctor.aboutImage}
                     alt={doctor.name}
