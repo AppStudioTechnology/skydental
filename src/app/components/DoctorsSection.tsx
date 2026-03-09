@@ -136,7 +136,7 @@ function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id
             style={doctor.imageSide ? { willChange: 'opacity' } : undefined}
             loading="eager"
           />
-          <div className="absolute bottom-[16px] left-[16px] bg-black/70 backdrop-blur-sm px-[16px] py-[8px] rounded-[20px] z-10">
+          <div className="absolute bottom-[16px] left-[16px] bg-black px-5 py-2.5 rounded-full z-10">
             <span className="text-white text-[12px] md:text-[13px] font-medium">{specialty}</span>
           </div>
         </div>
