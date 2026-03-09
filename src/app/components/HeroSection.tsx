@@ -71,9 +71,7 @@ export default function HeroSection() {
             >
               {t('hero', 'title')}
               <br />
-              <span className="block sm:inline">{t('hero', 'tagline1')}</span>
-              <br className="sm:hidden" />
-              <span className="inline">{t('hero', 'tagline2')}</span>
+              <span>{t('hero', 'tagline1')}{t('hero', 'tagline2')}</span>
               <br />
               {t('hero', 'tagline3')}
             </motion.h1>
