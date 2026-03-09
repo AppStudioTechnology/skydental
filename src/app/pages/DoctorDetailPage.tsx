@@ -119,17 +119,16 @@ export default function DoctorDetailPage() {
         </div>
       </section>
 
-      {/* About Section - image height matches left content on lg */}
+      {/* About Section */}
       <section ref={aboutRef} className="py-24 bg-white">
         <div className="container mx-auto px-6">
-          <div className="max-w-7xl mx-auto relative">
+          <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-24 items-start">
-              {/* Text Content - on lg, reserve space for image so it doesn't overlap */}
+              {/* Text Content */}
               <motion.div
                 initial={shouldReduceMotion ? {} : { opacity: 0, x: -30 }}
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
-                className="lg:pr-[calc(42%+1.5rem)]"
               >
                 <h2 className="text-4xl md:text-5xl font-['Gilda_Display'] text-black mb-6 tracking-tight">
                   About {doctor.name.split(' ')[1]}
@@ -159,14 +158,14 @@ export default function DoctorDetailPage() {
                 </div>
               </motion.div>
 
-              {/* Image - on lg, absolute so height matches left column; on mobile full width + aspect ratio */}
+              {/* Image - same proportion as doctor cards (3:4), full width of column */}
               <motion.div
                 initial={shouldReduceMotion ? {} : { opacity: 0, x: 30 }}
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
-                className="relative w-full lg:absolute lg:right-0 lg:top-0 lg:bottom-0 lg:w-[42%]"
+                className="relative w-full"
               >
-                <div className="relative w-full min-h-[280px] aspect-[3/4] lg:aspect-auto lg:min-h-0 lg:h-full rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
+                <div className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
                   <img
                     src={doctor.aboutImage}
                     alt={doctor.name}
