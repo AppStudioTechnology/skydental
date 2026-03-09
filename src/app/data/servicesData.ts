@@ -152,7 +152,7 @@ export const servicesData: ServiceDetail[] = [
     hero: {
       title: 'Smile Aesthetics',
       subtitle: 'Enhancing Your Smile, Naturally',
-      description: 'Enhancing Your Smile, Naturally Cosmetic dentistry focuses on improving the appearance of your teeth, gums, and smile using advanced aesthetic techniques and materials, tailored to your unique features.'
+      description: 'Enhancing Your Smile, Naturally. We focus on improving the appearance of your teeth, gums, and smile using advanced aesthetic techniques and materials, tailored to your unique features.'
     },
     benefitsIntro: 'Our team provides thoughtful, precise care designed to maintain healthy teeth while enhancing your smile. Each treatment is delivered with attention to detail, ensuring comfort, confidence, and results that feel natural and harmonious with your face.',
     benefits: [

@@ -165,7 +165,33 @@ export default function ServiceDetailPage() {
         </div>
       </section>
 
-      {/* Benefits Section */}
+      {/* Services Section - moved up */}
+      <section ref={servicesRef} className="py-24 bg-[#f8f9fa]">
+        <div className="container mx-auto px-6">
+          <motion.div
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+            animate={servicesInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-5xl font-['Gilda_Display'] text-black mb-6 tracking-tight">
+              Our {service.title} Services
+            </h2>
+            <p className="text-lg text-black/70 font-['Arial'] leading-relaxed max-w-3xl mx-auto">
+              {service.servicesIntro ?? 'From routine checkups to specialized treatments, we offer comprehensive care for your oral health needs.'}
+            </p>
+          </motion.div>
+
+          {/* Services Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {service.services.map((item, index) => (
+              <ServiceCard key={index} service={item} index={index} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Benefits Section - Comprehensive Care for Your Smile - moved below Services */}
       <section ref={benefitsRef} className="py-24 bg-white">
         <div className="container mx-auto px-6">
           <motion.div
@@ -209,32 +235,6 @@ export default function ServiceDetailPage() {
                 </motion.div>
               )
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section ref={servicesRef} className="py-24 bg-[#f8f9fa]">
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
-            animate={servicesInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-['Gilda_Display'] text-black mb-6 tracking-tight">
-              Our {service.title} Services
-            </h2>
-            <p className="text-lg text-black/70 font-['Arial'] leading-relaxed max-w-3xl mx-auto">
-              {service.servicesIntro ?? 'From routine checkups to specialized treatments, we offer comprehensive care for your oral health needs.'}
-            </p>
-          </motion.div>
-
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {service.services.map((item, index) => (
-              <ServiceCard key={index} service={item} index={index} />
-            ))}
           </div>
         </div>
       </section>
