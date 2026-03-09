@@ -73,7 +73,7 @@ export default function HeroSection() {
               <br />
               <span className="whitespace-nowrap">{t('hero', 'tagline1')}{t('hero', 'tagline2')}</span>
               <br />
-              {t('hero', 'tagline3')}
+              <span style={{ color: '#cbff8f' }}>{t('hero', 'tagline3')}</span>
             </motion.h1>
           </div>
         </div>
