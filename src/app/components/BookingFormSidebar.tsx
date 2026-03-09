@@ -100,6 +100,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
   const datePickerRef = useRef<HTMLDivElement>(null)
   const timePickerRef = useRef<HTMLDivElement>(null)
   const countryCodeRef = useRef<HTMLDivElement>(null)
+  const savedScrollYRef = useRef(0)
 
   // Set preselected doctor when sidebar opens
   useEffect(() => {
@@ -148,15 +149,31 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     }
   }, [])
 
-  // Prevent body scroll when sidebar is open
+  // Lock body scroll when sidebar is open (stops background/Lenis from scrolling)
   useEffect(() => {
     if (isOpen) {
+      savedScrollYRef.current = window.scrollY
       document.body.style.overflow = 'hidden'
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${savedScrollYRef.current}px`
+      document.body.style.left = '0'
+      document.body.style.right = '0'
     } else {
+      const scrollY = savedScrollYRef.current
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.left = ''
+      document.body.style.right = ''
+      window.scrollTo(0, scrollY)
     }
     return () => {
       document.body.style.overflow = ''
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.left = ''
+      document.body.style.right = ''
+      window.scrollTo(0, savedScrollYRef.current)
     }
   }, [isOpen])
 
@@ -254,13 +271,16 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
               transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: 'easeInOut' }}
               className="fixed top-0 right-0 w-full max-w-[600px] h-[100vh] max-h-[100dvh] bg-white shadow-2xl z-[1000] flex flex-col"
             >
-              {/* Single scrollable area: header + form (no nested flex scroll) */}
+              {/* Single scrollable area: header + form; capture wheel so background doesn't scroll */}
               <div
-                className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain"
+                className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain h-full"
                 style={{
                   WebkitOverflowScrolling: 'touch',
                   overflowY: 'scroll',
+                  touchAction: 'pan-y',
+                  maxHeight: '100vh',
                 } as React.CSSProperties}
+                onWheel={(e) => e.stopPropagation()}
               >
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 md:p-8 pb-4 md:pb-6 border-b border-gray-100 flex-shrink-0">
