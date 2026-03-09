@@ -118,21 +118,24 @@ function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id
       className="group flex flex-col"
     >
       <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-        <div className="relative h-[350px] md:h-[400px] overflow-hidden">
-          {/* Front view - always visible */}
-          <img
-            src={doctor.image}
-            alt={doctor.name}
-            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0"
-          />
-          {/* Side view - fades in on hover (only if imageSide exists) */}
+        <div className="relative h-[350px] md:h-[400px] overflow-hidden isolate">
+          {/* Layer 1: Side view (back) - always at full opacity */}
           {doctor.imageSide && (
             <img
               src={doctor.imageSide}
               alt={`${doctor.name} (side view)`}
-              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+              className="absolute inset-0 w-full h-full object-cover z-0"
+              loading="eager"
             />
           )}
+          {/* Layer 2: Front view (top) - fades out on hover for smooth crossfade */}
+          <img
+            src={doctor.image}
+            alt={doctor.name}
+            className={`absolute inset-0 w-full h-full object-cover z-[1] opacity-100 ${doctor.imageSide ? 'transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0' : ''}`}
+            style={doctor.imageSide ? { willChange: 'opacity' } : undefined}
+            loading="eager"
+          />
           <div className="absolute bottom-[16px] left-[16px] bg-black/70 backdrop-blur-sm px-[16px] py-[8px] rounded-[20px] z-10">
             <span className="text-white text-[12px] md:text-[13px] font-medium">{specialty}</span>
           </div>

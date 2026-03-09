@@ -188,23 +188,28 @@ export default function OurDoctorsPageNew() {
                 transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: index * 0.15, ease: 'easeOut' }}
                 className="group flex flex-col"
               >
-                {/* Image Card - front/side view with hover transition */}
+                {/* Image Card - front/side view with smooth hover crossfade */}
                 <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group/card">
-                  <div className="relative h-[350px] md:h-[400px] overflow-hidden">
+                  <div className="relative h-[350px] md:h-[400px] overflow-hidden isolate">
                     {doctor.image ? (
                       <>
-                        <img
-                          src={doctor.image}
-                          alt={doctor.name}
-                          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out group-hover/card:opacity-0"
-                        />
+                        {/* Layer 1: Side view (back) - always at full opacity */}
                         {doctor.imageSide && (
                           <img
                             src={doctor.imageSide}
                             alt={`${doctor.name} (side view)`}
-                            className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover/card:opacity-100"
+                            className="absolute inset-0 w-full h-full object-cover z-0"
+                            loading="eager"
                           />
                         )}
+                        {/* Layer 2: Front view (top) - fades out on hover only when side view exists */}
+                        <img
+                          src={doctor.image}
+                          alt={doctor.name}
+                          className={`absolute inset-0 w-full h-full object-cover z-[1] opacity-100 ${doctor.imageSide ? 'transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/card:opacity-0' : ''}`}
+                          style={doctor.imageSide ? { willChange: 'opacity' } : undefined}
+                          loading="eager"
+                        />
                       </>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-200">
