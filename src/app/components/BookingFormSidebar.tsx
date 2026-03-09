@@ -246,35 +246,37 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
               className="fixed inset-0 bg-black/50 z-[999]"
             />
 
-            {/* Sidebar - viewport height so form area can scroll */}
+            {/* Sidebar - viewport height; inner wrapper enforces flex + scroll */}
             <motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.3, ease: 'easeInOut' }}
-              className="fixed top-0 right-0 h-screen max-h-[100dvh] w-full max-w-[600px] bg-white shadow-2xl z-[1000] flex flex-col overflow-hidden"
+              className="fixed top-0 right-0 w-full max-w-[600px] bg-white shadow-2xl z-[1000]"
+              style={{ height: '100vh', maxHeight: '100dvh' }}
             >
-              {/* Header - stays visible */}
-              <div className="flex-shrink-0 flex items-center justify-between p-6 md:p-8 pb-4 md:pb-6 border-b border-gray-100">
-                <h2 className="text-[28px] font-bold text-black" style={{ fontFamily: "'Gilda Display', serif" }}>
-                  Book an Appointment
-                </h2>
-                <button
-                  onClick={onClose}
-                  className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-                >
-                  <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
+              <div className="h-full flex flex-col min-h-0 overflow-hidden">
+                {/* Header - stays visible */}
+                <div className="flex-shrink-0 flex items-center justify-between p-6 md:p-8 pb-4 md:pb-6 border-b border-gray-100">
+                  <h2 className="text-[28px] font-bold text-black" style={{ fontFamily: "'Gilda Display', serif" }}>
+                    Book an Appointment
+                  </h2>
+                  <button
+                    onClick={onClose}
+                    className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+                  >
+                    <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
 
-              {/* Form - scrollable area so full form + submit button is visible */}
-              <div
-                className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain"
-                style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
-              >
-                <div className="p-6 md:p-8 pt-4 md:pt-6">
+                {/* Form - scrollable; explicit max-height so overflow scrolls */}
+                <div
+                  className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden overscroll-contain max-h-[calc(100vh-80px)]"
+                  style={{ WebkitOverflowScrolling: 'touch' } as React.CSSProperties}
+                >
+                  <div className="p-6 md:p-8 pt-4 md:pt-6">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-[24px] sm:gap-[30px] pb-8">
                   {/* Patient Information Section */}
                   <div className="flex flex-col gap-[16px] sm:gap-[20px]">
@@ -491,6 +493,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
                     Request Appointment
                   </motion.button>
                 </form>
+                  </div>
                 </div>
               </div>
             </motion.div>
