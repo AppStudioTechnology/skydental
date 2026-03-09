@@ -4,13 +4,15 @@ import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { doctorsData as fullDoctorsData } from '../data/doctorsData'
 
-const doctorsData = [
-  { id: 'dr-saifaldin-tawakul', name: 'Dr. Saif Eldin Tawakul', specialtyKey: 'specialistOralSurgeon' as const, image: '/doctor1.png' },
-  { id: 'dr-basma-al-rawi', name: 'Dr. Basma Alrawi', specialtyKey: 'specialistOralSurgeon' as const, image: '/doctor2.png' },
-  { id: 'dr-claude-istanbouli', name: 'Dr. Claude Istanbouli', specialtyKey: 'generalDentalImplantologist' as const, image: '/doctor3.png' },
-  { id: 'dr-elias-daoud-hanna', name: 'Dr. Elias Hanna', specialtyKey: 'specialistPedodontist' as const, image: '/doctor4.png' }
-]
+const specialtyKeys = ['specialistOralSurgeon', 'specialistOralSurgeon', 'generalDentalImplantologist', 'specialistPedodontist'] as const
+const doctorsData = fullDoctorsData.slice(0, 4).map((d, i) => ({
+  id: d.id,
+  name: d.name,
+  specialtyKey: specialtyKeys[i],
+  image: d.image
+}))
 
 export default function DoctorsSection() {
   const ref = useRef(null)

@@ -6,114 +6,21 @@ import { Link } from 'react-router-dom'
 import { Search, ChevronDown, Award, Shield } from 'lucide-react'
 import { useBooking } from '../context/BookingContext'
 import ScrollSection from '../components/ScrollSection'
+import { doctorsData as fullDoctorsData } from '../data/doctorsData'
 
-// Doctor data - First 4 match homepage, rest can be added later
-const doctorsData = [
-  {
-    id: 'dr-saifaldin-tawakul',
-    name: 'Dr. Saif Eldin Tawakul',
-    specialty: 'Specialist Oral Surgeon',
-    experience: '20+ years',
-    image: '/doctor1.png',
-    available: true
-  },
-  {
-    id: 'dr-basma-al-rawi',
-    name: 'Dr. Basma Alrawi',
-    specialty: 'Specialist Oral Surgeon',
-    experience: '12+ years',
-    image: '/doctor2.png',
-    available: true
-  },
-  {
-    id: 'dr-claude-istanbouli',
-    name: 'Dr. Claude Istanbouli',
-    specialty: 'General Dental Practitioner & Implantologist',
-    experience: '10+ years',
-    image: '/doctor3.png',
-    available: true
-  },
-  {
-    id: 'dr-elias-daoud-hanna',
-    name: 'Dr. Elias Hanna',
-    specialty: 'Specialist Pedodontist',
-    experience: '20+ years',
-    image: '/doctor4.png',
-    available: true
-  },
-  {
-    id: 'dr-amr-husson',
-    name: 'Dr. Amr Husson',
-    specialty: 'Specialist Orthodontist',
-    experience: '8+ years',
-    image: '/doctor5.png',
-    available: true
-  },
-  {
-    id: 'dr-shridhar-munje',
-    name: 'Dr. Shridhar Munje',
-    specialty: 'Specialist Orthodontist',
-    experience: '18+ years',
-    image: '/doctor6.png',
-    available: true
-  },
-  {
-    id: 'dr-mohammad-abdulrazak',
-    name: 'Dr. Mohammad Abdulrazak',
-    specialty: 'Specialist Periodontist',
-    experience: '14+ years',
-    image: '/doctor7.png',
-    available: true
-  },
-  {
-    id: 'dr-hazem-reslan',
-    name: 'Dr. Hazem Reslan',
-    specialty: 'Specialist Pedodontist',
-    experience: '11+ years',
-    image: '/doctor8.png',
-    available: true
-  },
-  {
-    id: 'dr-nasrin-badreldin',
-    name: 'Dr. Nasrin Badreldin Mahgoub',
-    specialty: 'Specialist Endodontist',
-    experience: '9+ years',
-    image: '/doctor9.png',
-    available: true
-  },
-  {
-    id: 'dr-kinan-mohammed',
-    name: 'Dr. Kinan Mohammed Mohdi',
-    specialty: 'General Dental Practitioner',
-    experience: '7+ years',
-    image: '/doctor10.png',
-    available: true
-  },
-  {
-    id: 'dr-mohanned-albasha',
-    name: 'Dr. Mohanned Albasha',
-    specialty: 'General Dental Practitioner',
-    experience: '13+ years',
-    image: '/doctor11.png',
-    available: true
-  },
-  {
-    id: 'dr-arwa-rashed',
-    name: 'Dr. Arwa Rashed Almarshoodi',
-    specialty: 'General Dental Practitioner',
-    experience: '10+ years',
-    image: '/doctor12.png',
-    available: true
-  },
-  {
-    id: 'dr-reem-al-hammadi',
-    name: 'Dr. Reem Al-Hammadi',
-    specialty: 'General Dental Practitioner',
-    experience: '6+ years',
-    image: '/doctor13.png',
+// Derive list from central doctorsData (uses front-view photos from assets)
+const doctorsData = fullDoctorsData.map((d) => {
+  const expStat = d.stats.find((s) => s.label.toLowerCase().includes('year'))
+  const experience = expStat ? expStat.value : (d.stats[0]?.value ?? '')
+  return {
+    id: d.id,
+    name: d.name,
+    specialty: d.specialty,
+    experience: experience.includes('+') ? experience : experience ? `${experience} years` : '',
+    image: d.image,
     available: true
   }
-]
+})
 
 const specialties = [
   'All Specialties',
