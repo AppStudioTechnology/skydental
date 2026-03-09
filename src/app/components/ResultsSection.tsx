@@ -95,7 +95,7 @@ export default function ResultsSection() {
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd])
 
   return (
-    <section className="py-[80px] px-0">
+    <section className="py-[80px] px-0 overflow-x-hidden">
       <motion.div
         ref={ref}
         initial={{ opacity: 0 }}
@@ -104,7 +104,7 @@ export default function ResultsSection() {
         className="w-full bg-[#e0edff] rounded-none"
       >
         <div className="max-w-[1390px] mx-auto px-[16px] md:px-[20px] lg:px-[25px] py-[24px] md:py-[36px] lg:py-[48px]">
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-[24px] md:gap-[32px] lg:gap-[40px]">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-[24px] md:gap-[32px] lg:gap-[40px] min-w-0">
             {/* Before/After Images */}
             <motion.div
               ref={containerRef}
@@ -198,21 +198,21 @@ export default function ResultsSection() {
               </div>
             </motion.div>
 
-            {/* Right Content */}
+            {/* Right Content - min-w-0 prevents flex overflow on mobile */}
             <motion.div
               initial={{ x: 50, opacity: 0 }}
               animate={isInView ? { x: 0, opacity: 1 } : { x: 50, opacity: 0 }}
               transition={{ delay: shouldReduceMotion ? 0 : 0.5, duration: shouldReduceMotion ? 0 : 0.8 }}
-              className="flex flex-col gap-[20px] md:gap-[28px] lg:gap-[32px] max-w-full lg:max-w-[610px]"
+              className="flex flex-col gap-[20px] md:gap-[28px] lg:gap-[32px] min-w-0 w-full max-w-full lg:max-w-[610px]"
             >
-              <div className="flex flex-col gap-[16px]">
+              <div className="flex flex-col gap-[16px] min-w-0">
                 <h2
-                  className="text-black text-[32px] md:text-[40px] lg:text-[48px] leading-[1.2] tracking-[-1.44px] capitalize whitespace-nowrap"
+                  className="text-black text-[28px] sm:text-[32px] md:text-[40px] lg:text-[48px] leading-[1.2] tracking-[-1.44px] capitalize lg:whitespace-nowrap"
                   style={{ fontFamily: "'Gilda Display', serif" }}
                 >
                   {t('home', 'excellentResults')}
                 </h2>
-                <p className="text-[#202020] text-[16px] leading-[1.55]">
+                <p className="text-[#202020] text-[15px] sm:text-[16px] leading-[1.55] break-words">
                   {t('home', 'excellentResultsDesc')}
                 </p>
               </div>
