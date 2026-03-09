@@ -48,7 +48,7 @@ export const servicesData: ServiceDetail[] = [
     hero: {
       title: 'Relief & Urgent Care',
       subtitle: 'Foundation for Lifelong Oral Health',
-      description: 'Foundation for Lifelong Oral Health. General dentistry forms the cornerstone of healthy teeth and gums, focusing on early detection, prevention, and treatment of common dental concerns.'
+      description: 'Foundation for Lifelong forms the cornerstone of healthy teeth and gums, focusing on early detection, prevention, and treatment of common dental concerns.'
     },
     benefitsIntro: 'Our team provides thoughtful, precise care designed to protect your oral health and maintain strong, healthy teeth. Every visit is crafted for comfort, clarity, and confidence, guided by modern techniques and a patient-first approach.',
     benefits: [
