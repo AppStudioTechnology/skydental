@@ -150,7 +150,7 @@ function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id
         </h3>
         <Link 
           to={`/our-doctors/${doctor.id}`}
-          className="text-[#0C0060] text-[14px] md:text-[15px] hover:underline"
+          className="inline-block bg-white text-[#0C0060] text-[13px] md:text-[14px] font-medium py-[10px] px-[20px] rounded-[12px] hover:bg-[#0C0060] hover:text-white transition-colors text-center whitespace-nowrap"
         >
           {viewDetails}
         </Link>
