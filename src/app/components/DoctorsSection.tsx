@@ -98,7 +98,7 @@ export default function DoctorsSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-[12px] sm:gap-[20px] md:gap-[24px] lg:gap-[32px]"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] md:gap-[24px] lg:gap-[32px]"
         >
           {doctorsData.map((doctor, index) => (
             <DoctorCard key={doctor.id} doctor={doctor} specialty={t('home', doctor.specialtyKey)} viewDetails={t('common', 'viewDetails')} variants={cardVariants} />
@@ -137,7 +137,7 @@ function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id
             loading="eager"
           />
           <div className="absolute bottom-[16px] left-[16px] bg-black px-5 py-2.5 rounded-full z-10">
-            <span className="text-white text-[12px] md:text-[13px] font-medium">{specialty}</span>
+            <span className="text-white text-[12px] md:text-[13px] font-medium whitespace-nowrap">{specialty}</span>
           </div>
         </div>
       </div>

@@ -168,7 +168,7 @@ export default function OurDoctorsPageNew() {
       {/* Doctors Grid */}
       <section className="py-[50px] md:py-[60px] lg:py-[70px] px-[16px] md:px-[20px] lg:px-[25px] bg-[#e0edff]">
         <div className="max-w-[1390px] mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-[12px] sm:gap-[20px] md:gap-[24px] lg:gap-[32px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] md:gap-[24px] lg:gap-[32px]">
             {filteredDoctors.map((doctor, index) => (
               <motion.div
                 key={doctor.id}
@@ -209,7 +209,7 @@ export default function OurDoctorsPageNew() {
                     )}
                     {/* Specialty Badge */}
                     <div className="absolute bottom-[16px] left-[16px] bg-black px-5 py-2.5 rounded-full z-10">
-                      <span className="text-white text-[12px] md:text-[13px] font-medium">{doctor.specialty}</span>
+                      <span className="text-white text-[12px] md:text-[13px] font-medium whitespace-nowrap">{doctor.specialty}</span>
                     </div>
                   </div>
                 </div>
