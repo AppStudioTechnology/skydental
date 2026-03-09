@@ -10,6 +10,20 @@ import drHazemImg from '../../assets/Drs Front View Pictures/dr hazem.jpg'
 import drKinanImg from '../../assets/Drs Front View Pictures/dr kinan mohammed.jpg'
 import drMohanedImg from '../../assets/Drs Front View Pictures/dr mohaned albasha.jpg'
 import drReemImg from '../../assets/Drs Front View Pictures/dr reem.jpg'
+import drArwaImg from '../../assets/Drs Front View Pictures/dr arwa.jpg'
+// Doctor side-view photos (hover state)
+import drSaifSideImg from '../../assets/Drs Side View Pictures/dr saif.jpg'
+import drBasmaSideImg from '../../assets/Drs Side View Pictures/dr basma.jpg'
+import drClaudeSideImg from '../../assets/Drs Side View Pictures/dr claude.jpg'
+import drEliasSideImg from '../../assets/Drs Side View Pictures/dr elias.jpg'
+import drAmrHussonSideImg from '../../assets/Drs Side View Pictures/dr amr husson.jpg'
+import drShridharSideImg from '../../assets/Drs Side View Pictures/dr shridhar munje.jpg'
+import drMuhammadAbdulrazakSideImg from '../../assets/Drs Side View Pictures/dr mohammad abdulrazak.jpg'
+import drHazemSideImg from '../../assets/Drs Side View Pictures/dr hazem.jpg'
+import drKinanSideImg from '../../assets/Drs Side View Pictures/dr kinan mohammed.jpg'
+import drMohanedSideImg from '../../assets/Drs Side View Pictures/dr mohanned albasha.jpg'
+import drReemSideImg from '../../assets/Drs Side View Pictures/dr reem.jpg'
+import drArwaSideImg from '../../assets/Drs Side View Pictures/dr Arwa.jpg'
 
 export interface DoctorDetail {
   id: string
@@ -17,6 +31,8 @@ export interface DoctorDetail {
   title: string
   specialty: string
   image: string
+  /** Side-view image shown on hover (optional; e.g. Dr. Nasrin has no side view) */
+  imageSide?: string
   aboutImage: string
   description: string
   stats: {
@@ -54,6 +70,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Oral Surgeon & Implantologist',
     specialty: 'Specialist Oral Surgeon & Implantologist',
     image: drSaifImg,
+    imageSide: drSaifSideImg,
     aboutImage: drSaifImg,
     description: 'Dr. Saif Eldin Tawakul is a distinguished Specialist Oral Surgeon and Implantologist with more than 20 years of international clinical experience in Germany and the UAE. Renowned for his advanced surgical expertise and precision-driven treatment approach, Dr. Saif is one of the region\'s most respected oral surgery practitioners. He completed his German Board Certification in Oral Surgery in Bremen, Germany, in 2009, and holds a certified implant privilege. He is also a registered Specialist under the Department of Health – Abu Dhabi. Dr. Saif began his professional journey in Germany, practising Oral Surgery and Implantology from 2004 to 2010, before relocating to the UAE, where he spent over a decade practicing general dentistry and oral surgery in Al Ain. In 2020, he co-founded Sky Dental Center, where he continues to provide exceptional surgical care and plays an integral role in shaping the centre\'s clinical excellence and patient-focused philosophy.',
     stats: [
@@ -136,6 +153,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Oral Surgeon',
     specialty: 'Specialist Oral Surgeon',
     image: drBasmaImg,
+    imageSide: drBasmaSideImg,
     aboutImage: drBasmaImg,
     description: 'Dr. Basma Alrawi is a highly accomplished Specialist Oral Surgeon renowned for her advanced surgical expertise, precision-driven clinical approach, and unwavering commitment to patient safety and wellbeing. With implant privileges and extensive experience managing complex oral and maxillofacial conditions, she brings exceptional skill and a calm, reassuring presence to every treatment journey. Her practice integrates evidence-based surgery, modern diagnostic technologies, and a multidisciplinary philosophy—ensuring that patients receive comprehensive, safe, and predictable surgical outcomes.',
     stats: [
@@ -199,6 +217,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'General Dental Practitioner & Implantologist',
     specialty: 'General Dental Practitioner & Implantologist',
     image: drClaudeImg,
+    imageSide: drClaudeSideImg,
     aboutImage: drClaudeImg,
     description: 'With more than 30 years of transformative experience in restorative, surgical, and cosmetic dentistry, Dr. Claude Istanbouli stands as one of the region\'s foremost authorities in dental implants and full-mouth rehabilitation. Since graduating from Damascus University in 1988 and completing advanced training in cosmetic and restorative dentistry at UCLA, California in 1999, Dr. Istanbouli has built a distinguished international career across the United States and the UAE. His professional journey includes key positions at ADNOC Medical Services and Mubadala Health\'s Healthpoint Hospital, where he contributed to elevating clinical standards and delivering life-changing results. Today, as a leading specialist at Sky Dental Center in Khalifa City A, part of CMC Medical, he continues to redefine modern implant dentistry with unparalleled expertise and innovation.',
     stats: [
@@ -300,6 +319,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Pedodontist',
     specialty: 'Specialist Pedodontist',
     image: drEliasImg,
+    imageSide: drEliasSideImg,
     aboutImage: drEliasImg,
     description: 'Dr. Elias Hanna is a distinguished Specialist Prosthodontist with advanced expertise in the restoration and replacement of missing or damaged teeth, functional rehabilitation, and aesthetic smile enhancement. With implant privileges and extensive training in prosthodontic sciences, he offers patients comprehensive restorative solutions grounded in precision, craftsmanship, and evidence-based excellence. His clinical philosophy focuses on restoring harmony, comfort, and confidence—ensuring that every patient receives personalised, functional, and naturally aesthetic outcomes.',
     stats: [
@@ -362,6 +382,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Orthodontist',
     specialty: 'Specialist Orthodontist',
     image: drAmrHussonImg,
+    imageSide: drAmrHussonSideImg,
     aboutImage: drAmrHussonImg,
     description: 'Dr. Amr Husson is an accomplished Orthodontic Specialist with more than nine years of advanced clinical expertise dedicated to diagnosing, correcting, and preventing dental and facial irregularities. At Sky Dental Center, he combines cutting-edge orthodontic technologies with a compassionate, patient-focused approach to create healthy, aesthetically refined smiles for children, teens, and adults alike. His commitment to excellence, meticulous attention to detail, and reliance on evidence-based practice ensure that every treatment delivers optimal functional stability and exceptional cosmetic results.',
     stats: [
@@ -461,6 +482,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Orthodontist',
     specialty: 'Specialist Orthodontist',
     image: drShridharImg,
+    imageSide: drShridharSideImg,
     aboutImage: drShridharImg,
     description: 'Dr. Shridhar Munje is a distinguished Specialist Orthodontist with more than 16 years of combined academic and clinical excellence, offering patients an advanced and comprehensive approach to orthodontic care. His career reflects a rare balance between high-level clinical expertise and a deep commitment to dental education, having mentored future dental professionals while continuously refining his mastery of modern orthodontic systems. With a professional journey that spans traditional mechanotherapy, cutting-edge aligner technologies, and interdisciplinary treatment planning, Dr. Munje provides tailored orthodontic solutions designed to achieve functional, aesthetic, and long-lasting results. His patient-centred philosophy emphasises precision, clarity, and comfort—ensuring that every individual receives a customised treatment pathway aligned with their unique dental needs and goals.',
     stats: [
@@ -550,6 +572,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Periodontist',
     specialty: 'Specialist Periodontist',
     image: drMuhammadAbdulrazakImg,
+    imageSide: drMuhammadAbdulrazakSideImg,
     aboutImage: drMuhammadAbdulrazakImg,
     description: 'Dr. Mohammad Abdulrazak is a highly accomplished Specialist Periodontist with more than a decade of advanced clinical experience dedicated to preserving periodontal health and restoring the structural foundations of the smile. Recognising that healthy gums are essential for long-term oral function and aesthetics, he integrates preventive care with sophisticated surgical techniques to deliver effective and sustainable outcomes for every patient. His refined clinical approach, supported by years of specialised training and international experience, positions him as one of the region\'s leading experts in periodontal therapy and gum-related surgical procedures.',
     stats: [
@@ -634,6 +657,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'Specialist Pedodontist',
     specialty: 'Specialist Pedodontist',
     image: drHazemImg,
+    imageSide: drHazemSideImg,
     aboutImage: drHazemImg,
     description: 'Dr. Hazem Reslan is a distinguished Specialist Pedodontist dedicated to delivering exceptional dental care to infants, children, and adolescents. With advanced expertise in paediatric oral health, behavioural management, preventive dentistry, and minimally invasive treatment techniques, he ensures that every child receives compassionate, safe, and personalised care in a comfortable environment. With a deep understanding of the unique dental and emotional needs of young patients, Dr. Hazem combines clinical excellence with a gentle, reassuring approach that builds trust and confidence—laying the foundation for a lifetime of healthy smiles.',
     stats: [
@@ -779,6 +803,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
     image: drKinanImg,
+    imageSide: drKinanSideImg,
     aboutImage: drKinanImg,
     description: 'With more than 15 years of dedicated clinical experience in general and prosthodontic dentistry, Dr. Kinan Mohammed Mohdi brings a distinguished level of expertise and an exceptional commitment to patient-focused care. His professional journey—beginning with the establishment of his own private clinic in Syria and extending into a longstanding career in the UAE—reflects a deep dedication to clinical excellence, continuous development, and restorative dentistry that restores both function and aesthetic confidence. Through his extensive international experience, Dr. Kinan has become known for his meticulous approach, advanced restorative skills, and his ability to manage complex dental cases with precision, artistry, and a compassionate patient-centred philosophy.',
     stats: [
@@ -862,6 +887,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
     image: drMohanedImg,
+    imageSide: drMohanedSideImg,
     aboutImage: drMohanedImg,
     description: 'Dr. Mohanned Albasha is a dedicated General Dentist who delivers high-quality, patient-centred dental care with precision, compassion, and a commitment to long-term oral health. With extensive experience across the full spectrum of general dentistry, he ensures that every patient receives personalised treatment tailored to their unique needs, whether for prevention, restoration, or urgent care. His approach is grounded in clinical excellence, evidence-based practice, and clear communication—providing patients with confidence and comfort throughout their dental journey.',
     stats: [
@@ -928,8 +954,9 @@ export const doctorsData: DoctorDetail[] = [
     name: 'Dr. Arwa Rashed Almarshoodi',
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
-    image: '/doctor12.png',
-    aboutImage: '/doctor12.png',
+    image: drArwaImg,
+    imageSide: drArwaSideImg,
+    aboutImage: drArwaImg,
     description: 'Dr. Arwa Rashed Almarshoodi is a distinguished Prosthodontic Specialist who transforms lives by restoring oral function, comfort, and aesthetics with exceptional precision. Through her advanced training and meticulous approach to comprehensive restorative care, she empowers patients to regain their confidence, rediscover their smiles, and achieve long-term oral health. Her clinical philosophy is grounded in the belief that every patient deserves a personalised, functional, and aesthetically harmonious smile—crafted through evidence-based practice and artistic attention to detail.',
     stats: [
       { label: 'Specialist', value: 'Prosthodontic Specialist' },
@@ -1018,6 +1045,7 @@ export const doctorsData: DoctorDetail[] = [
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
     image: drReemImg,
+    imageSide: drReemSideImg,
     aboutImage: drReemImg,
     description: 'Dr. Reem Al-Hammadi is a highly committed general practice dentist who delivers comprehensive, patient-focused dental care grounded in precision, empathy, and evidence-based practice. With a solid academic foundation and extensive clinical exposure across leading healthcare institutions in Abu Dhabi, she has built a reputation as a trusted dental professional who blends technical excellence with genuine dedication to patient wellbeing. Her approach reflects the highest standards of modern dentistry—combining meticulous diagnostic skill, refined clinical techniques, and a warm, reassuring patient experience.',
     stats: [

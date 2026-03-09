@@ -11,7 +11,8 @@ const doctorsData = fullDoctorsData.slice(0, 4).map((d, i) => ({
   id: d.id,
   name: d.name,
   specialtyKey: specialtyKeys[i],
-  image: d.image
+  image: d.image,
+  imageSide: d.imageSide
 }))
 
 export default function DoctorsSection() {
@@ -108,7 +109,7 @@ export default function DoctorsSection() {
   )
 }
 
-function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id: string; name: string; image: string }; specialty: string; viewDetails: string; variants: any }) {
+function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id: string; name: string; image: string; imageSide?: string }; specialty: string; viewDetails: string; variants: any }) {
   const shouldReduceMotion = useReducedMotion()
 
   return (
@@ -116,14 +117,23 @@ function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id
       variants={variants}
       className="group flex flex-col"
     >
-      <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+      <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
         <div className="relative h-[350px] md:h-[400px] overflow-hidden">
+          {/* Front view - always visible */}
           <img
             src={doctor.image}
             alt={doctor.name}
-            className="w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out group-hover:opacity-0"
           />
-          <div className="absolute bottom-[16px] left-[16px] bg-black/70 backdrop-blur-sm px-[16px] py-[8px] rounded-[20px]">
+          {/* Side view - fades in on hover (only if imageSide exists) */}
+          {doctor.imageSide && (
+            <img
+              src={doctor.imageSide}
+              alt={`${doctor.name} (side view)`}
+              className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+            />
+          )}
+          <div className="absolute bottom-[16px] left-[16px] bg-black/70 backdrop-blur-sm px-[16px] py-[8px] rounded-[20px] z-10">
             <span className="text-white text-[12px] md:text-[13px] font-medium">{specialty}</span>
           </div>
         </div>

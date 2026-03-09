@@ -8,7 +8,7 @@ import { useBooking } from '../context/BookingContext'
 import ScrollSection from '../components/ScrollSection'
 import { doctorsData as fullDoctorsData } from '../data/doctorsData'
 
-// Derive list from central doctorsData (uses front-view photos from assets)
+// Derive list from central doctorsData (uses front/side view photos from assets)
 const doctorsData = fullDoctorsData.map((d) => {
   const expStat = d.stats.find((s) => s.label.toLowerCase().includes('year'))
   const experience = expStat ? expStat.value : (d.stats[0]?.value ?? '')
@@ -18,6 +18,7 @@ const doctorsData = fullDoctorsData.map((d) => {
     specialty: d.specialty,
     experience: experience.includes('+') ? experience : experience ? `${experience} years` : '',
     image: d.image,
+    imageSide: d.imageSide,
     available: true
   }
 })
@@ -187,15 +188,24 @@ export default function OurDoctorsPageNew() {
                 transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: index * 0.15, ease: 'easeOut' }}
                 className="group flex flex-col"
               >
-                {/* Image Card - Only contains image and tag */}
-                <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow">
+                {/* Image Card - front/side view with hover transition */}
+                <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group/card">
                   <div className="relative h-[350px] md:h-[400px] overflow-hidden">
                     {doctor.image ? (
-                      <img
-                        src={doctor.image}
-                        alt={doctor.name}
-                        className="w-full h-full object-cover"
-                      />
+                      <>
+                        <img
+                          src={doctor.image}
+                          alt={doctor.name}
+                          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out group-hover/card:opacity-0"
+                        />
+                        {doctor.imageSide && (
+                          <img
+                            src={doctor.imageSide}
+                            alt={`${doctor.name} (side view)`}
+                            className="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover/card:opacity-100"
+                          />
+                        )}
+                      </>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-200">
                         <svg className="w-24 h-24 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
@@ -204,7 +214,7 @@ export default function OurDoctorsPageNew() {
                       </div>
                     )}
                     {/* Specialty Badge */}
-                    <div className="absolute bottom-[16px] left-[16px] bg-black/70 backdrop-blur-sm px-[16px] py-[8px] rounded-[20px]">
+                    <div className="absolute bottom-[16px] left-[16px] bg-black/70 backdrop-blur-sm px-[16px] py-[8px] rounded-[20px] z-10">
                       <span className="text-white text-[12px] md:text-[13px] font-medium">{doctor.specialty}</span>
                     </div>
                   </div>
