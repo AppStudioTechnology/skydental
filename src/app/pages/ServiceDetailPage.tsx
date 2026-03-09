@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowUpRight, Home, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon } from 'lucide-react'
+import { ArrowUpRight, Home, ChevronRight } from 'lucide-react'
 import { getServiceById } from '../data/servicesData'
 import { useBooking } from '../context/BookingContext'
 import { serviceIcons } from '../components/ServiceIcons'
@@ -14,37 +14,6 @@ const guestExperiences = [
   'https://images.unsplash.com/photo-1606811842243-af7e16970c1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
   'https://images.unsplash.com/photo-1758205307854-5f0b57c27f17?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
   'https://images.unsplash.com/photo-1642844819197-5f5f21b89ff8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080'
-]
-
-// Solution tabs data for Implant & Advanced Care
-const solutionTabs = [
-  {
-    id: 'multiple',
-    title: 'Multiple missing Teeth',
-    description:
-      "Losing three teeth doesn't always mean you'll need three separate implants. Schedule a consultation with our specialist to explore the best solutions available to restore your smile.",
-    icon: '/Mutiplemissingteeth.svg',
-    beforeImage: '/Multiple-missing-Teeth-before-2.webp',
-    afterImage: '/Multiple-missing-Teeth-after-2.webp',
-  },
-  {
-    id: 'none',
-    title: 'No Teeth at all',
-    description:
-      "While having no teeth may seem overwhelming, it's a condition that requires expert planning and care. Living without teeth can greatly impact daily life, but there are advanced solutions beyond traditional dentures. Our team is here to guide you toward a permanent, reliable solution that brings back both the function and beauty of your smile, helping you feel confident once again.",
-    icon: '/noteethatall.svg',
-    beforeImage: '/No-Teeth-at-all-before-1.webp',
-    afterImage: '/No-Teeth-at-all-after-1.webp',
-  },
-  {
-    id: 'single',
-    title: 'One missing Tooth',
-    description:
-      'Did you crack a tooth biting something hard? Is there bleeding? Suffer an injury during sports? Our expert team can help restore your smile with a single dental implant that looks and feels just like your natural tooth.',
-    icon: '/onemissingtooth.svg',
-    beforeImage: '/One-missing-Tooth-before-2.webp',
-    afterImage: '/One-missing-Tooth-after-2.webp',
-  },
 ]
 
 function ServiceCard({ service, index }: { service: any; index: number }) {
@@ -94,14 +63,10 @@ export default function ServiceDetailPage() {
   const service = getServiceById(serviceId || '')
   const shouldReduceMotion = useReducedMotion()
   
-  const [activeTab, setActiveTab] = useState('multiple')
-  const [sliderPosition, setSliderPosition] = useState(50)
-  
   const heroRef = useRef(null)
   const benefitsRef = useRef(null)
   const servicesRef = useRef(null)
   const whyChooseRef = useRef(null)
-  const solutionRef = useRef(null)
   const ctaRef = useRef(null)
   const experiencesRef = useRef(null)
 
@@ -109,30 +74,9 @@ export default function ServiceDetailPage() {
   const benefitsInView = useInView(benefitsRef, { once: true })
   const servicesInView = useInView(servicesRef, { once: true })
   const whyChooseInView = useInView(whyChooseRef, { once: true })
-  const solutionInView = useInView(solutionRef, { once: true })
   const ctaInView = useInView(ctaRef, { once: true })
   const experiencesInView = useInView(experiencesRef, { once: true })
   
-  const activeTabData = solutionTabs.find(tab => tab.id === activeTab) || solutionTabs[0]
-  
-  const [isDragging, setIsDragging] = useState(false)
-  
-  const handleSliderMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const percentage = (x / rect.width) * 100
-    setSliderPosition(Math.max(0, Math.min(100, percentage)))
-  }
-  
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = e.touches[0].clientX - rect.left
-    const percentage = (x / rect.width) * 100
-    setSliderPosition(Math.max(0, Math.min(100, percentage)))
-  }
-
   if (!service) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -354,142 +298,6 @@ export default function ServiceDetailPage() {
           </div>
         </div>
       </section>
-
-      {/* Solution To Your Problems Section - Only for Implant & Advanced Care */}
-      {serviceId === 'advanced-restorative' && (
-        <section ref={solutionRef} className="py-24 bg-white">
-          <div className="container mx-auto px-6">
-            <div className="max-w-7xl mx-auto">
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
-                animate={solutionInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6 }}
-                className="text-center mb-12"
-              >
-                <h2 className="text-5xl font-['Gilda_Display'] text-black mb-4 tracking-tight">
-                  The Solution To Your Problems
-                </h2>
-                <p className="text-lg text-black/70 font-['Arial'] leading-relaxed">
-                  Share your issue with us, and we'll find the perfect solution for you.
-                </p>
-              </motion.div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                {/* Left Sidebar - Tabs */}
-                <div className="space-y-3">
-                  {solutionTabs.map((tab) => (
-                    <motion.button
-                      key={tab.id}
-                      onClick={() => {
-                        setActiveTab(tab.id)
-                        setSliderPosition(50) // Reset slider when tab changes
-                      }}
-                      className={`w-full text-left p-6 rounded-2xl transition-all duration-300 ${
-                        activeTab === tab.id
-                          ? 'bg-[#CBFF8F] text-black shadow-lg'
-                          : 'bg-gray-100 text-black hover:bg-gray-200'
-                      }`}
-                      whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
-                      whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-                    >
-                      <div className="flex items-center gap-4">
-                        {tab.icon && (
-                          <img
-                            src={tab.icon}
-                            alt={tab.title}
-                            className="w-16 h-16 object-contain flex-shrink-0"
-                          />
-                        )}
-                        <span className="font-['Arial'] font-semibold text-lg">
-                          {tab.title}
-                        </span>
-                        {activeTab === tab.id && (
-                          <ChevronRightIcon className="w-5 h-5 ml-auto text-[#CBFF8F]" />
-                        )}
-                      </div>
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Right Side - Before/After Slider */}
-                <motion.div
-                  initial={shouldReduceMotion ? {} : { opacity: 0, x: 30 }}
-                  animate={solutionInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="relative"
-                >
-                  <div className="bg-gray-200 rounded-3xl overflow-hidden shadow-2xl">
-                    {/* Before/After Image Slider */}
-                    <div
-                      className="relative w-full aspect-[4/3] cursor-col-resize select-none"
-                      onMouseMove={handleSliderMove}
-                      onMouseDown={() => setIsDragging(true)}
-                      onMouseUp={() => setIsDragging(false)}
-                      onMouseLeave={() => {
-                        setIsDragging(false)
-                        setSliderPosition(50)
-                      }}
-                      onTouchStart={() => setIsDragging(true)}
-                      onTouchMove={handleTouchMove}
-                      onTouchEnd={() => setIsDragging(false)}
-                    >
-                      {/* Before Image (Background) */}
-                      <div className="absolute inset-0">
-                        <img
-                          src={activeTabData.beforeImage}
-                          alt="Before"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-4 left-4 bg-[#8B4513] text-white px-4 py-2 rounded-lg font-['Arial'] font-medium">
-                          Before
-                        </div>
-                      </div>
-
-                      {/* After Image (Clipped) */}
-                      <div
-                        className="absolute inset-0 overflow-hidden"
-                        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                      >
-                        <img
-                          src={activeTabData.afterImage}
-                          alt="After"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute bottom-4 right-4 bg-[#8B4513] text-white px-4 py-2 rounded-lg font-['Arial'] font-medium">
-                          After
-                        </div>
-                      </div>
-
-                      {/* Slider Control */}
-                      <div
-                        className="absolute top-0 bottom-0 w-1 bg-white shadow-lg cursor-col-resize z-10"
-                        style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
-                      >
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
-                          <div className="flex gap-1">
-                            <ChevronLeft className="w-4 h-4 text-[#0C0060]" />
-                            <ChevronRight className="w-4 h-4 text-[#0C0060]" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Title and Description Below Image */}
-                    <div className="px-6 pt-6 pb-6">
-                      <h3 className="text-3xl font-['Gilda_Display'] text-black mb-4">
-                        {activeTabData.title}
-                      </h3>
-                      <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                        {activeTabData.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* CTA Section */}
       <section 
