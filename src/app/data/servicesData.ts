@@ -48,7 +48,7 @@ export const servicesData: ServiceDetail[] = [
     hero: {
       title: 'Relief & Urgent Care',
       subtitle: 'Foundation for Lifelong Oral Health',
-      description: 'Foundation for Lifelong Oral Health General Dentistry forms the cornerstone of healthy teeth and gums, focusing on early detection, prevention, and treatment of common dental concerns.'
+      description: 'Foundation for Lifelong Oral Health. General dentistry forms the cornerstone of healthy teeth and gums, focusing on early detection, prevention, and treatment of common dental concerns.'
     },
     benefitsIntro: 'Our team provides thoughtful, precise care designed to protect your oral health and maintain strong, healthy teeth. Every visit is crafted for comfort, clarity, and confidence, guided by modern techniques and a patient-first approach.',
     benefits: [
@@ -469,7 +469,7 @@ export const servicesData: ServiceDetail[] = [
     hero: {
       title: 'Protect & Restore',
       subtitle: 'Confidence and Harmony',
-      description: 'Confidence and Harmony Our advanced restorative dentistry combines expert care with thoughtful planning to repair, replace, and restore damaged or missing teeth. Every treatment is designed to bring lasting results while maintaining natural function and aesthetics.'
+      description: 'Confidence and Harmony. We combine expert care with thoughtful planning to repair, replace, and restore damaged or missing teeth. Every treatment is designed to bring lasting results while maintaining natural function and aesthetics.'
     },
     benefitsIntro: 'We provide carefully tailored treatments that support oral health, restore confidence, and enhance comfort. From single-tooth implants to full-mouth rehabilitation, each solution is delivered with precision, attention to detail, and a focus on long-term success.',
     benefits: [
