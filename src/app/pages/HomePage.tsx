@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import HeroSection from '../components/HeroSection'
-import AboutSection from '../components/AboutSection'
 import ServicesSection from '../components/ServicesSection'
 import WhyChooseSection from '../components/WhyChooseSection'
 import InsurancePartnersSection from '../components/InsurancePartnersSection'
@@ -28,7 +27,6 @@ export default function HomePage() {
   return (
     <main>
       <ScrollSection><HeroSection /></ScrollSection>
-      <ScrollSection><AboutSection /></ScrollSection>
       <ScrollSection><ServicesSection /></ScrollSection>
       <ScrollSection><WhyChooseSection /></ScrollSection>
       <ScrollSection><ResultsSection /></ScrollSection>

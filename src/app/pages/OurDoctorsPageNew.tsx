@@ -8,8 +8,10 @@ import { useBooking } from '../context/BookingContext'
 import ScrollSection from '../components/ScrollSection'
 import { doctorsData as fullDoctorsData } from '../data/doctorsData'
 
-// Derive list from central doctorsData (uses front/side view photos from assets)
-const doctorsData = fullDoctorsData.map((d) => {
+// Derive list from central doctorsData (uses front/side view photos from assets); hide Dr. Arwa for now
+const doctorsData = fullDoctorsData
+  .filter((d) => d.id !== 'dr-arwa-rashed')
+  .map((d) => {
   const expStat = d.stats.find((s) => s.label.toLowerCase().includes('year'))
   const experience = expStat ? expStat.value : (d.stats[0]?.value ?? '')
   return {

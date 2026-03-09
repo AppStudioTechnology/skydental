@@ -732,8 +732,9 @@ export const doctorsData: DoctorDetail[] = [
     name: 'Dr. Nasrin Badreldin Mahgoub',
     title: 'Specialist Endodontist',
     specialty: 'Specialist Endodontist',
-    image: '/doctor9.png',
-    aboutImage: '/doctor9.png',
+    image: drArwaImg,
+    imageSide: drArwaSideImg,
+    aboutImage: drArwaImg,
     description: 'Dr. Nasrin Badreldin Mahgoub is a passionate, patient-centred Endodontic Specialist with more than 15 years of clinical experience across Sudan, China, Egypt, and the UAE. Her practice is defined by precision, deep clinical insight, and mastery of advanced root canal therapies that restore comfort, function, and confidence to every patient she treats. With a reputation for delivering meticulous endodontic care using modern, evidence-based techniques, Dr. Nasrin provides exceptional treatment outcomes even in the most complex and challenging cases.',
     stats: [
       { label: 'Years of Experience', value: '15+' },
@@ -954,9 +955,8 @@ export const doctorsData: DoctorDetail[] = [
     name: 'Dr. Arwa Rashed Almarshoodi',
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
-    image: drArwaImg,
-    imageSide: drArwaSideImg,
-    aboutImage: drArwaImg,
+    image: '/doctor9.png',
+    aboutImage: '/doctor9.png',
     description: 'Dr. Arwa Rashed Almarshoodi is a distinguished Prosthodontic Specialist who transforms lives by restoring oral function, comfort, and aesthetics with exceptional precision. Through her advanced training and meticulous approach to comprehensive restorative care, she empowers patients to regain their confidence, rediscover their smiles, and achieve long-term oral health. Her clinical philosophy is grounded in the belief that every patient deserves a personalised, functional, and aesthetically harmonious smile—crafted through evidence-based practice and artistic attention to detail.',
     stats: [
       { label: 'Specialist', value: 'Prosthodontic Specialist' },
