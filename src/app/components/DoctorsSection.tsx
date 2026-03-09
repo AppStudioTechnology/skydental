@@ -98,7 +98,7 @@ export default function DoctorsSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] md:gap-[24px] lg:gap-[32px]"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-[12px] sm:gap-[20px] md:gap-[24px] lg:gap-[32px]"
         >
           {doctorsData.map((doctor, index) => (
             <DoctorCard key={doctor.id} doctor={doctor} specialty={t('home', doctor.specialtyKey)} viewDetails={t('common', 'viewDetails')} variants={cardVariants} />
@@ -118,21 +118,21 @@ function DoctorCard({ doctor, specialty, viewDetails, variants }: { doctor: { id
       className="group flex flex-col"
     >
       <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-        <div className="relative h-[350px] md:h-[400px] overflow-hidden isolate">
-          {/* Layer 1: Side view (back) - always at full opacity */}
+        <div className="relative w-full aspect-[3/4] overflow-hidden isolate">
+          {/* Layer 1: Side view (back) - always at full opacity; object-top keeps head in frame */}
           {doctor.imageSide && (
             <img
               src={doctor.imageSide}
               alt={`${doctor.name} (side view)`}
-              className="absolute inset-0 w-full h-full object-cover z-0"
+              className="absolute inset-0 w-full h-full object-cover object-top z-0"
               loading="eager"
             />
           )}
-          {/* Layer 2: Front view (top) - fades out on hover for smooth crossfade */}
+          {/* Layer 2: Front view (top) - fades out on hover; object-top keeps head in frame */}
           <img
             src={doctor.image}
             alt={doctor.name}
-            className={`absolute inset-0 w-full h-full object-cover z-[1] opacity-100 ${doctor.imageSide ? 'transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0' : ''}`}
+            className={`absolute inset-0 w-full h-full object-cover object-top z-[1] opacity-100 ${doctor.imageSide ? 'transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:opacity-0' : ''}`}
             style={doctor.imageSide ? { willChange: 'opacity' } : undefined}
             loading="eager"
           />

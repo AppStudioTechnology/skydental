@@ -168,7 +168,7 @@ export default function OurDoctorsPageNew() {
       {/* Doctors Grid */}
       <section className="py-[50px] md:py-[60px] lg:py-[70px] px-[16px] md:px-[20px] lg:px-[25px] bg-[#e0edff]">
         <div className="max-w-[1390px] mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[20px] md:gap-[24px] lg:gap-[32px]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-[12px] sm:gap-[20px] md:gap-[24px] lg:gap-[32px]">
             {filteredDoctors.map((doctor, index) => (
               <motion.div
                 key={doctor.id}
@@ -179,23 +179,23 @@ export default function OurDoctorsPageNew() {
               >
                 {/* Image Card - front/side view with smooth hover crossfade */}
                 <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group/card">
-                  <div className="relative h-[350px] md:h-[400px] overflow-hidden isolate">
+                  <div className="relative w-full aspect-[3/4] overflow-hidden isolate">
                     {doctor.image ? (
                       <>
-                        {/* Layer 1: Side view (back) - always at full opacity */}
+                        {/* Layer 1: Side view (back); object-top keeps head in frame */}
                         {doctor.imageSide && (
                           <img
                             src={doctor.imageSide}
                             alt={`${doctor.name} (side view)`}
-                            className="absolute inset-0 w-full h-full object-cover z-0"
+                            className="absolute inset-0 w-full h-full object-cover object-top z-0"
                             loading="eager"
                           />
                         )}
-                        {/* Layer 2: Front view (top) - fades out on hover only when side view exists */}
+                        {/* Layer 2: Front view; object-top keeps head in frame */}
                         <img
                           src={doctor.image}
                           alt={doctor.name}
-                          className={`absolute inset-0 w-full h-full object-cover z-[1] opacity-100 ${doctor.imageSide ? 'transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/card:opacity-0' : ''}`}
+                          className={`absolute inset-0 w-full h-full object-cover object-top z-[1] opacity-100 ${doctor.imageSide ? 'transition-opacity duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover/card:opacity-0' : ''}`}
                           style={doctor.imageSide ? { willChange: 'opacity' } : undefined}
                           loading="eager"
                         />
