@@ -5,6 +5,7 @@ import { useRef } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { usePageSEO } from '../hooks/usePageSEO'
 import TestimonialsSection from '../components/TestimonialsSection'
 import { 
   GeneralDentistryIcon, 
@@ -88,6 +89,7 @@ function ServiceCard({ service, title, description, learnMore, index }: { servic
 export default function ServicesPage() {
   const shouldReduceMotion = useReducedMotion()
   const { t } = useLanguage()
+  usePageSEO('Dental Services', 'Dental services at Sky Dental Center Abu Dhabi: general dentistry, implants, protect & restore, smile aesthetics, pediatric care. Book online.')
   const heroRef = useRef(null)
   const servicesRef = useRef(null)
   const experiencesRef = useRef(null)

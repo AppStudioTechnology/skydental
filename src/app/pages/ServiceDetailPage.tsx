@@ -7,6 +7,7 @@ import { ArrowUpRight, Home, ChevronRight } from 'lucide-react'
 import { getServiceById } from '../data/servicesData'
 import { useBooking } from '../context/BookingContext'
 import { serviceIcons } from '../components/ServiceIcons'
+import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
 
 // Guest experience images
@@ -62,7 +63,8 @@ export default function ServiceDetailPage() {
   const { serviceId } = useParams()
   const service = getServiceById(serviceId || '')
   const shouldReduceMotion = useReducedMotion()
-  
+  usePageSEO(service?.title, service ? `${service.shortDescription} Sky Dental Center Abu Dhabi.` : undefined)
+
   const heroRef = useRef(null)
   const benefitsRef = useRef(null)
   const servicesRef = useRef(null)

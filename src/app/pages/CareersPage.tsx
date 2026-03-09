@@ -4,6 +4,7 @@ import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, MessageCircle, ArrowUpRight, Upload, Send, Stethoscope, Heart, Monitor, Briefcase } from 'lucide-react'
+import { usePageSEO } from '../hooks/usePageSEO'
 import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.png"
 import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png"
 import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png"
@@ -64,6 +65,7 @@ const jobCategories: JobCategory[] = [
 
 export default function CareersPage() {
   const shouldReduceMotion = useReducedMotion()
+  usePageSEO('Careers', 'Join Sky Dental Center. Dental careers in Abu Dhabi. Supportive culture, advanced technology, and growth opportunities.')
   const [formData, setFormData] = useState({
     name: '',
     email: '',

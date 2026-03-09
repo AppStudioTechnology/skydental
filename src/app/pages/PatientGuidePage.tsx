@@ -5,6 +5,7 @@ import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Home, ChevronRight, Check, FileText, ClipboardList, Shield, DollarSign, MapPin } from 'lucide-react'
 import { useBooking } from '../context/BookingContext'
+import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
 import imgDentalCare from "../../assets/7e26eb0c35bbd0356cd593caf48b0b5a702f7753.png"
 import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.png"
@@ -111,7 +112,7 @@ function PatientGuidePartnerCard({ partner }: { partner: InsurancePartner }) {
 export default function PatientGuidePage() {
   const shouldReduceMotion = useReducedMotion()
   const { openBookingSidebar } = useBooking()
-
+  usePageSEO('Patient Guide', 'Your guide to visiting Sky Dental Center. First visit, second opinion, insurance, and what to expect. Abu Dhabi dental care.')
   const heroRef = useRef(null)
   const firstVisitRef = useRef(null)
   const secondOpinionRef = useRef(null)

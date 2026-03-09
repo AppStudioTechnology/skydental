@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Search, ChevronDown, Award, Shield } from 'lucide-react'
 import { useBooking } from '../context/BookingContext'
+import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
 import { doctorsData as fullDoctorsData } from '../data/doctorsData'
 
@@ -57,6 +58,7 @@ export default function OurDoctorsPageNew() {
   const [selectedSpecialty, setSelectedSpecialty] = useState('All Specialties')
   const [isSpecialtyOpen, setIsSpecialtyOpen] = useState(false)
   const { openBookingSidebar } = useBooking()
+  usePageSEO('Our Doctors', 'Meet the expert dental team at Sky Dental Center. Experienced specialists in general dentistry, implants, orthodontics, and more in Abu Dhabi.')
 
   useEffect(() => {
     window.scrollTo(0, 0)

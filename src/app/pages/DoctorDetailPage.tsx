@@ -6,6 +6,7 @@ import { useParams, Link } from 'react-router-dom'
 import { ArrowUpRight, Home, ChevronRight, Phone, Calendar, CheckCircle } from 'lucide-react'
 import { getDoctorById } from '../data/doctorsData'
 import { useBooking } from '../context/BookingContext'
+import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
 
 export default function DoctorDetailPage() {
@@ -31,6 +32,8 @@ export default function DoctorDetailPage() {
   const philosophyInView = useInView(philosophyRef, { once: true })
   const galleryInView = useInView(galleryRef, { once: true })
   const contactInView = useInView(contactRef, { once: true })
+
+  usePageSEO(doctor ? `${doctor.name} – ${doctor.specialty}` : undefined, doctor ? `${doctor.title} at Sky Dental Center. ${doctor.specialty}. Book an appointment.` : undefined)
 
   if (!doctor) {
     return (

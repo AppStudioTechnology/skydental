@@ -5,6 +5,7 @@ import { useRef, useEffect, useMemo } from 'react'
 import { Heart, Target, Users, Award, Zap, Shield, Clock, CheckCircle } from 'lucide-react'
 import { useBooking } from '../context/BookingContext'
 import { useLanguage } from '../context/LanguageContext'
+import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
 
 // Guest Experience Images
@@ -21,6 +22,7 @@ export default function AboutUsPageNew() {
   const shouldReduceMotion = useReducedMotion()
   const { openBookingSidebar } = useBooking()
   const { t } = useLanguage()
+  usePageSEO('About Us', 'Learn about Sky Dental Center in Abu Dhabi. Our team, values, technology, and commitment to your smile and confidence.')
 
   const coreValues = useMemo(() => [
     { icon: Award, title: t('about', 'excellence'), description: t('about', 'excellenceDesc'), bgColor: '#CBFF8F' },
