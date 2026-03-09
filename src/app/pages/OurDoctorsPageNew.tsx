@@ -23,20 +23,9 @@ const doctorsData = fullDoctorsData.map((d) => {
   }
 })
 
-const specialties = [
-  'All Specialties',
-  'Specialist Orthodontist',
-  'Cosmetic Dentistry',
-  'Endodontist',
-  'Specialist Oral Surgeon',
-  'Periodontist',
-  'General Dentistry',
-  'General Dental Practitioner',
-  'General Dental Practitioner & Implantologist',
-  'Prosthodontist',
-  'Specialist Pedodontist',
-  'Pediatric Dentistry'
-]
+// Derive specialty options from actual doctors (tags they use)
+const specialtySet = new Set(fullDoctorsData.map((d) => d.specialty))
+const specialties = ['All Specialties', ...Array.from(specialtySet).sort((a, b) => a.localeCompare(b))]
 
 const coreValues = [
   {
