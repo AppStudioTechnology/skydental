@@ -158,20 +158,18 @@ export default function DoctorDetailPage() {
                 </div>
               </motion.div>
 
-              {/* Image - height capped to align with left column, full width of column */}
+              {/* Image only - height capped to align with left column */}
               <motion.div
                 initial={shouldReduceMotion ? {} : { opacity: 0, x: 30 }}
                 animate={aboutInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.8 }}
-                className="relative w-full"
+                className="relative w-full h-[420px] overflow-hidden"
               >
-                <div className="relative w-full h-[420px] rounded-3xl overflow-hidden shadow-2xl bg-gray-100">
-                  <img
-                    src={doctor.aboutImage}
-                    alt={doctor.name}
-                    className="absolute inset-0 w-full h-full object-contain object-center"
-                  />
-                </div>
+                <img
+                  src={doctor.aboutImage}
+                  alt={doctor.name}
+                  className="w-full h-full object-contain object-center"
+                />
               </motion.div>
             </div>
           </div>
