@@ -77,7 +77,7 @@ export default function OurDoctorsPageNew() {
     <div className="bg-white overflow-x-hidden">
       {/* Hero Section */}
       <section 
-        className="relative min-h-[400px] overflow-hidden pt-24 pb-16"
+        className="relative min-h-[320px] overflow-hidden pt-20 pb-8"
         style={{
           background: 'linear-gradient(160deg, rgb(237, 248, 255) 0%, rgb(255, 255, 255) 50%, rgb(237, 248, 255) 100%)'
         }}
@@ -86,7 +86,7 @@ export default function OurDoctorsPageNew() {
         <div className="absolute -left-32 top-20 w-96 h-96 bg-[rgba(203,255,143,0.3)] rounded-full blur-[100px]" />
         <div className="absolute -right-32 top-40 w-96 h-96 bg-[rgba(151,196,255,0.2)] rounded-full blur-[100px]" />
 
-        <div className="container mx-auto px-6 py-20 relative z-10">
+        <div className="container mx-auto px-6 py-10 relative z-10">
           <motion.div
             initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
