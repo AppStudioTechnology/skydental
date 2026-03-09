@@ -1,4 +1,4 @@
-import { Calendar, Award, Users, CalendarCheck, Sparkles, Scissors, Sprout, Bandage, Shield, Sparkle, Palette, Zap, Gem, Crown, Target, Search, UserCheck, Smile, Square, Eye, ClipboardCheck, Heart, GraduationCap, BookOpen, Lock, Microscope, ShieldCheck, RefreshCw, AlertCircle } from 'lucide-react'
+import { Calendar, Award, Users, CalendarCheck, Sparkles, Scissors, Sprout, Bandage, Shield, Sparkle, Palette, Zap, Gem, Crown, Target, Search, UserCheck, Smile, Square, Eye, ClipboardCheck, Heart, GraduationCap, BookOpen, Lock, Microscope, ShieldCheck, RefreshCw, AlertCircle, Circle } from 'lucide-react'
 import { LucideIcon } from 'lucide-react'
 
 export interface ServiceDetail {
@@ -208,6 +208,28 @@ export const servicesData: ServiceDetail[] = [
         ]
       },
       {
+        icon: Square,
+        title: 'Metal & Ceramic Braces',
+        description: 'Traditional yet highly effective systems for a wide range of alignment issues. Ceramic braces offer a discreet, elegant option for those seeking subtle treatment.',
+        features: [
+          'Metal and ceramic options',
+          'Corrects diverse alignment issues',
+          'Reliable and predictable results',
+          'Discreet ceramic appearance'
+        ]
+      },
+      {
+        icon: Circle,
+        title: 'Invisalign, Sparks & Smarter Aligners',
+        description: 'Clear aligner systems that gently adjust teeth with digital precision. Comfortable, removable, and convenient for everyday life, they offer a modern alternative to traditional braces.',
+        features: [
+          'Clear, removable aligners',
+          'Advanced digital treatment planning',
+          'Comfortable for daily use',
+          'Highly effective and discreet'
+        ]
+      },
+      {
         icon: Palette,
         title: 'Smile Design',
         description: 'A digital planning process that visualizes your ideal smile in harmony with your facial features. Preview your results before treatment begins, giving you full confidence in the outcome.',
@@ -237,6 +259,28 @@ export const servicesData: ServiceDetail[] = [
           'Shade-matched fillings',
           'Functional and aesthetic restoration',
           'Subtle, comfortable treatment'
+        ]
+      },
+      {
+        icon: ClipboardCheck,
+        title: 'Orthodontic Check-ups',
+        description: 'Regular assessments to monitor dental alignment, evaluate bite concerns, and adjust treatment plans as needed.',
+        features: [
+          'Comprehensive evaluation',
+          'Bite and alignment analysis',
+          'Treatment adjustments',
+          'Ensures predictable outcomes'
+        ]
+      },
+      {
+        icon: Circle,
+        title: 'Retainers & Smile Maintenance',
+        description: 'Custom retainers designed to preserve your results and prevent teeth from shifting. Ensures your smile remains aligned long after active treatment.',
+        features: [
+          'Custom-fitted for comfort',
+          'Maintains orthodontic results',
+          'Prevents shifting',
+          'Supports long-term stability'
         ]
       }
     ],
@@ -514,8 +558,8 @@ export const servicesData: ServiceDetail[] = [
         ]
       },
       {
-        icon: Microscope,
-        title: 'Implants',
+        icon: Scissors,
+        title: 'Dental Implants',
         description: 'Implants replace missing teeth with stability, function, and a natural appearance. Each case is planned to seamlessly restore your bite and smile.',
         features: [
           'Long-lasting, reliable solutions',
@@ -526,6 +570,17 @@ export const servicesData: ServiceDetail[] = [
       },
       {
         icon: RefreshCw,
+        title: 'Full-Mouth Rehabilitation',
+        description: 'A comprehensive approach to restore oral harmony, function, and aesthetics. Treatments are customized using a multi-disciplinary strategy to achieve balanced, confident results.',
+        features: [
+          'Complete oral restoration',
+          'Function and aesthetics enhancement',
+          'Holistic smile harmony',
+          'Personalized, multi-disciplinary planning'
+        ]
+      },
+      {
+        icon: Smile,
         title: 'Dentures',
         description: 'Removable or fixed dentures that restore your smile and chewing ability. Custom-fitted for comfort and a natural look.',
         features: [
