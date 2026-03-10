@@ -125,12 +125,12 @@ export default function Header() {
           borderBottom: '0.2px solid #0061AF'
         }}
       >
-        <div className="px-4 py-2 xl:px-6 xl:py-2.5 max-w-[1340px] mx-auto">
-          <div className="flex items-center justify-between w-full">
-            {/* Logo - smaller on mobile, full size on desktop */}
+        <div className="px-4 py-2 xl:px-6 xl:py-1 max-w-[1340px] mx-auto">
+          <div className="flex items-center justify-between w-full min-h-[50px] xl:min-h-[82px]">
+            {/* Logo - bigger without increasing header bar height */}
             <button onClick={() => scrollToSection('home')} className="flex items-center shrink-0 ml-0 xl:ml-6" style={{ marginTop: '1.5px' }}>
-              <div className="flex items-center justify-center overflow-hidden w-[50px] h-[46px] xl:w-[76px] xl:h-[70px]">
-                <div className="origin-center flex-shrink-0 scale-[0.52] xl:scale-[0.76]" style={{ width: 96.592, height: 91.833 }}>
+              <div className="flex items-center justify-center overflow-visible w-[54px] h-[50px] xl:w-[88px] xl:h-[82px]">
+                <div className="origin-center flex-shrink-0 scale-[0.56] xl:scale-[0.893]" style={{ width: 96.592, height: 91.833 }}>
                   <MaskGroup />
                 </div>
               </div>

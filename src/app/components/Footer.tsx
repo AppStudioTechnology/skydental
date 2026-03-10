@@ -22,11 +22,13 @@ export default function Footer() {
           <div className="flex flex-col gap-6 md:gap-8 lg:gap-10">
             {/* Main Footer Content */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-6 lg:gap-4">
-              {/* Logo and Description */}
-              <div className="flex flex-col gap-5 md:gap-7">
-                <div className="flex items-center">
-                  <div className="w-[64px] h-[60px]">
-                    <MaskGroup />
+              {/* Logo and Description - bigger logo, same footer footprint */}
+              <div className="flex flex-col gap-3 md:gap-5">
+                <div className="flex items-center -mt-0.5">
+                  <div className="w-[88px] h-[82px] flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <div className="origin-center flex-shrink-0" style={{ width: 96.592, height: 91.833, transform: 'scale(0.893)' }}>
+                      <MaskGroup />
+                    </div>
                   </div>
                 </div>
                 <p className="text-black text-[13px] md:text-[14px] leading-[1.6]">
