@@ -25,8 +25,8 @@ export default function Footer() {
               {/* Logo and Description - bigger logo, same footer footprint */}
               <div className="flex flex-col gap-3 md:gap-5">
                 <div className="flex items-center -mt-0.5">
-                  <div className="w-[88px] h-[82px] flex items-center justify-center overflow-hidden flex-shrink-0">
-                    <div className="origin-center flex-shrink-0" style={{ width: 96.592, height: 91.833, transform: 'scale(0.893)' }}>
+                  <div className="w-[104px] h-[97px] flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <div className="origin-center flex-shrink-0" style={{ width: 96.592, height: 91.833, transform: 'scale(1.056)' }}>
                       <MaskGroup />
                     </div>
                   </div>
