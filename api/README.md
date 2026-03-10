@@ -1,4 +1,6 @@
-# Booking API (send confirmation emails)
+# APIs (Vercel serverless)
+
+## Booking API (`/api/send-booking`)
 
 The **Request Appointment** form generates a PDF and can send it by email to:
 1. **The user** – copy to the email they entered  
@@ -43,3 +45,22 @@ When you move the site to **cPanel** (or another host) and no longer use Vercel:
      Recreate the same behaviour in a small backend (e.g. Node/Express or PHP) on cPanel that accepts the booking + PDF and sends email (e.g. via Resend, SendGrid, or SMTP). Then set `VITE_BOOKING_API_URL` to that backend URL.
 
 Until then, the Vercel setup above is enough for testing.
+
+---
+
+## Job application API (`/api/send-job-application`)
+
+The **Careers → Apply Now** form sends the applicant’s name, email, and CV (PDF/DOC/DOCX) to the clinic by email. It uses the same **`RESEND_API_KEY`** and **`FROM_EMAIL`** as the booking API.
+
+- **Recipient:** By default applications go to `smile@skydc.ae`. For Resend test mode (only your account email can receive), set **`JOB_APPLICATIONS_EMAIL`** in Vercel to your email (e.g. `aliaslam683@gmail.com`), then switch back to `smile@skydc.ae` when the domain is verified.
+- The frontend calls `/api/send-job-application` on the same origin; optional **`VITE_JOB_APPLICATION_API_URL`** overrides the URL if you host the API elsewhere.
+
+---
+
+## Contact / general inquiry API (`/api/send-contact-message`)
+
+The **Contact Us → Send Us a Message** form sends the visitor’s name, email, phone (optional), subject, and message to the clinic by email. It uses the same **`RESEND_API_KEY`** and **`FROM_EMAIL`**.
+
+- **Recipient:** By default messages go to `smile@skydc.ae`. For Resend test mode, set **`CONTACT_INQUIRIES_EMAIL`** in Vercel to your email (e.g. `aliaslam683@gmail.com`).
+- The email is sent with **Reply-To** set to the visitor’s email so you can reply directly.
+- The frontend calls `/api/send-contact-message` on the same origin; optional **`VITE_CONTACT_API_URL`** overrides the URL if you host the API elsewhere.

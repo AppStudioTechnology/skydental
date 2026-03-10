@@ -72,6 +72,8 @@ export default function CareersPage() {
     cvFile: null as File | null
   })
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const heroRef = useRef(null)
   const whyJoinRef = useRef(null)
@@ -96,18 +98,55 @@ export default function CareersPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setFormSubmitted(true)
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setFormData({
-        name: '',
-        email: '',
-        cvFile: null
-      })
-      setFormSubmitted(false)
-    }, 3000)
+    if (!formData.cvFile) {
+      setSubmitError('Please upload your CV.')
+      return
+    }
+    setSubmitError(null)
+    setIsSubmitting(true)
+    const file = formData.cvFile
+    const reader = new FileReader()
+    reader.onload = async () => {
+      const cvBase64 = (reader.result as string).split(',')[1]
+      if (!cvBase64) {
+        setSubmitError('Could not read file. Please try again.')
+        setIsSubmitting(false)
+        return
+      }
+      const apiUrl = import.meta.env.VITE_JOB_APPLICATION_API_URL || `${window.location.origin}/api/send-job-application`
+      try {
+        const res = await fetch(apiUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            cvBase64,
+            cvFilename: file.name
+          })
+        })
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) {
+          setSubmitError(data?.message || data?.error || 'Failed to send application. Please try again or email smile@skydc.ae.')
+          setIsSubmitting(false)
+          return
+        }
+        setFormSubmitted(true)
+        setFormData({ name: '', email: '', cvFile: null })
+        setIsSubmitting(false)
+        setTimeout(() => setFormSubmitted(false), 5000)
+      } catch (err) {
+        setSubmitError('Network error. Please try again or email smile@skydc.ae.')
+        setIsSubmitting(false)
+      }
+    }
+    reader.onerror = () => {
+      setSubmitError('Could not read file. Please try again.')
+      setIsSubmitting(false)
+    }
+    reader.readAsDataURL(file)
   }
 
   return (
@@ -393,12 +432,19 @@ export default function CareersPage() {
                   )}
                 </div>
 
+                {submitError && (
+                  <p className="mb-4 text-sm font-['Arial'] text-red-600 bg-red-50 px-4 py-3 rounded-xl">
+                    {submitError}
+                  </p>
+                )}
+
                 {/* Submit Button */}
                 <button
                   type="submit"
-                  className="w-full bg-[#CBFF8F] hover:bg-[#b8e680] text-[#0C0060] font-['Arial'] font-bold py-4 px-6 rounded-full flex items-center justify-center gap-3 transition-all duration-300 group"
+                  disabled={isSubmitting}
+                  className="w-full bg-[#CBFF8F] hover:bg-[#b8e680] text-[#0C0060] font-['Arial'] font-bold py-4 px-6 rounded-full flex items-center justify-center gap-3 transition-all duration-300 group disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span className="text-base">Submit Application</span>
+                  <span className="text-base">{isSubmitting ? 'Sending…' : 'Submit Application'}</span>
                   <div className="w-8 h-8 bg-[#0C0060] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Send className="w-4 h-4 text-[#CBFF8F]" />
                   </div>
