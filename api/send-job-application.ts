@@ -8,8 +8,8 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <onboarding@resend.dev>'
-// Recipient for job applications (use aliaslam683@gmail.com for testing if Resend is in test mode)
-const JOB_APPLICATIONS_EMAIL = process.env.JOB_APPLICATIONS_EMAIL || 'smile@skydc.ae'
+// Default to your Resend account email so it works in test mode; set JOB_APPLICATIONS_EMAIL=smile@skydc.ae in Vercel after domain verification
+const JOB_APPLICATIONS_EMAIL = process.env.JOB_APPLICATIONS_EMAIL || 'aliaslam683@gmail.com'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -59,9 +59,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (result.error) {
       console.error('Resend job application error:', result.error)
+      const resendMessage = (result.error as { message?: string })?.message || ''
+      const isTestModeRestriction = /only send testing emails|verify a domain/i.test(resendMessage)
+      const userMessage = isTestModeRestriction
+        ? "We're temporarily unable to receive applications by email. Please send your CV directly to smile@skydc.ae."
+        : resendMessage || 'Email service error'
       return res.status(500).json({
         error: 'Failed to send application',
-        message: (result.error as { message?: string })?.message || 'Email service error',
+        message: userMessage,
         details: result.error
       })
     }
