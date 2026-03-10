@@ -230,7 +230,8 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
           })
           const data = await res.json().catch(() => ({}))
           if (!res.ok) {
-            console.error('[Booking] API error:', res.status, data)
+            const msg = (data as { message?: string })?.message || (data as { error?: string })?.error
+            console.error('[Booking] API error:', res.status, msg || data)
           }
         } catch (err) {
           console.error('[Booking] Request failed:', err)

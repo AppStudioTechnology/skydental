@@ -70,8 +70,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       attachments: [{ filename, content: pdfBuffer }]
     })
     if (clinicResult.error) {
+      const err = clinicResult.error as { message?: string; name?: string }
       console.error('Resend clinic email error:', clinicResult.error)
-      return res.status(500).json({ error: 'Failed to send clinic email', details: clinicResult.error })
+      return res.status(500).json({
+        error: 'Failed to send clinic email',
+        message: err?.message || 'Resend rejected the send',
+        details: clinicResult.error
+      })
     }
 
     // 2. Send copy to user if email provided
