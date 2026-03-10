@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
+import { generateBookingPdf } from '../utils/generateBookingPdf'
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [
@@ -91,12 +92,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
   const [showTimePicker, setShowTimePicker] = useState(false)
   const [showCountryCodeDropdown, setShowCountryCodeDropdown] = useState(false)
   const [availableDoctors, setAvailableDoctors] = useState<string[]>([])
-  const [showOTPModal, setShowOTPModal] = useState(false)
-  const [otp, setOtp] = useState('')
-  const [otpSent, setOtpSent] = useState(false)
-  const [otpVerified, setOtpVerified] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [bookingId, setBookingId] = useState('')
-  const [generatedOTP, setGeneratedOTP] = useState('')
+  const [lastBookingDetails, setLastBookingDetails] = useState<typeof formData | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const datePickerRef = useRef<HTMLDivElement>(null)
   const timePickerRef = useRef<HTMLDivElement>(null)
   const countryCodeRef = useRef<HTMLDivElement>(null)
@@ -192,11 +191,6 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     setShowTimePicker(false)
   }
 
-  // Generate OTP (fixed for testing)
-  const generateOTP = () => {
-    return '123456'
-  }
-
   // Generate a booking ID
   const generateBookingId = () => {
     const prefix = 'SKY'
@@ -205,48 +199,58 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     return `${prefix}-${timestamp}-${random}`
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const otp = generateOTP()
-    const bookingId = generateBookingId()
-    
-    setGeneratedOTP(otp)
-    setBookingId(bookingId)
-    setOtpSent(true)
-    setShowOTPModal(true)
-    setOtp('')
-    setOtpVerified(false)
-    
-    console.log(`OTP sent to ${formData.countryCode}${formData.phone}: ${otp}`)
-  }
+  const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL as string | undefined
 
-  const handleOTPVerify = () => {
-    if (otp === generatedOTP) {
-      setOtpVerified(true)
-    } else {
-      alert('Invalid OTP. Please try again.')
-      setOtp('')
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    const id = generateBookingId()
+    setBookingId(id)
+    setLastBookingDetails({ ...formData })
+
+    try {
+      const { blob, base64 } = generateBookingPdf(id, formData)
+
+      // Optional: call backend to send PDF to user email and smile@skydc.ae
+      if (BOOKING_API_URL) {
+        try {
+          await fetch(BOOKING_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              bookingId: id,
+              booking: formData,
+              pdfBase64: base64,
+              toUser: formData.email || undefined,
+              toClinic: 'smile@skydc.ae'
+            })
+          })
+        } catch (_) {
+          // API may not be deployed; still show success
+        }
+      }
+
+      setShowSuccessModal(true)
+      setFormData({
+        fullName: '',
+        email: '',
+        countryCode: '+971',
+        phone: '',
+        service: '',
+        doctor: preselectedDoctor || '',
+        date: '',
+        time: '',
+        message: ''
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
-  const handleCloseModal = () => {
-    setShowOTPModal(false)
-    setOtp('')
-    setOtpSent(false)
-    setOtpVerified(false)
-    setGeneratedOTP('')
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false)
     setBookingId('')
-    setFormData({
-      fullName: '',
-      email: '',
-      countryCode: '+971',
-      phone: '',
-      service: '',
-      doctor: preselectedDoctor || '',
-      date: '',
-      time: '',
-      message: ''
-    })
+    setLastBookingDetails(null)
   }
 
   return (
@@ -511,9 +515,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
                   {/* Submit Button */}
                   <motion.button
                     type="submit"
-                    className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-[#0C0060] hover:bg-[#B1FF57] transition-colors"
+                    disabled={isSubmitting}
+                    className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-[#0C0060] hover:bg-[#B1FF57] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Request Appointment
+                    {isSubmitting ? 'Sending...' : 'Request Appointment'}
                   </motion.button>
                 </form>
                 </div>
@@ -523,18 +528,12 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
         )}
       </AnimatePresence>
 
-      {/* OTP Verification Modal */}
-      {showOTPModal && (
-        <OTPVerificationModal
-          phoneNumber={`${formData.countryCode}${formData.phone}`}
-          otp={otp}
-          setOtp={setOtp}
-          otpSent={otpSent}
-          otpVerified={otpVerified}
-          onVerify={handleOTPVerify}
-          onClose={handleCloseModal}
+      {/* Success confirmation modal */}
+      {showSuccessModal && lastBookingDetails && (
+        <BookingSuccessModal
           bookingId={bookingId}
-          bookingDetails={formData}
+          bookingDetails={lastBookingDetails}
+          onClose={handleCloseSuccessModal}
         />
       )}
     </>
@@ -746,38 +745,45 @@ function TimePicker({
   )
 }
 
-// OTP Verification Modal Component
-function OTPVerificationModal({
-  phoneNumber,
-  otp,
-  setOtp,
-  otpSent,
-  otpVerified,
-  onVerify,
-  onClose,
+// Success confirmation modal (no OTP – request sent, copy to email + clinic)
+function BookingSuccessModal({
   bookingId,
-  bookingDetails
+  bookingDetails,
+  onClose
 }: {
-  phoneNumber: string
-  otp: string
-  setOtp: (otp: string) => void
-  otpSent: boolean
-  otpVerified: boolean
-  onVerify: () => void
-  onClose: () => void
   bookingId: string
   bookingDetails: {
     fullName: string
     email: string
+    countryCode?: string
+    phone?: string
     service: string
     doctor: string
     date: string
     time: string
+    message?: string
   }
+  onClose: () => void
 }) {
-  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 6)
-    setOtp(value)
+  const handleDownloadPdf = () => {
+    const details = {
+      fullName: bookingDetails.fullName,
+      email: bookingDetails.email,
+      countryCode: bookingDetails.countryCode ?? '+971',
+      phone: bookingDetails.phone ?? '',
+      service: bookingDetails.service,
+      doctor: bookingDetails.doctor,
+      date: bookingDetails.date,
+      time: bookingDetails.time,
+      message: bookingDetails.message
+    }
+    const { blob } = generateBookingPdf(bookingId, details)
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `Sky-Dental-Booking-${bookingId}.pdf`
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
@@ -791,100 +797,76 @@ function OTPVerificationModal({
         <button
           onClick={onClose}
           className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+          aria-label="Close"
         >
           <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {!otpVerified ? (
-          <>
-            <div className="mb-6">
-              <h3 className="text-[24px] font-bold text-black mb-2" style={{ fontFamily: "'Gilda Display', serif" }}>
-                Verify Your Phone Number
-              </h3>
-              <p className="text-[14px] text-gray-600">
-                We've sent a 6-digit OTP to <span className="font-semibold text-black">{phoneNumber}</span>
-              </p>
-            </div>
+        <div className="mb-6">
+          <div className="w-16 h-16 bg-[#CBFF8F] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-[#0C0060]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-[24px] font-bold text-black mb-2 text-center" style={{ fontFamily: "'Gilda Display', serif" }}>
+            Your request has been sent
+          </h3>
+          <p className="text-[14px] text-gray-600 text-center">
+            {bookingDetails.email
+              ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at smile@skydc.ae.'
+              : 'The clinic has received your appointment request at smile@skydc.ae.'}
+          </p>
+        </div>
 
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-black">
-                  Enter OTP <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={otp}
-                  onChange={handleOtpChange}
-                  placeholder="000000"
-                  maxLength={6}
-                  className="bg-[#f1f1f1] h-[55px] px-[24px] py-[16px] rounded-[12px] text-[14px] text-black text-center tracking-[8px] text-[20px] font-semibold"
-                />
-              </div>
-
-              <button
-                onClick={onVerify}
-                disabled={otp.length !== 6}
-                className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-black hover:bg-[#B1FF57] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Verify OTP
-              </button>
+        <div className="bg-[#f1f1f1] rounded-[16px] p-6 mb-6">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Booking ID</span>
+              <span className="text-[16px] font-bold text-black">{bookingId}</span>
             </div>
-          </>
-        ) : (
-          <>
-            <div className="mb-6">
-              <div className="w-16 h-16 bg-[#CBFF8F] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-[#0C0060]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="text-[24px] font-bold text-black mb-2 text-center" style={{ fontFamily: "'Gilda Display', serif" }}>
-                Appointment Confirmed!
-              </h3>
-              <p className="text-[14px] text-gray-600 text-center">
-                Your appointment has been successfully booked
-              </p>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Name</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.fullName}</span>
             </div>
-
-            <div className="bg-[#f1f1f1] rounded-[16px] p-6 mb-6">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Booking ID</span>
-                  <span className="text-[16px] font-bold text-black">{bookingId}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Name</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.fullName}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Service</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.service}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Doctor</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.doctor}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Date</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.date}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[14px] text-gray-600">Time</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.time}</span>
-                </div>
-              </div>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Service</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.service}</span>
             </div>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Doctor</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.doctor}</span>
+            </div>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Date</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.date}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[14px] text-gray-600">Time</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.time}</span>
+            </div>
+          </div>
+        </div>
 
-            <button
-              onClick={onClose}
-              className="w-full bg-[#0C0060] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-white hover:bg-[#7db3ff] transition-colors"
-            >
-              Close
-            </button>
-          </>
-        )}
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-[#0C0060] hover:bg-[#B1FF57] transition-colors flex items-center justify-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download PDF
+          </button>
+          <button
+            onClick={onClose}
+            className="w-full bg-[#0C0060] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-white hover:bg-[#7db3ff] transition-colors"
+          >
+            Close
+          </button>
+        </div>
       </motion.div>
     </div>
   )
