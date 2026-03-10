@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 import { generateBookingPdf } from '../utils/generateBookingPdf'
+import logoImage from '../../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.png'
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [
@@ -98,6 +99,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const datePickerRef = useRef<HTMLDivElement>(null)
   const timePickerRef = useRef<HTMLDivElement>(null)
+  const logoBase64Ref = useRef<string | null>(null)
   const countryCodeRef = useRef<HTMLDivElement>(null)
   const savedScrollYRef = useRef(0)
 
@@ -176,6 +178,29 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     }
   }, [isOpen])
 
+  // Preload logo as base64 for PDF (when sidebar opens)
+  useEffect(() => {
+    if (!isOpen || logoBase64Ref.current) return
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.naturalWidth
+        canvas.height = img.naturalHeight
+        const ctx = canvas.getContext('2d')
+        if (ctx) {
+          ctx.drawImage(img, 0, 0)
+          const dataUrl = canvas.toDataURL('image/png')
+          logoBase64Ref.current = dataUrl.includes(',') ? dataUrl.split(',')[1] : dataUrl
+        }
+      } catch {
+        logoBase64Ref.current = null
+      }
+    }
+    img.src = (typeof logoImage === 'string' ? logoImage : (logoImage as { default?: string })?.default) ?? ''
+  }, [isOpen])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -212,7 +237,9 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     setLastBookingDetails({ ...formData })
 
     try {
-      const { blob, base64 } = generateBookingPdf(id, formData)
+      const { blob, base64 } = generateBookingPdf(id, formData, {
+        logoBase64: logoBase64Ref.current ?? undefined
+      })
 
       // Call API to send PDF to user email and clinic (works on Vercel same-deployment)
       if (BOOKING_API_URL) {
@@ -786,7 +813,9 @@ function BookingSuccessModal({
       time: bookingDetails.time,
       message: bookingDetails.message
     }
-    const { blob } = generateBookingPdf(bookingId, details)
+    const { blob } = generateBookingPdf(bookingId, details, {
+      logoBase64: logoBase64Ref.current ?? undefined
+    })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url

@@ -12,101 +12,146 @@ export interface BookingDetails {
   message?: string
 }
 
-const SKY_BLUE = '#0C0060'
-const SKY_GREEN = '#CBFF8F'
+// Sky Dental green (header/footer)
+const GREEN_RGB = { r: 203, g: 255, b: 143 } // #CBFF8F
+const PAGE_WIDTH_MM = 210
+const MARGIN = 20
+const HEADER_H = 26
+const FOOTER_H = 18
+const COL_GAP = 16
+const COL_WIDTH = (PAGE_WIDTH_MM - 2 * MARGIN - COL_GAP) / 2
+const LOGO_MAX_W = 50
+const LOGO_MAX_H = 18
+
+/**
+ * Format current date/time for "request generated" (at PDF generation time).
+ */
+function getRequestGeneratedLabel(): { date: string; time: string } {
+  const now = new Date()
+  const date = now.toLocaleDateString('en-AE', { day: 'numeric', month: 'short', year: 'numeric' })
+  const time = now.toLocaleTimeString('en-AE', { hour: '2-digit', minute: '2-digit', hour12: true })
+  return { date, time }
+}
 
 /**
  * Generates a PDF with Sky Dental branding and booking details.
+ * Header and footer use green background; logo in header if logoBase64 is provided.
+ * Two-column layout with request-generated date/time.
  * Returns the PDF as a base64 string (for sending via API) and as a Blob (for download).
  */
 export function generateBookingPdf(
   bookingId: string,
-  details: BookingDetails
+  details: BookingDetails,
+  options?: { logoBase64?: string }
 ): { blob: Blob; base64: string } {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
-  const pageWidth = doc.internal.pageSize.getWidth()
-  const margin = 20
-  let y = 20
+  const pageHeight = doc.internal.pageSize.getHeight()
+  const { date: reqDate, time: reqTime } = getRequestGeneratedLabel()
 
-  // ---- Header: Sky Dental branding (English only; Arabic not supported by default font) ----
-  doc.setFillColor(12, 0, 96) // #0C0060
-  doc.rect(0, 0, pageWidth, 24, 'F')
+  // ---- Header: green background, logo or name ----
+  doc.setFillColor(GREEN_RGB.r, GREEN_RGB.g, GREEN_RGB.b)
+  doc.rect(0, 0, PAGE_WIDTH_MM, HEADER_H, 'F')
 
-  doc.setTextColor(255, 255, 255)
-  doc.setFontSize(22)
-  doc.setFont('helvetica', 'bold')
-  doc.text('SKY DENTAL CENTER', pageWidth / 2, 14, { align: 'center' })
+  if (options?.logoBase64) {
+    try {
+      doc.addImage(options.logoBase64, 'PNG', PAGE_WIDTH_MM / 2 - LOGO_MAX_W / 2, 4, LOGO_MAX_W, LOGO_MAX_H)
+    } catch {
+      drawHeaderText(doc)
+    }
+  } else {
+    drawHeaderText(doc)
+  }
 
-  doc.setTextColor(0, 0, 0)
-  y = 34
+  let y = HEADER_H + 20
 
-  // ---- Title ----
+  // ---- Title and Booking ID ----
   doc.setFontSize(16)
   doc.setFont('helvetica', 'bold')
-  doc.text('Appointment Request Confirmation', margin, y)
-  y += 12
-
+  doc.setTextColor(0, 0, 0)
+  doc.text('Appointment Request Confirmation', MARGIN, y)
+  y += 8
   doc.setFontSize(10)
   doc.setFont('helvetica', 'normal')
   doc.setTextColor(80, 80, 80)
-  doc.text(`Booking ID: ${bookingId}`, margin, y)
-  y += 10
+  doc.text(`Booking ID: ${bookingId}`, MARGIN, y)
+  y += 14
 
-  // ---- Divider ----
-  doc.setDrawColor(203, 255, 143) // #CBFF8F
-  doc.setLineWidth(1)
-  doc.line(margin, y, pageWidth - margin, y)
-  y += 12
+  // ---- Two columns ----
+  const leftX = MARGIN
+  const rightX = MARGIN + COL_WIDTH + COL_GAP
+  let leftY = y
+  let rightY = y
 
-  doc.setTextColor(0, 0, 0)
+  // Left column: Patient & Contact, Request generated
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(11)
-  doc.text('Patient & Contact', margin, y)
-  y += 8
+  doc.setTextColor(0, 0, 0)
+  doc.text('Patient & Contact', leftX, leftY)
+  leftY += 8
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(10)
-  doc.text(`Name: ${details.fullName}`, margin, y)
-  y += 6
-  doc.text(`Phone: ${details.countryCode} ${details.phone}`, margin, y)
-  y += 6
-  doc.text(`Email: ${details.email || '—'}`, margin, y)
-  y += 14
+  doc.text(`Name: ${details.fullName}`, leftX, leftY)
+  leftY += 6
+  doc.text(`Phone: ${details.countryCode} ${details.phone}`, leftX, leftY)
+  leftY += 6
+  doc.text(`Email: ${details.email || '—'}`, leftX, leftY)
+  leftY += 14
 
   doc.setFont('helvetica', 'bold')
-  doc.text('Appointment Details', margin, y)
-  y += 8
+  doc.text('Request generated', leftX, leftY)
+  leftY += 8
   doc.setFont('helvetica', 'normal')
-  doc.text(`Service: ${details.service}`, margin, y)
-  y += 6
-  doc.text(`Doctor: ${details.doctor}`, margin, y)
-  y += 6
-  doc.text(`Date: ${details.date}`, margin, y)
-  y += 6
-  doc.text(`Time: ${details.time}`, margin, y)
-  y += 14
+  doc.text(`Date: ${reqDate}`, leftX, leftY)
+  leftY += 6
+  doc.text(`Time: ${reqTime}`, leftX, leftY)
+  leftY += 6
+
+  // Right column: Appointment Details, Notes
+  doc.setFont('helvetica', 'bold')
+  doc.text('Appointment Details', rightX, rightY)
+  rightY += 8
+  doc.setFont('helvetica', 'normal')
+  doc.text(`Service: ${details.service}`, rightX, rightY)
+  rightY += 6
+  doc.text(`Doctor: ${details.doctor}`, rightX, rightY)
+  rightY += 6
+  doc.text(`Date: ${details.date}`, rightX, rightY)
+  rightY += 6
+  doc.text(`Time: ${details.time}`, rightX, rightY)
+  rightY += 14
 
   if (details.message?.trim()) {
     doc.setFont('helvetica', 'bold')
-    doc.text('Notes / Special Instructions', margin, y)
-    y += 8
+    doc.text('Notes / Special Instructions', rightX, rightY)
+    rightY += 8
     doc.setFont('helvetica', 'normal')
-    const splitMsg = doc.splitTextToSize(details.message, pageWidth - 2 * margin)
-    doc.text(splitMsg, margin, y)
-    y += splitMsg.length * 6 + 10
+    const splitMsg = doc.splitTextToSize(details.message, COL_WIDTH)
+    doc.text(splitMsg, rightX, rightY)
+    rightY += splitMsg.length * 6 + 10
   }
 
-  // ---- Footer ----
-  y = doc.internal.pageSize.getHeight() - 20
+  // ---- Footer: green background and message ----
+  const footerY = pageHeight - FOOTER_H
+  doc.setFillColor(GREEN_RGB.r, GREEN_RGB.g, GREEN_RGB.b)
+  doc.rect(0, footerY, PAGE_WIDTH_MM, FOOTER_H, 'F')
   doc.setFontSize(8)
-  doc.setTextColor(120, 120, 120)
+  doc.setTextColor(0, 0, 0)
+  doc.setFont('helvetica', 'normal')
   doc.text(
     'Sky Dental Center · Appointment Request · This is an automated confirmation.',
-    pageWidth / 2,
-    y,
+    PAGE_WIDTH_MM / 2,
+    footerY + FOOTER_H / 2 + 1,
     { align: 'center' }
   )
 
   const blob = doc.output('blob')
   const base64 = doc.output('datauristring').split(',')[1] ?? ''
   return { blob, base64 }
+}
+
+function drawHeaderText(doc: jsPDF): void {
+  doc.setFontSize(20)
+  doc.setFont('helvetica', 'bold')
+  doc.setTextColor(12, 0, 96) // #0C0060
+  doc.text('SKY DENTAL CENTER', PAGE_WIDTH_MM / 2, 14, { align: 'center' })
 }
