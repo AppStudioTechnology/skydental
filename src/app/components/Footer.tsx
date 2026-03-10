@@ -29,7 +29,7 @@ export default function Footer() {
                     <MaskGroup />
                   </div>
                 </div>
-                <p className="text-black text-[13px] md:text-[14px] leading-[1.6]">
+                <p className="text-black text-[13px] md:text-[14px] leading-[1.6] whitespace-pre-line">
                   {t('footer', 'description')}
                 </p>
               </div>
