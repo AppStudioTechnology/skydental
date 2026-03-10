@@ -4,6 +4,7 @@ import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef, useState } from 'react'
 import { ArrowUpRight, Check, GraduationCap, HeartPulse, Sparkles, Smile, Percent, Sparkle } from 'lucide-react'
 import { usePageSEO } from '../hooks/usePageSEO'
+import { useBooking } from '../context/BookingContext'
 import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.png"
 import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png"
 import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png"
@@ -127,6 +128,7 @@ const paymentCards = [
 
 export default function PackagesPage() {
   const shouldReduceMotion = useReducedMotion()
+  const { openBookingSidebar } = useBooking()
   usePageSEO('Packages & Offers', 'Exclusive dental packages and offers at Sky Dental Center Abu Dhabi. Back to School, loyalty rewards, and premium smile care.')
   const heroRef = useRef(null)
   const packagesRef = useRef(null)
@@ -258,6 +260,7 @@ export default function PackagesPage() {
                   <motion.button
                     whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
                     whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+                    onClick={() => openBookingSidebar()}
                     className="bg-[#CBFF8F] text-[#0C0060] font-bold px-6 py-3.5 rounded-full w-full inline-flex items-center justify-between hover:bg-[#b8ff6d] transition-colors font-['Arial'] text-[15px]"
                   >
                     <span>Request Now</span>

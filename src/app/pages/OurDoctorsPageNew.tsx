@@ -3,8 +3,9 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Search, ChevronDown, Award, Shield } from 'lucide-react'
+import { Search, ChevronDown, Award, Shield, Heart, Target, Zap } from 'lucide-react'
 import { useBooking } from '../context/BookingContext'
+import { useLanguage } from '../context/LanguageContext'
 import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
 import { doctorsData as fullDoctorsData } from '../data/doctorsData'
@@ -30,19 +31,12 @@ const doctorsData = fullDoctorsData
 const specialtySet = new Set(fullDoctorsData.map((d) => d.specialty))
 const specialties = ['All Specialties', ...Array.from(specialtySet).sort((a, b) => a.localeCompare(b))]
 
-const coreValues = [
-  {
-    icon: Award,
-    title: 'Excellence',
-    description: 'We uphold the highest standards in dentistry, combining expertise, careful planning, and thoughtful care to deliver results you can rely on.',
-    bgColor: '#CBFF8F'
-  },
-  {
-    icon: Shield,
-    title: 'Trust',
-    description: 'We build lasting relationships through honesty, transparency, and compassionate attention, ensuring every patient feels confident and cared for.',
-    bgColor: '#CBFF8F'
-  }
+const coreValuesConfig = [
+  { icon: Award, titleKey: 'coreValue1Title', descKey: 'coreValue1Desc' },
+  { icon: Heart, titleKey: 'coreValue2Title', descKey: 'coreValue2Desc' },
+  { icon: Target, titleKey: 'coreValue3Title', descKey: 'coreValue3Desc' },
+  { icon: Zap, titleKey: 'coreValue4Title', descKey: 'coreValue4Desc' },
+  { icon: Shield, titleKey: 'coreValue5Title', descKey: 'coreValue5Desc' }
 ]
 
 // Guest Experience Images
@@ -58,6 +52,7 @@ export default function OurDoctorsPageNew() {
   const [selectedSpecialty, setSelectedSpecialty] = useState('All Specialties')
   const [isSpecialtyOpen, setIsSpecialtyOpen] = useState(false)
   const { openBookingSidebar } = useBooking()
+  const { t } = useLanguage()
   usePageSEO('Our Doctors', 'Meet the expert dental team at Sky Dental Center. Experienced specialists in general dentistry, implants, orthodontics, and more in Abu Dhabi.')
 
   useEffect(() => {
@@ -282,15 +277,15 @@ export default function OurDoctorsPageNew() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-['Gilda_Display'] text-black mb-4 tracking-tight">
-              Our Core Values
+              {t('about', 'coreValues')}
             </h2>
             <p className="text-base text-black/60 font-['Arial'] max-w-3xl mx-auto">
               Guiding Every Smile, Every Day
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {coreValues.map((value, index) => {
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {coreValuesConfig.map((value, index) => {
               const Icon = value.icon
               return (
                 <motion.div
@@ -305,10 +300,10 @@ export default function OurDoctorsPageNew() {
                     <Icon className="w-8 h-8 text-[#0C0060]" stroke="#0C0060" />
                   </div>
                   <h3 className="text-xl font-['Gilda_Display'] text-black mb-4">
-                    {value.title}
+                    {t('about', value.titleKey)}
                   </h3>
                   <p className="text-sm text-black/70 font-['Arial'] leading-relaxed">
-                    {value.description}
+                    {t('about', value.descKey)}
                   </p>
                 </motion.div>
               )

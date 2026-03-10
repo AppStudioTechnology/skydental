@@ -25,8 +25,11 @@ export default function AboutUsPageNew() {
   usePageSEO('About Us', 'Learn about Sky Dental Center in Abu Dhabi. Our team, values, technology, and commitment to your smile and confidence.')
 
   const coreValues = useMemo(() => [
-    { icon: Award, title: t('about', 'excellence'), description: t('about', 'excellenceDesc'), bgColor: '#CBFF8F' },
-    { icon: Shield, title: t('about', 'trust'), description: t('about', 'trustDesc'), bgColor: '#CBFF8F' }
+    { icon: Award, title: t('about', 'coreValue1Title'), description: t('about', 'coreValue1Desc'), bgColor: '#CBFF8F' },
+    { icon: Heart, title: t('about', 'coreValue2Title'), description: t('about', 'coreValue2Desc'), bgColor: '#CBFF8F' },
+    { icon: Target, title: t('about', 'coreValue3Title'), description: t('about', 'coreValue3Desc'), bgColor: '#CBFF8F' },
+    { icon: Zap, title: t('about', 'coreValue4Title'), description: t('about', 'coreValue4Desc'), bgColor: '#CBFF8F' },
+    { icon: Shield, title: t('about', 'coreValue5Title'), description: t('about', 'coreValue5Desc'), bgColor: '#CBFF8F' }
   ], [t])
 
   const innovationFeatures = useMemo(() => [
@@ -220,7 +223,7 @@ export default function AboutUsPageNew() {
           </motion.div>
 
           {/* Values Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {coreValues.map((value, index) => {
               const Icon = value.icon
               return (
