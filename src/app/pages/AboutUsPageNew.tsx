@@ -109,7 +109,7 @@ export default function AboutUsPageNew() {
               <p>{t('about', 'aboutClinic')}</p>
               <p>{t('about', 'aboutExperience')}</p>
               <p>{t('about', 'aboutBelief')}</p>
-              <p className="font-['Gilda_Display'] font-bold text-[#CBFF8F] text-xl pt-2">{t('about', 'careThatGrows')}</p>
+              <p className="font-['Gilda_Display'] font-bold text-[#CBFF8F] text-2xl md:text-3xl pt-2">{t('about', 'careThatGrows')}</p>
             </div>
           </motion.div>
         </div>
