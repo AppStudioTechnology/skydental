@@ -28,20 +28,17 @@ export function generateBookingPdf(
   const margin = 20
   let y = 20
 
-  // ---- Header: Sky Dental branding ----
+  // ---- Header: Sky Dental branding (English only; Arabic not supported by default font) ----
   doc.setFillColor(12, 0, 96) // #0C0060
-  doc.rect(0, 0, pageWidth, 32, 'F')
+  doc.rect(0, 0, pageWidth, 24, 'F')
 
   doc.setTextColor(255, 255, 255)
   doc.setFontSize(22)
   doc.setFont('helvetica', 'bold')
   doc.text('SKY DENTAL CENTER', pageWidth / 2, 14, { align: 'center' })
-  doc.setFontSize(10)
-  doc.setFont('helvetica', 'normal')
-  doc.text('مركز سكاي لطب الأسنان', pageWidth / 2, 22, { align: 'center' })
 
   doc.setTextColor(0, 0, 0)
-  y = 42
+  y = 34
 
   // ---- Title ----
   doc.setFontSize(16)

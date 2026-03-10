@@ -199,7 +199,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     return `${prefix}-${timestamp}-${random}`
   }
 
-  const BOOKING_API_URL = import.meta.env.VITE_BOOKING_API_URL as string | undefined
+  // When deployed on Vercel (same app + api), use same-origin. Else use env or skip.
+  const BOOKING_API_URL =
+    (import.meta.env.VITE_BOOKING_API_URL as string | undefined) ||
+    (typeof window !== 'undefined' ? `${window.location.origin}/api/send-booking` : '')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -211,10 +214,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     try {
       const { blob, base64 } = generateBookingPdf(id, formData)
 
-      // Optional: call backend to send PDF to user email and smile@skydc.ae
+      // Call API to send PDF to user email and clinic (works on Vercel same-deployment)
       if (BOOKING_API_URL) {
         try {
-          await fetch(BOOKING_API_URL, {
+          const res = await fetch(BOOKING_API_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -222,11 +225,16 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
               booking: formData,
               pdfBase64: base64,
               toUser: formData.email || undefined,
-              toClinic: 'smile@skydc.ae'
+              toClinic: 'aliaslam683@gmail.com'
             })
           })
-        } catch (_) {
-          // API may not be deployed; still show success
+          const data = await res.json().catch(() => ({}))
+          if (!res.ok) {
+            console.error('[Booking] API error:', res.status, data)
+          }
+        } catch (err) {
+          console.error('[Booking] Request failed:', err)
+          // Still show success; user can download PDF
         }
       }
 
@@ -815,8 +823,8 @@ function BookingSuccessModal({
           </h3>
           <p className="text-[14px] text-gray-600 text-center">
             {bookingDetails.email
-              ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at smile@skydc.ae.'
-              : 'The clinic has received your appointment request at smile@skydc.ae.'}
+              ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at aliaslam683@gmail.com.'
+              : 'The clinic has received your appointment request at aliaslam683@gmail.com.'}
           </p>
         </div>
 
