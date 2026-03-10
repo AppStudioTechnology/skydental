@@ -511,7 +511,7 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p>Villa 45, Alforsan Street, Khalifa City, Abu Dhabi, UAE</p>
                 <p>
-                  <strong className="text-black">Phone:</strong> +971 26677448
+                  <strong className="text-black">Phone:</strong> +971 26 677 448
                 </p>
                 <p>
                   <strong className="text-black">Email:</strong>{' '}

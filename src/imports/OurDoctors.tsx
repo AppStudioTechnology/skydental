@@ -2293,7 +2293,7 @@ function Phone1() {
   return (
     <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-name="Phone">
       <Frame9 />
-      <p className="font-['Arial:Regular',sans-serif] h-[29.738px] leading-[30px] not-italic relative shrink-0 text-[14px] text-black w-[195.607px]">+971 26677448</p>
+      <p className="font-['Arial:Regular',sans-serif] h-[29.738px] leading-[30px] not-italic relative shrink-0 text-[14px] text-black w-[195.607px]">+971 26 677 448</p>
     </div>
   );
 }

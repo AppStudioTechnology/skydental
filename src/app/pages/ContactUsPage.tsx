@@ -140,7 +140,7 @@ export default function ContactUsPage() {
                 <Phone className="w-8 h-8 text-[#0C0060]" />
               </div>
               <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">{t('contactPage', 'phone')}</h3>
-              <p className="text-base font-['Arial'] font-bold text-[#0c0060] mb-1">026 677 448</p>
+              <p className="text-base font-['Arial'] font-bold text-[#0c0060] mb-1">+971 26 677 448</p>
               <p className="text-xs font-['Arial'] text-black opacity-70">
                 Call us to book appointments or for any enquiries.
               </p>
@@ -365,91 +365,37 @@ export default function ContactUsPage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Address & Opening Hours */}
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, x: -20 }}
-              animate={visitClinicInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-[#f9fafb] rounded-3xl p-8"
-            >
-              {/* Our Address */}
-              <div className="mb-8">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-[#CBFF8F] rounded-2xl flex items-center justify-center shrink-0">
-                    <MapPin className="w-6 h-6 text-[#0C0060]" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-['Gilda_Display'] text-black mb-2">Our Address</h3>
-                    <p className="text-base font-['Arial'] text-black font-bold">Villa 45, Al Forsan Street, Khalifa City, Abu Dhabi, UAE</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Opening Hours */}
-              <div>
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-12 h-12 bg-[#CBFF8F] rounded-2xl flex items-center justify-center shrink-0">
-                    <Clock className="w-6 h-6 text-[#0C0060]" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-['Gilda_Display'] text-black mb-3">{t('contactPage', 'hours')}</h3>
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-[#CBFF8F] rounded-full"></div>
-                        <p className="text-sm font-['Arial'] text-black">
-                          <span className="font-bold">10:00 AM – 10:00 PM</span>
-                        </p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-[#CBFF8F] rounded-full"></div>
-                        <p className="text-sm font-['Arial'] text-black">
-                          <span className="font-bold">7 days a week</span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <p className="text-sm font-['Arial'] text-black/80 leading-relaxed mt-6">
-                Sky Dental Center is a modern, full-service dental clinic offering comprehensive care across all specialties. Our professional and experienced doctors are highly skilled in the latest treatment methods, delivering precise, advanced, and patient-focused care in a comfortable, contemporary setting.
-              </p>
-            </motion.div>
-
-            {/* Google Maps Embed */}
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, x: 20 }}
-              animate={visitClinicInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="bg-[#e0edff] rounded-3xl overflow-hidden relative group"
-              style={{ minHeight: '400px' }}
-            >
-              <iframe
-                src="https://www.google.com/maps?q=Sky+Dental+Center,+Villa+45,+Alforsan+street,+Khalifa+city,+Abu+Dhabi,+UAE&output=embed&zoom=16"
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: '400px' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 w-full h-full"
-                title="Sky Dental Center Location"
-              />
-              {/* Open in Google Maps Button */}
-              <div className="absolute bottom-4 right-4 z-10">
-                <a
-                  href="https://www.google.com/maps/search/?api=1&query=Villa+45,+Alforsan+street,+Khalifa+city,+Abu+Dhabi,+UAE"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white hover:bg-[#f9fafb] text-[#0C0060] font-['Arial'] font-bold py-2 px-4 rounded-full shadow-lg flex items-center gap-2 transition-all duration-300 hover:shadow-xl"
-                >
-                  <MapPin className="w-4 h-4" />
-                  <span>Open in Google Maps</span>
-                </a>
-              </div>
-            </motion.div>
-          </div>
+          {/* Google Map - directly after Visit Our Clinic intro */}
+          <motion.div
+            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+            animate={visitClinicInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="max-w-6xl mx-auto bg-[#e0edff] rounded-3xl overflow-hidden relative"
+            style={{ minHeight: '400px' }}
+          >
+            <iframe
+              src="https://www.google.com/maps?q=Sky+Dental+Center,+Villa+45,+Alforsan+street,+Khalifa+city,+Abu+Dhabi,+UAE&output=embed&zoom=16"
+              width="100%"
+              height="100%"
+              style={{ border: 0, minHeight: '400px' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 w-full h-full"
+              title="Sky Dental Center Location"
+            />
+            <div className="absolute bottom-4 right-4 z-10">
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=Villa+45,+Alforsan+street,+Khalifa+city,+Abu+Dhabi,+UAE"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white hover:bg-[#f9fafb] text-[#0C0060] font-['Arial'] font-bold py-2 px-4 rounded-full shadow-lg flex items-center gap-2 transition-all duration-300 hover:shadow-xl"
+              >
+                <MapPin className="w-4 h-4" />
+                <span>Open in Google Maps</span>
+              </a>
+            </div>
+          </motion.div>
         </div>
       </section>
       </ScrollSection>

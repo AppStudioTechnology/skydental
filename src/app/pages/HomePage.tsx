@@ -5,7 +5,6 @@ import { motion, useReducedMotion } from 'motion/react'
 import { usePageSEO } from '../hooks/usePageSEO'
 import HeroSection from '../components/HeroSection'
 import ServicesSection from '../components/ServicesSection'
-import WhyChooseSection from '../components/WhyChooseSection'
 import InsurancePartnersSection from '../components/InsurancePartnersSection'
 import ResultsSection from '../components/ResultsSection'
 import TestimonialsSection from '../components/TestimonialsSection'
@@ -30,7 +29,6 @@ export default function HomePage() {
     <main>
       <ScrollSection><HeroSection /></ScrollSection>
       <ScrollSection><ServicesSection /></ScrollSection>
-      <ScrollSection><WhyChooseSection /></ScrollSection>
       <ScrollSection><ResultsSection /></ScrollSection>
       <ScrollSection><TestimonialsSection /></ScrollSection>
       <ScrollSection><DoctorsSection /></ScrollSection>

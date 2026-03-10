@@ -471,7 +471,7 @@ function Container3() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
       <div className="flex flex-col font-['Arial:Bold',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#0c0060] text-[16px] text-center text-nowrap">
-        <p className="leading-[28px]">+971 26677448</p>
+        <p className="leading-[28px]">+971 26 677 448</p>
       </div>
     </div>
   );
@@ -481,7 +481,7 @@ function Container4() {
   return (
     <div className="content-stretch flex flex-col items-center relative shrink-0 w-full" data-name="Container">
       <div className="flex flex-col font-['Arial:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[12px] text-black text-center text-nowrap">
-        <p className="leading-[20px]">+971 26677448</p>
+        <p className="leading-[20px]">+971 26 677 448</p>
       </div>
     </div>
   );
@@ -1053,7 +1053,7 @@ function Container25() {
     <div className="basis-0 grow min-h-px min-w-px relative shrink-0" data-name="Container">
       <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex flex-col items-start overflow-clip pb-px pt-0 px-0 relative rounded-[inherit] w-full">
         <div className="flex flex-col font-['Arial:Regular',sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#9ca3af] text-[15px] text-nowrap">
-          <p className="leading-[normal]">+971 26677448</p>
+          <p className="leading-[normal]">+971 26 677 448</p>
         </div>
       </div>
     </div>
@@ -2066,7 +2066,7 @@ function Phone() {
   return (
     <div className="content-stretch flex gap-[12px] items-center relative shrink-0" data-name="Phone">
       <Frame4 />
-      <p className="font-['Arial:Regular',sans-serif] h-[29.738px] leading-[30px] not-italic relative shrink-0 text-[14px] text-black w-[195.607px]">+971 26677448</p>
+      <p className="font-['Arial:Regular',sans-serif] h-[29.738px] leading-[30px] not-italic relative shrink-0 text-[14px] text-black w-[195.607px]">+971 26 677 448</p>
     </div>
   );
 }

@@ -52,7 +52,6 @@ export default function AboutUsPageNew() {
 
   const heroRef = useRef(null)
   const visionRef = useRef(null)
-  const whyChooseRef = useRef(null)
   const valuesRef = useRef(null)
   const innovationRef = useRef(null)
   const patientJourneyRef = useRef(null)
@@ -61,7 +60,6 @@ export default function AboutUsPageNew() {
 
   const heroInView = useInView(heroRef, { once: true })
   const visionInView = useInView(visionRef, { once: true })
-  const whyChooseInView = useInView(whyChooseRef, { once: true })
   const valuesInView = useInView(valuesRef, { once: true })
   const innovationInView = useInView(innovationRef, { once: true })
   const patientJourneyInView = useInView(patientJourneyRef, { once: true })
@@ -111,7 +109,7 @@ export default function AboutUsPageNew() {
               <p>{t('about', 'aboutClinic')}</p>
               <p>{t('about', 'aboutExperience')}</p>
               <p>{t('about', 'aboutBelief')}</p>
-              <p className="font-['Gilda_Display'] text-black text-xl pt-2">{t('about', 'careThatGrows')}</p>
+              <p className="font-['Gilda_Display'] font-bold text-[#CBFF8F] text-xl pt-2">{t('about', 'careThatGrows')}</p>
             </div>
           </motion.div>
         </div>
@@ -245,89 +243,6 @@ export default function AboutUsPageNew() {
                 </motion.div>
               )
             })}
-          </div>
-        </div>
-      </section>
-      </ScrollSection>
-
-      <ScrollSection>
-      {/* Why Choose Sky Dental Center Section */}
-      <section 
-        ref={whyChooseRef}
-        className="py-24 bg-white"
-      >
-        <div className="container mx-auto px-6">
-          <motion.div
-            initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
-            animate={whyChooseInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-['Gilda_Display'] text-black mb-4 tracking-tight">
-              {t('about', 'whyChooseUs')}
-            </h2>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-              animate={whyChooseInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0 * 0.1 }}
-              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm"
-            >
-              <CheckCircle className="w-6 h-6 text-[#0C0060] mb-4" />
-              <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                Luxurious, patient-centred care with a focus on comfort and wellbeing.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-              animate={whyChooseInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 1 * 0.1 }}
-              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm"
-            >
-              <CheckCircle className="w-6 h-6 text-[#0C0060] mb-4" />
-              <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                Advanced digital systems ensuring precise diagnosis and efficient treatment.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-              animate={whyChooseInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 2 * 0.1 }}
-              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm"
-            >
-              <CheckCircle className="w-6 h-6 text-[#0C0060] mb-4" />
-              <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                A multidisciplinary team of experienced dental specialists.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-              animate={whyChooseInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 3 * 0.1 }}
-              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm"
-            >
-              <CheckCircle className="w-6 h-6 text-[#0C0060] mb-4" />
-              <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                World-class sterilisation and safety protocols.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-              animate={whyChooseInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 4 * 0.1 }}
-              className="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm md:col-span-2 lg:col-span-1"
-            >
-              <CheckCircle className="w-6 h-6 text-[#0C0060] mb-4" />
-              <p className="text-base text-black/70 font-['Arial'] leading-relaxed">
-                Thirteen modern dental clinics providing seamless appointment scheduling and optimised patient flow.
-              </p>
-            </motion.div>
           </div>
         </div>
       </section>
