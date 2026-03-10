@@ -294,15 +294,15 @@ export default function OurDoctorsPageNew() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
-                  className="bg-white rounded-3xl p-8 text-center shadow-sm"
+                  className="bg-white rounded-2xl p-5 text-center shadow-sm flex flex-col"
                 >
-                  <div className="w-16 h-16 bg-[#CBFF8F] rounded-full flex items-center justify-center mx-auto mb-6">
-                    <Icon className="w-8 h-8 text-[#0C0060]" stroke="#0C0060" />
+                  <div className="w-12 h-12 bg-[#CBFF8F] rounded-full flex items-center justify-center mx-auto mb-3 shrink-0">
+                    <Icon className="w-6 h-6 text-[#0C0060]" stroke="#0C0060" />
                   </div>
-                  <h3 className="text-xl font-['Gilda_Display'] text-black mb-4">
+                  <h3 className="text-base font-['Gilda_Display'] text-black mb-2 font-semibold">
                     {t('about', value.titleKey)}
                   </h3>
-                  <p className="text-sm text-black/70 font-['Arial'] leading-relaxed">
+                  <p className="text-xs text-black/70 font-['Arial'] leading-snug">
                     {t('about', value.descKey)}
                   </p>
                 </motion.div>
