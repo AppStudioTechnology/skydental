@@ -36,7 +36,7 @@ export default function LoadingScreen({ visible, onComplete }: LoadingScreenProp
     >
       <div className="relative flex items-center justify-center">
         {/* Animated circle(s) around logo */}
-        <div className="absolute size-[120px] md:size-[160px]" aria-hidden>
+        <div className="absolute size-[180px] md:size-[240px]" aria-hidden>
           <svg
             className={`size-full -rotate-90 ${shouldReduceMotion ? '' : 'animate-loading-spin'}`}
             viewBox="0 0 100 100"
@@ -72,9 +72,9 @@ export default function LoadingScreen({ visible, onComplete }: LoadingScreenProp
         <img
           src={LOADING_LOGO_SRC}
           alt="Sky Dental Center"
-          className="relative z-10 h-14 w-14 object-contain md:h-16 md:w-16"
-          width={64}
-          height={64}
+          className="relative z-10 h-24 w-24 object-contain md:h-32 md:w-32"
+          width={128}
+          height={128}
           fetchPriority="high"
         />
       </div>
