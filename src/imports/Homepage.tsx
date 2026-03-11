@@ -301,8 +301,8 @@ function Section2() {
       <Frame23 />
       <div className="[grid-area:1_/_1] grid-cols-[max-content] grid-rows-[max-content] inline-grid ml-0 mt-0 place-items-start relative" data-name="Change Image">
         <div className="[grid-area:1_/_1] h-[725px] ml-0 mt-0 relative rounded-[25px] w-[1390px]" data-name="Image">
-          <video autoPlay className="absolute max-w-none object-cover rounded-[25px] size-full" controlsList="nodownload" loop playsInline>
-            <source src="/_videos/v1/cac7ef0f2078d54cbca9b2ac882dd44881ca13ba" />
+          <video autoPlay className="absolute max-w-none object-cover rounded-[25px] size-full" controlsList="nodownload" loop playsInline muted preload="auto">
+            <source src="/_videos/v1/cac7ef0f2078d54cbca9b2ac882dd44881ca13ba" type="video/mp4" />
           </video>
         </div>
         <div className="[grid-area:1_/_1] bg-gradient-to-b from-[44.828%] from-[rgba(203,255,143,0)] h-[725px] ml-0 mt-0 rounded-[25px] to-[rgba(0,0,0,0.7)] w-[1390px]" data-name="Gradient" />

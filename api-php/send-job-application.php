@@ -45,7 +45,7 @@ $filename = $cvFilename && preg_match('/^[\w.-]+\.(pdf|doc|docx)$/i', $cvFilenam
     : 'CV-' . preg_replace('/\s+/', '-', $name) . '.pdf';
 $attachments = [['filename' => $filename, 'content' => $cvBase64]];
 
-$jobSubject = 'Job Application – ' . $name;
+$jobSubject = 'Job Application - ' . $name;
 $jobHtml = '<p><strong>New job application</strong></p>'
     . '<p><strong>Name:</strong> ' . htmlspecialchars($name) . '</p>'
     . '<p><strong>Email:</strong> ' . htmlspecialchars($email) . '</p>'

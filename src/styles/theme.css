@@ -204,6 +204,24 @@
   }
 }
 
+/* Loading screen: circle animation around logo */
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loading-dash {
+  to {
+    stroke-dashoffset: -290;
+  }
+}
+.animate-loading-spin {
+  animation: loading-spin 1.2s linear infinite;
+}
+.animate-loading-dash {
+  animation: loading-dash 1.2s linear infinite;
+}
+
 /* Hide scrollbar while keeping scroll behaviour */
 .hide-scrollbar {
   scrollbar-width: none;

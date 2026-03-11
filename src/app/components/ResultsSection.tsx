@@ -122,6 +122,8 @@ export default function ResultsSection() {
                   src={AFTER_IMAGE}
                   alt="After treatment"
                   className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                 />
                 <div className="absolute inset-0 bg-[rgba(0,0,0,0.1)]" />
@@ -146,6 +148,8 @@ export default function ResultsSection() {
                   src={BEFORE_IMAGE}
                   alt="Before treatment"
                   className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                   draggable={false}
                 />
                 <div className="absolute inset-0 bg-[rgba(0,0,0,0.2)]" />

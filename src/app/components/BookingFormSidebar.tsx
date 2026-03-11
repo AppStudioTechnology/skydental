@@ -117,6 +117,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [bookingId, setBookingId] = useState('')
   const [lastBookingDetails, setLastBookingDetails] = useState<typeof formData | null>(null)
+  const [userEmailSent, setUserEmailSent] = useState<boolean | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [phoneError, setPhoneError] = useState('')
   const [emailError, setEmailError] = useState('')
@@ -303,14 +304,19 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
             })
           })
           const data = await res.json().catch(() => ({}))
+          const sent = (data as { userEmailSent?: boolean }).userEmailSent
+          setUserEmailSent(typeof sent === 'boolean' ? sent : null)
           if (!res.ok) {
             const msg = (data as { message?: string })?.message || (data as { error?: string })?.error
             console.error('[Booking] API error:', res.status, msg || data)
           }
         } catch (err) {
           console.error('[Booking] Request failed:', err)
+          setUserEmailSent(null)
           // Still show success; user can download PDF
         }
+      } else {
+        setUserEmailSent(null)
       }
 
       setShowSuccessModal(true)
@@ -334,6 +340,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     setShowSuccessModal(false)
     setBookingId('')
     setLastBookingDetails(null)
+    setUserEmailSent(null)
   }
 
   return (
@@ -622,6 +629,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
         <BookingSuccessModal
           bookingId={bookingId}
           bookingDetails={lastBookingDetails}
+          userEmailSent={userEmailSent}
           logoBase64={logoBase64Ref.current ?? undefined}
           onClose={handleCloseSuccessModal}
         />
@@ -839,6 +847,7 @@ function TimePicker({
 function BookingSuccessModal({
   bookingId,
   bookingDetails,
+  userEmailSent,
   logoBase64,
   onClose
 }: {
@@ -854,6 +863,7 @@ function BookingSuccessModal({
     time: string
     message?: string
   }
+  userEmailSent?: boolean | null
   logoBase64?: string
   onClose: () => void
 }) {
@@ -909,7 +919,11 @@ function BookingSuccessModal({
           </h3>
           <p className="text-[14px] text-gray-600 text-center">
             {bookingDetails.email
-              ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at smile@skydc.ae.'
+              ? userEmailSent === false
+                ? 'The clinic has received your request at smile@skydc.ae. We tried to send a copy to your email but it may not have arrived—please check your spam folder and use the Download PDF button below to save your confirmation.'
+                : userEmailSent === true
+                  ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at smile@skydc.ae.'
+                  : 'The clinic has received your request at smile@skydc.ae. If you do not see an email from us, check your spam folder or use the Download PDF button below.'
               : 'The clinic has received your appointment request at smile@skydc.ae.'}
           </p>
         </div>

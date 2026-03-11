@@ -102,7 +102,8 @@ The booking API sends one email to the clinic (smile@skydc.ae) and one to the pa
 
 1. **Spam/junk** – Mail from shared hosting to Gmail, Yahoo, etc. often goes to spam. Ask the user to check spam and to add smile@skydc.ae (or your FROM_EMAIL) as a safe sender.
 2. **Host limits** – Some cPanel hosts throttle or restrict mail to external addresses. The clinic copy (same domain) works; the user copy (external) may be delayed or blocked. Check cPanel → Email → Delivery Reports or ask your host.
-3. **Response flag** – The API now returns `userEmailSent: true/false`. If you log or display this, you can see when the server reports failure to send to the user.
+3. **Response flag** – The API returns `userEmailSent: true/false`. The booking success screen uses this to tell the user to check spam and use **Download PDF** when the server could not confirm delivery to their address.
+4. **Verify the address** – The API only sends to the user when the address is valid (`filter_var(..., FILTER_VALIDATE_EMAIL)`). The frontend sends `toUser: formData.email` and the PHP uses `toUser` or `booking.email`; both should be the same.
 
 The patient can always use **Download PDF** on the success screen as a backup.
 

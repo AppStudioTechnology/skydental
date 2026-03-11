@@ -41,7 +41,7 @@ if (!$fullName || !$emailAddress || !$subject || !$message) {
     api_json_response(['error' => 'Missing required fields: full name, email, subject, message'], 400);
 }
 
-$subjectLine = 'Contact: ' . (strlen($subject) > 60 ? substr($subject, 0, 60) . '…' : $subject);
+$subjectLine = 'Contact: ' . (strlen($subject) > 60 ? substr($subject, 0, 60) . '...' : $subject);
 $html = '<p><strong>New message from the website contact form</strong></p>'
     . '<p><strong>Name:</strong> ' . htmlspecialchars($fullName) . '</p>'
     . '<p><strong>Email:</strong> ' . htmlspecialchars($emailAddress) . '</p>';

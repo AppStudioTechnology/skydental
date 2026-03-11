@@ -28,6 +28,8 @@ function PartnerCard({ partner }: { partner: typeof insurancePartners[0] }) {
           src={partner.logo}
           alt={`${partner.name} logo`}
           className={isBiggerLogo ? "max-w-[240px] max-h-[80px] object-contain" : "max-w-[180px] max-h-[60px] object-contain"}
+          loading="lazy"
+          decoding="async"
           onError={() => setImageError(true)}
         />
       ) : (

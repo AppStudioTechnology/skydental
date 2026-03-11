@@ -25,6 +25,8 @@ function TestimonialCard({ text, author, image }: { text: string; author: string
               src={image}
               alt={author}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </div>
           <span className="text-black font-semibold text-[14px] md:text-[15px]">
