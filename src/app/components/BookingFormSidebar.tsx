@@ -224,10 +224,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     return `${prefix}-${timestamp}-${random}`
   }
 
-  // When deployed on Vercel (same app + api), use same-origin. Else use env or skip.
+  // When deployed on cPanel, use env. Fallback must include .php for PHP backend.
   const BOOKING_API_URL =
     (import.meta.env.VITE_BOOKING_API_URL as string | undefined) ||
-    (typeof window !== 'undefined' ? `${window.location.origin}/api/send-booking` : '')
+    (typeof window !== 'undefined' ? `${window.location.origin}/api/send-booking.php` : '')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -568,6 +568,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
         <BookingSuccessModal
           bookingId={bookingId}
           bookingDetails={lastBookingDetails}
+          logoBase64={logoBase64Ref.current ?? undefined}
           onClose={handleCloseSuccessModal}
         />
       )}
@@ -784,6 +785,7 @@ function TimePicker({
 function BookingSuccessModal({
   bookingId,
   bookingDetails,
+  logoBase64,
   onClose
 }: {
   bookingId: string
@@ -798,6 +800,7 @@ function BookingSuccessModal({
     time: string
     message?: string
   }
+  logoBase64?: string
   onClose: () => void
 }) {
   const handleDownloadPdf = () => {
@@ -813,7 +816,7 @@ function BookingSuccessModal({
       message: bookingDetails.message
     }
     const { blob } = generateBookingPdf(bookingId, details, {
-      logoBase64: logoBase64Ref.current ?? undefined
+      logoBase64: logoBase64 ?? undefined
     })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')

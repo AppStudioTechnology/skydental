@@ -4,8 +4,8 @@
  * Emails are sent using your cPanel server mail (PHP mail) and smile@skydc.ae.
  */
 return [
-    // Sender: must be an address from cPanel → Email Accounts (e.g. smile@skydc.ae).
-    'FROM_EMAIL' => 'Sky Dental <smile@skydc.ae>',
+    // Sender: must be an address from cPanel → Email Accounts. Use plain address to avoid delivery issues.
+    'FROM_EMAIL' => 'smile@skydc.ae',
 
     // Where to receive booking confirmations
     'CLINIC_EMAIL' => 'smile@skydc.ae',

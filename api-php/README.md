@@ -54,6 +54,60 @@ Submit the Request Appointment, Contact, and Careers forms. Emails should arrive
 
 ---
 
+## Beta testing checklist (beta.skydc.ae)
+
+Use this to test on **beta** before going live. Your “server” is cPanel: no local server needed.
+
+1. **Build for beta** (so forms call beta API):
+   ```bash
+   VITE_BOOKING_API_URL=https://beta.skydc.ae/api/send-booking.php \
+   VITE_JOB_APPLICATION_API_URL=https://beta.skydc.ae/api/send-job-application.php \
+   VITE_CONTACT_API_URL=https://beta.skydc.ae/api/send-contact-message.php \
+   npm run build
+   ```
+2. **Upload site:** Upload the **contents** of `dist/` to the **beta** folder (e.g. the folder cPanel uses for beta.skydc.ae).
+3. **Upload API:** In that same beta folder, create an `api/` folder. Upload the contents of **api-php/** into `api/` (all `.php` files + `config.sample.php`).
+4. **Config on server:** In `api/`, copy `config.sample.php` to `config.php` and set FROM_EMAIL and recipients to **smile@skydc.ae**.
+5. **Test:** Open **https://beta.skydc.ae**, submit the forms. Emails go via cPanel to smile@skydc.ae.
+
+When ready for **live**, repeat with live URLs (e.g. `https://skydc.ae/api/...`) and upload to **public_html** and **public_html/api/**.
+
+---
+
+## Testing forms and email without going live
+
+**Option A: Staging subdomain on the same cPanel (recommended)**  
+1. In cPanel create a subdomain (e.g. `staging.skydc.ae` or `test.skydc.ae`) and point it to a folder (e.g. `public_html_staging`).  
+2. Upload the **api-php** files into that folder’s `api/` (e.g. `public_html_staging/api/`). Copy `config.sample.php` to `config.php` and set smile@skydc.ae (same as production).  
+3. Build the frontend with the staging API URLs:
+   ```bash
+   VITE_BOOKING_API_URL=https://staging.skydc.ae/api/send-booking.php \
+   VITE_JOB_APPLICATION_API_URL=https://staging.skydc.ae/api/send-job-application.php \
+   VITE_CONTACT_API_URL=https://staging.skydc.ae/api/send-contact-message.php \
+   npm run build
+   ```
+4. Upload the contents of `dist/` to the staging folder.  
+5. Open `https://staging.skydc.ae`, submit the forms. Emails will send via the same cPanel mail to smile@skydc.ae, so you can verify without touching the live site.
+
+**Option B: Local PHP (see request/response only)**  
+- From the project root: `cd api-php && php -S localhost:8080`.  
+- In another terminal, run the app with env vars pointing to `http://localhost:8080` (e.g. `VITE_BOOKING_API_URL=http://localhost:8080/send-booking.php`).  
+- Forms will POST to your machine; you can confirm the API returns success. PHP `mail()` on localhost often does not deliver real email unless you configure a local SMTP or use a mail catcher (e.g. Mailpit).
+
+---
+
+## Not receiving email?
+
+If the form shows success but no email arrives:
+
+1. **Check spam/junk** for smile@skydc.ae (and the inbox you’re checking).
+2. **cPanel → Email Accounts** – Ensure **smile@skydc.ae** exists and you can log in to it. PHP `mail()` should use an address that exists on the same server.
+3. **From address** – In `config.php`, set `FROM_EMAIL` to the plain address first: `'smile@skydc.ae'`. If that works, you can try `'Sky Dental <smile@skydc.ae>'` later. Some hosts are strict about the From format.
+4. **cPanel error logs** – In cPanel → Errors or Metrics → Errors, check for PHP or mail errors around the time you submitted the form.
+5. **Test from cPanel** – Use cPanel → Email → Send Email (or webmail) to send a test to smile@skydc.ae. If that doesn’t arrive either, the issue is with the mailbox or server mail, not the PHP script.
+
+---
+
 ## Security note
 
 - Do **not** commit `config.php` (it contains email addresses). It is listed in `.gitignore`.
