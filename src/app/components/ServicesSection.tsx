@@ -91,7 +91,7 @@ export default function ServicesSection() {
 
   return (
     <div className="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
-      <section id="services" className="py-[140px] w-full">
+      <section id="services" className="pt-0 pb-[80px] w-full">
         <motion.div
           ref={ref}
           variants={containerVariants}
@@ -102,7 +102,7 @@ export default function ServicesSection() {
           {/* Service Detail Card - Full Width Blue Background */}
           <motion.div
             variants={itemVariants}
-            className="bg-[#e0edff] rounded-none p-[24px] md:p-[36px] lg:p-[48px] relative overflow-hidden w-full"
+            className="bg-[#e0edff] rounded-none pt-[48px] pb-[48px] px-[24px] md:pt-[56px] md:pb-[56px] md:px-[36px] lg:pt-[64px] lg:pb-[64px] lg:px-[48px] relative overflow-hidden w-full"
           >
             {/* Background Tooth Icon */}
             <div className="absolute left-[-163px] top-[-97px] w-[642px] h-[642px] opacity-5 hidden lg:block">
