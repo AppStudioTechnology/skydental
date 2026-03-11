@@ -251,8 +251,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
               bookingId: id,
               booking: formData,
               pdfBase64: base64,
-              toUser: formData.email || undefined,
-              toClinic: 'aliaslam683@gmail.com'
+              toUser: formData.email || undefined
             })
           })
           const data = await res.json().catch(() => ({}))
@@ -853,8 +852,8 @@ function BookingSuccessModal({
           </h3>
           <p className="text-[14px] text-gray-600 text-center">
             {bookingDetails.email
-              ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at aliaslam683@gmail.com.'
-              : 'The clinic has received your appointment request at aliaslam683@gmail.com.'}
+              ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at smile@skydc.ae.'
+              : 'The clinic has received your appointment request at smile@skydc.ae.'}
           </p>
         </div>
 

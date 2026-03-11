@@ -7,8 +7,7 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <onboarding@resend.dev>'
-// Recipient for contact form (use your email for testing if Resend is in test mode)
+const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <smile@skydc.ae>'
 const CONTACT_INQUIRIES_EMAIL = process.env.CONTACT_INQUIRIES_EMAIL || 'smile@skydc.ae'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

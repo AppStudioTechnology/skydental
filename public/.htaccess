@@ -1,0 +1,10 @@
+# React Router: send all requests to index.html so client-side routes work
+# (required for /about-us, /services, /contact, etc. to work on refresh or direct open)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

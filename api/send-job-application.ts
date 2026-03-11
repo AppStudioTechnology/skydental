@@ -7,9 +7,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
-const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <onboarding@resend.dev>'
-// Default to your Resend account email so it works in test mode; set JOB_APPLICATIONS_EMAIL=smile@skydc.ae in Vercel after domain verification
-const JOB_APPLICATIONS_EMAIL = process.env.JOB_APPLICATIONS_EMAIL || 'aliaslam683@gmail.com'
+const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <smile@skydc.ae>'
+const JOB_APPLICATIONS_EMAIL = process.env.JOB_APPLICATIONS_EMAIL || 'smile@skydc.ae'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*')

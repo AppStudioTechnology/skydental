@@ -1,66 +1,31 @@
-# APIs (Vercel serverless)
+# APIs for Sky Dental
 
-## Booking API (`/api/send-booking`)
+## cPanel hosting (recommended)
 
-The **Request Appointment** form generates a PDF and can send it by email to:
-1. **The user** – copy to the email they entered  
-2. **The clinic** – currently `aliaslam683@gmail.com` (for testing; change back to `smile@skydc.ae` in `api/send-booking.ts` and `BookingFormSidebar.tsx` when finalizing).
+When the site is on **cPanel**, use the **PHP API** in the **`api-php/`** folder. Emails are sent with cPanel’s built-in mail to **smile@skydc.ae** (no Resend, no Vercel).
 
-## Vercel (current – testing)
-
-When the app is deployed on **Vercel**, the frontend and this API are on the same deployment. The app automatically calls `/api/send-booking` on the same domain, so **you do not need to set `VITE_BOOKING_API_URL`**.
-
-1. Deploy the project to Vercel (the `api/` folder is picked up as serverless functions).
-2. In **Vercel → your project → Settings → Environment Variables**, add:
-   - **`RESEND_API_KEY`** – your [Resend](https://resend.com) API key (create an account, get the key from the dashboard).
-   - Optionally **`FROM_EMAIL`** – e.g. `Sky Dental <onboarding@resend.dev>` for testing, or a verified domain later.
-3. Redeploy so the new env vars are applied.
-
-After that, submitting the Request Appointment form will send the PDF to the user (if they entered an email) and to the clinic address.
-
-### If you don’t receive emails
-
-1. **Redeploy**  
-   After adding env vars, use **Deployments → ⋯ → Redeploy** so the new values are used.
-
-2. **Check the browser**  
-   Submit the form, then open **Developer Tools (F12) → Console**. If you see `[Booking] API error:` or `[Booking] Request failed:`, the API call failed (e.g. 404 = API not deployed, 500 = Resend error).
-
-3. **Check Vercel logs**  
-   In Vercel: **Deployments → open the latest deployment → Functions** (or **Logs**). Click the `api/send-booking` function and look at the logs. You’ll see “Resend clinic email error” or “RESEND_API_KEY not configured” if something is wrong.
-
-4. **Resend dashboard**  
-   At [resend.com](https://resend.com) → **Logs**, check whether the send was attempted and if it was rejected (e.g. invalid from address or domain).
-
-## cPanel / other host (after finalization)
-
-When you move the site to **cPanel** (or another host) and no longer use Vercel:
-
-- The **frontend** can be deployed as static files (e.g. via File Manager or FTP).
-- The **email-sending logic** must run somewhere that can call Resend (or another email provider). Options:
-  1. **Keep using Vercel only for the API**  
-     Deploy just this repo to Vercel, use only the serverless function, and in your cPanel-hosted app set:
-     `VITE_BOOKING_API_URL=https://your-vercel-app.vercel.app/api/send-booking`
-  2. **Backend on cPanel**  
-     Recreate the same behaviour in a small backend (e.g. Node/Express or PHP) on cPanel that accepts the booking + PDF and sends email (e.g. via Resend, SendGrid, or SMTP). Then set `VITE_BOOKING_API_URL` to that backend URL.
-
-Until then, the Vercel setup above is enough for testing.
+1. Upload the contents of `api-php/` to cPanel (e.g. into `public_html/api/`).
+2. Copy `config.sample.php` to `config.php` in that folder. The sample already uses smile@skydc.ae.
+3. When building for cPanel, set:
+   - `VITE_BOOKING_API_URL=https://skydc.ae/api/send-booking.php`
+   - `VITE_JOB_APPLICATION_API_URL=https://skydc.ae/api/send-job-application.php`
+   - `VITE_CONTACT_API_URL=https://skydc.ae/api/send-contact-message.php`
+4. Full steps are in **`api-php/README.md`** and **`DEPLOY-CPANEL-STEPS.md`**.
 
 ---
 
-## Job application API (`/api/send-job-application`)
+## Booking API
 
-The **Careers → Apply Now** form sends the applicant’s name, email, and CV (PDF/DOC/DOCX) to the clinic by email. It uses the same **`RESEND_API_KEY`** and **`FROM_EMAIL`** as the booking API.
-
-- **Recipient:** By default applications go to `smile@skydc.ae`. For Resend test mode (only your account email can receive), set **`JOB_APPLICATIONS_EMAIL`** in Vercel to your email (e.g. `aliaslam683@gmail.com`), then switch back to `smile@skydc.ae` when the domain is verified.
-- The frontend calls `/api/send-job-application` on the same origin; optional **`VITE_JOB_APPLICATION_API_URL`** overrides the URL if you host the API elsewhere.
+The **Request Appointment** form sends a PDF to the clinic (smile@skydc.ae) and a copy to the user if they entered an email.
 
 ---
 
-## Contact / general inquiry API (`/api/send-contact-message`)
+## Job application API
 
-The **Contact Us → Send Us a Message** form sends the visitor’s name, email, phone (optional), subject, and message to the clinic by email. It uses the same **`RESEND_API_KEY`** and **`FROM_EMAIL`**.
+The **Careers → Apply Now** form sends the applicant’s name, email, and CV to smile@skydc.ae (or the address in config.php).
 
-- **Recipient:** By default messages go to `smile@skydc.ae`. For Resend test mode, set **`CONTACT_INQUIRIES_EMAIL`** in Vercel to your email (e.g. `aliaslam683@gmail.com`).
-- The email is sent with **Reply-To** set to the visitor’s email so you can reply directly.
-- The frontend calls `/api/send-contact-message` on the same origin; optional **`VITE_CONTACT_API_URL`** overrides the URL if you host the API elsewhere.
+---
+
+## Contact API
+
+The **Contact Us → Send Us a Message** form sends the message to smile@skydc.ae (or the address in config.php). Reply-To is set to the visitor’s email.

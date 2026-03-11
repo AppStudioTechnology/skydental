@@ -36,6 +36,8 @@ export default function HeroSection() {
           loop 
           playsInline 
           muted
+          preload="auto"
+          fetchPriority="high"
           className="absolute w-full h-full object-cover"
           controlsList="nodownload"
         >

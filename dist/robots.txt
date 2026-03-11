@@ -1,0 +1,6 @@
+# Sky Dental Center - robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap (update the host to your production domain)
+Sitemap: https://skydentalcenter.ae/sitemap.xml

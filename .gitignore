@@ -1,1 +1,4 @@
 node_modules
+
+# cPanel API – do not commit config with email addresses
+api-php/config.php

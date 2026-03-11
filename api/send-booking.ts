@@ -15,8 +15,8 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const CLINIC_EMAIL = 'aliaslam683@gmail.com'
-const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <onboarding@resend.dev>'
+const CLINIC_EMAIL = process.env.CLINIC_EMAIL || 'smile@skydc.ae'
+const FROM_EMAIL = process.env.FROM_EMAIL || 'Sky Dental <smile@skydc.ae>'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS: allow same-origin (Vercel app) and preflight
