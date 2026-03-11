@@ -5,7 +5,7 @@ import { useRef } from 'react'
 import { useBooking } from '../context/BookingContext'
 import { useLanguage } from '../context/LanguageContext'
 // Image is in public folder, using direct path
-const imgImage1 = '/woman-patient-in-dental-clinic-being-examined-by-a-2025-04-01-13-09-56-utc.png'
+const imgImage1 = '/assets/images/woman-patient-in-dental-clinic-being-examined-by-a-2025-04-01-13-09-56-utc.png'
 
 export default function WhyChooseSection() {
   const ref = useRef(null)

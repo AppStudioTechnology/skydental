@@ -955,8 +955,8 @@ export const doctorsData: DoctorDetail[] = [
     name: 'Dr. Arwa Rashed Almarshoodi',
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
-    image: '/doctor9.png',
-    aboutImage: '/doctor9.png',
+    image: '/assets/images/doctor9.png',
+    aboutImage: '/assets/images/doctor9.png',
     description: 'Dr. Arwa Rashed Almarshoodi is a distinguished Prosthodontic Specialist who transforms lives by restoring oral function, comfort, and aesthetics with exceptional precision. Through her advanced training and meticulous approach to comprehensive restorative care, she empowers patients to regain their confidence, rediscover their smiles, and achieve long-term oral health. Her clinical philosophy is grounded in the belief that every patient deserves a personalised, functional, and aesthetically harmonious smile—crafted through evidence-based practice and artistic attention to detail.',
     stats: [
       { label: 'Specialist', value: 'Prosthodontic Specialist' },

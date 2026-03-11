@@ -48,12 +48,12 @@ export default function TechnologySection() {
               }}
               onError={(e) => {
                 console.error('Technology video failed to load')
-                console.error('Video path:', '/technology-video.mp4')
-                console.error('Full URL:', window.location.origin + '/technology-video.mp4')
+                console.error('Video path:', '/assets/videos/technology-video.mp4')
+                console.error('Full URL:', window.location.origin + '/assets/videos/technology-video.mp4')
                 console.error('Error:', e)
               }}
             >
-              <source src="/technology-video.mp4" type="video/mp4" />
+              <source src="/assets/videos/technology-video.mp4" type="video/mp4" />
             </video>
             {/* Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent from-[5.587%] to-[rgba(0,0,0,0.6)] to-[68.156%]" />

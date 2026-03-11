@@ -41,7 +41,7 @@ export default function HeroSection() {
           className="absolute w-full h-full object-cover"
           controlsList="nodownload"
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          <source src="/assets/videos/hero-video.mp4" type="video/mp4" />
         </video>
         {/* Transparent dark overlay for text readability */}
         <div className="absolute inset-0 bg-black/35" aria-hidden />
