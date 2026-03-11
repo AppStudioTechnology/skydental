@@ -3,7 +3,8 @@
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 import { generateBookingPdf } from '../utils/generateBookingPdf'
-import logoImage from '../../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.png'
+
+const LOADING_LOGO_URL = '/logos/loading-logo.png'
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [
@@ -124,6 +125,8 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
   const datePickerRef = useRef<HTMLDivElement>(null)
   const timePickerRef = useRef<HTMLDivElement>(null)
   const logoBase64Ref = useRef<string | null>(null)
+  const logoNaturalWidthRef = useRef<number>(1)
+  const logoNaturalHeightRef = useRef<number>(1)
   const countryCodeRef = useRef<HTMLDivElement>(null)
   const savedScrollYRef = useRef(0)
 
@@ -202,13 +205,15 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
     }
   }, [isOpen])
 
-  // Preload logo as base64 for PDF (when sidebar opens)
+  // Preload loading logo as base64 for PDF (when sidebar opens)
   useEffect(() => {
     if (!isOpen || logoBase64Ref.current) return
     const img = new Image()
     img.crossOrigin = 'anonymous'
     img.onload = () => {
       try {
+        logoNaturalWidthRef.current = img.naturalWidth
+        logoNaturalHeightRef.current = img.naturalHeight
         const canvas = document.createElement('canvas')
         canvas.width = img.naturalWidth
         canvas.height = img.naturalHeight
@@ -222,7 +227,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
         logoBase64Ref.current = null
       }
     }
-    img.src = (typeof logoImage === 'string' ? logoImage : (logoImage as { default?: string })?.default) ?? ''
+    img.src = LOADING_LOGO_URL
   }, [isOpen])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -287,7 +292,9 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
 
     try {
       const { blob, base64 } = generateBookingPdf(id, formData, {
-        logoBase64: logoBase64Ref.current ?? undefined
+        logoBase64: logoBase64Ref.current ?? undefined,
+        logoNaturalWidth: logoNaturalWidthRef.current,
+        logoNaturalHeight: logoNaturalHeightRef.current
       })
 
       // Call API to send PDF to user email and clinic (works on Vercel same-deployment)
@@ -631,6 +638,8 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
           bookingDetails={lastBookingDetails}
           userEmailSent={userEmailSent}
           logoBase64={logoBase64Ref.current ?? undefined}
+          logoNaturalWidth={logoNaturalWidthRef.current}
+          logoNaturalHeight={logoNaturalHeightRef.current}
           onClose={handleCloseSuccessModal}
         />
       )}
@@ -849,6 +858,8 @@ function BookingSuccessModal({
   bookingDetails,
   userEmailSent,
   logoBase64,
+  logoNaturalWidth,
+  logoNaturalHeight,
   onClose
 }: {
   bookingId: string
@@ -865,6 +876,8 @@ function BookingSuccessModal({
   }
   userEmailSent?: boolean | null
   logoBase64?: string
+  logoNaturalWidth?: number
+  logoNaturalHeight?: number
   onClose: () => void
 }) {
   const handleDownloadPdf = () => {
@@ -880,7 +893,9 @@ function BookingSuccessModal({
       message: bookingDetails.message
     }
     const { blob } = generateBookingPdf(bookingId, details, {
-      logoBase64: logoBase64 ?? undefined
+      logoBase64: logoBase64 ?? undefined,
+      logoNaturalWidth: logoNaturalWidth ?? 1,
+      logoNaturalHeight: logoNaturalHeight ?? 1
     })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')

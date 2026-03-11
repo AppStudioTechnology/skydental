@@ -20,8 +20,9 @@ const HEADER_H = 26
 const FOOTER_H = 18
 const COL_GAP = 16
 const COL_WIDTH = (PAGE_WIDTH_MM - 2 * MARGIN - COL_GAP) / 2
-const LOGO_MAX_W = 50
-const LOGO_MAX_H = 18
+// Logo in header: small, centered, no stretch (aspect ratio preserved)
+const LOGO_MAX_W_MM = 28
+const LOGO_MAX_H_MM = 14
 
 /**
  * Format current date/time for "request generated" (at PDF generation time).
@@ -36,13 +37,13 @@ function getRequestGeneratedLabel(): { date: string; time: string } {
 /**
  * Generates a PDF with Sky Dental branding and booking details.
  * Header and footer use green background; logo in header if logoBase64 is provided.
- * Two-column layout with request-generated date/time.
+ * Logo is drawn small, centered, with aspect ratio preserved (no stretch).
  * Returns the PDF as a base64 string (for sending via API) and as a Blob (for download).
  */
 export function generateBookingPdf(
   bookingId: string,
   details: BookingDetails,
-  options?: { logoBase64?: string }
+  options?: { logoBase64?: string; logoNaturalWidth?: number; logoNaturalHeight?: number }
 ): { blob: Blob; base64: string } {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const pageHeight = doc.internal.pageSize.getHeight()
@@ -54,7 +55,18 @@ export function generateBookingPdf(
 
   if (options?.logoBase64) {
     try {
-      doc.addImage(options.logoBase64, 'PNG', PAGE_WIDTH_MM / 2 - LOGO_MAX_W / 2, 4, LOGO_MAX_W, LOGO_MAX_H)
+      const nw = options.logoNaturalWidth ?? 1
+      const nh = options.logoNaturalHeight ?? 1
+      // Fit within max box, preserve aspect ratio (no stretch)
+      let wMm = LOGO_MAX_W_MM
+      let hMm = (LOGO_MAX_W_MM * nh) / nw
+      if (hMm > LOGO_MAX_H_MM) {
+        hMm = LOGO_MAX_H_MM
+        wMm = (LOGO_MAX_H_MM * nw) / nh
+      }
+      const x = PAGE_WIDTH_MM / 2 - wMm / 2
+      const y = HEADER_H / 2 - hMm / 2
+      doc.addImage(options.logoBase64, 'PNG', x, y, wMm, hMm)
     } catch {
       drawHeaderText(doc)
     }
