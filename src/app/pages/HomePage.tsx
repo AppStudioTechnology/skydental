@@ -29,9 +29,9 @@ export default function HomePage() {
     <main>
       <ScrollSection><HeroSection /></ScrollSection>
       <ScrollSection><ServicesSection /></ScrollSection>
+      <ScrollSection><DoctorsSection /></ScrollSection>
       <ScrollSection><ResultsSection /></ScrollSection>
       <ScrollSection><TestimonialsSection /></ScrollSection>
-      <ScrollSection><DoctorsSection /></ScrollSection>
       <ScrollSection><InsurancePartnersSection /></ScrollSection>
       <ScrollSection><ContactSection /></ScrollSection>
     </main>
