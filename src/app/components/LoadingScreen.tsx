@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 
-import logoSrc from '../../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.png'
+const LOADING_LOGO_SRC = '/logos/loading-logo.png'
 
 interface LoadingScreenProps {
   onComplete?: () => void
@@ -70,7 +70,7 @@ export default function LoadingScreen({ visible, onComplete }: LoadingScreenProp
           </svg>
         </div>
         <img
-          src={logoSrc}
+          src={LOADING_LOGO_SRC}
           alt="Sky Dental Center"
           className="relative z-10 h-14 w-14 object-contain md:h-16 md:w-16"
           width={64}
