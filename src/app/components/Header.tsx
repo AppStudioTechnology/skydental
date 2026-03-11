@@ -430,7 +430,7 @@ export default function Header() {
                 <button
                   onClick={handleHomeClick}
                   className={`px-[20px] py-[12px] rounded-full text-[16px] transition-all text-left ${
-                    location.pathname === '/' || activeSection === 'home'
+                    location.pathname === '/'
                       ? 'bg-[#CBFF8F] text-[#0C0060] font-bold'
                       : 'text-black hover:text-[#0C0060]'
                   }                  `}
