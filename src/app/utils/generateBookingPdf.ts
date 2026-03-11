@@ -20,9 +20,10 @@ const HEADER_H = 26
 const FOOTER_H = 18
 const COL_GAP = 16
 const COL_WIDTH = (PAGE_WIDTH_MM - 2 * MARGIN - COL_GAP) / 2
-// Logo in header: small, centered, no stretch (aspect ratio preserved)
-const LOGO_MAX_W_MM = 28
-const LOGO_MAX_H_MM = 14
+// Logo in header: left-aligned, no stretch (aspect ratio preserved)
+const LOGO_MAX_W_MM = 38
+const LOGO_MAX_H_MM = 20
+const LOGO_LEFT_MARGIN_MM = 20
 
 /**
  * Format current date/time for "request generated" (at PDF generation time).
@@ -37,7 +38,7 @@ function getRequestGeneratedLabel(): { date: string; time: string } {
 /**
  * Generates a PDF with Sky Dental branding and booking details.
  * Header and footer use green background; logo in header if logoBase64 is provided.
- * Logo is drawn small, centered, with aspect ratio preserved (no stretch).
+ * Logo is drawn left-aligned in the header, with aspect ratio preserved (no stretch).
  * Returns the PDF as a base64 string (for sending via API) and as a Blob (for download).
  */
 export function generateBookingPdf(
@@ -57,14 +58,14 @@ export function generateBookingPdf(
     try {
       const nw = options.logoNaturalWidth ?? 1
       const nh = options.logoNaturalHeight ?? 1
-      // Fit within max box, preserve aspect ratio (no stretch)
+      // Fit within max box, preserve aspect ratio (no stretch), position left
       let wMm = LOGO_MAX_W_MM
       let hMm = (LOGO_MAX_W_MM * nh) / nw
       if (hMm > LOGO_MAX_H_MM) {
         hMm = LOGO_MAX_H_MM
         wMm = (LOGO_MAX_H_MM * nw) / nh
       }
-      const x = PAGE_WIDTH_MM / 2 - wMm / 2
+      const x = LOGO_LEFT_MARGIN_MM
       const y = HEADER_H / 2 - hMm / 2
       doc.addImage(options.logoBase64, 'PNG', x, y, wMm, hMm)
     } catch {
@@ -165,5 +166,5 @@ function drawHeaderText(doc: jsPDF): void {
   doc.setFontSize(20)
   doc.setFont('helvetica', 'bold')
   doc.setTextColor(12, 0, 96) // #0C0060
-  doc.text('SKY DENTAL CENTER', PAGE_WIDTH_MM / 2, 14, { align: 'center' })
+  doc.text('SKY DENTAL CENTER', LOGO_LEFT_MARGIN_MM, 14)
 }
