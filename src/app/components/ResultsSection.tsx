@@ -95,7 +95,7 @@ export default function ResultsSection() {
   }, [isDragging, handleMouseMove, handleMouseUp, handleTouchMove, handleTouchEnd])
 
   return (
-    <section className="py-[80px] px-0 overflow-x-hidden">
+    <section className="pt-[24px] pb-[80px] px-0 overflow-x-hidden">
       <motion.div
         ref={ref}
         initial={{ opacity: 0 }}

@@ -62,7 +62,7 @@ export default function TestimonialsSection() {
   }))
 
   return (
-    <section className="py-[80px] px-[16px] md:px-[20px] lg:px-[25px]">
+    <section className="pt-[80px] pb-[24px] px-[16px] md:px-[20px] lg:px-[25px]">
       <div className="max-w-[1390px] mx-auto">
         <div className="rounded-[24px] p-[24px] md:p-[36px] lg:p-[48px]">
           <h2
