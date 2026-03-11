@@ -102,7 +102,7 @@ export default function ServicesSection() {
           {/* Service Detail Card - Full Width Blue Background */}
           <motion.div
             variants={itemVariants}
-            className="bg-[#e0edff] rounded-none pt-[48px] pb-[48px] px-[24px] md:pt-[56px] md:pb-[56px] md:px-[36px] lg:pt-[64px] lg:pb-[64px] lg:px-[48px] relative overflow-hidden w-full"
+            className="bg-[#e0edff] rounded-none pt-[64px] pb-[64px] px-[24px] md:pt-[80px] md:pb-[80px] md:px-[36px] lg:pt-[96px] lg:pb-[96px] lg:px-[48px] relative overflow-hidden w-full"
           >
             {/* Background Tooth Icon */}
             <div className="absolute left-[-163px] top-[-97px] w-[642px] h-[642px] opacity-5 hidden lg:block">
