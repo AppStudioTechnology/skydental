@@ -10,22 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
+require __DIR__ . '/cpanel-mail-helper.php';
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Method not allowed']);
-    exit;
+    api_json_response(['error' => 'Method not allowed'], 405);
 }
 
 $configFile = __DIR__ . '/config.php';
 if (!is_file($configFile)) {
-    http_response_code(500);
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Config missing', 'message' => 'Copy config.sample.php to config.php and set FROM_EMAIL (e.g. smile@skydc.ae) and recipients.']);
-    exit;
+    api_json_response([
+        'error' => 'Config missing',
+        'message' => 'Copy config.sample.php to config.php and set FROM_EMAIL (e.g. smile@skydc.ae) and recipients.',
+    ], 500);
 }
 $config = require $configFile;
-require __DIR__ . '/cpanel-mail-helper.php';
 
 $raw = file_get_contents('php://input');
 $body = json_decode($raw, true) ?: [];
