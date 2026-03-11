@@ -30,8 +30,8 @@ export default function HomePage() {
       <ScrollSection><HeroSection /></ScrollSection>
       <ScrollSection><ServicesSection /></ScrollSection>
       <ScrollSection><DoctorsSection /></ScrollSection>
-      <ScrollSection><ResultsSection /></ScrollSection>
       <ScrollSection><TestimonialsSection /></ScrollSection>
+      <ScrollSection><ResultsSection /></ScrollSection>
       <ScrollSection><InsurancePartnersSection /></ScrollSection>
       <ScrollSection><ContactSection /></ScrollSection>
     </main>
