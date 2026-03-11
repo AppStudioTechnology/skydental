@@ -11,6 +11,9 @@ import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png
 import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png"
 import ScrollSection from '../components/ScrollSection'
 
+/** Sky Dental Center exact location – opens in Google Maps; user can tap Directions for route from their location */
+const SKY_DENTAL_GOOGLE_MAPS_URL = 'https://maps.app.goo.gl/p3GwfZJ32sokvec96'
+
 export default function ContactUsPage() {
   const shouldReduceMotion = useReducedMotion()
   const { t } = useLanguage()
@@ -191,7 +194,15 @@ export default function ContactUsPage() {
                 <MapPin className="w-8 h-8 text-[#0C0060]" />
               </div>
               <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">{t('contactPage', 'visitClinic')}</h3>
-              <p className="text-base font-['Arial'] font-bold text-[#0c0060] mb-1">Villa 45, Al Forsan Street, Khalifa City, Abu Dhabi, UAE</p>
+              <a
+                href={SKY_DENTAL_GOOGLE_MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base font-['Arial'] font-bold text-[#0c0060] mb-1 hover:underline block"
+                aria-label="Open Sky Dental Center in Google Maps"
+              >
+                Villa 45, Al Forsan Street, Khalifa City, Abu Dhabi, UAE
+              </a>
               <p className="text-xs font-['Arial'] text-black opacity-70">
                 Visit us for personalised, in-person consultations.
               </p>
@@ -237,10 +248,11 @@ export default function ContactUsPage() {
             />
             <div className="absolute bottom-4 right-4 z-10">
               <a
-                href="https://www.google.com/maps/search/?api=1&query=Villa+45,+Alforsan+street,+Khalifa+city,+Abu+Dhabi,+UAE"
+                href={SKY_DENTAL_GOOGLE_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white hover:bg-[#f9fafb] text-[#0C0060] font-['Arial'] font-bold py-2 px-4 rounded-full shadow-lg flex items-center gap-2 transition-all duration-300 hover:shadow-xl"
+                aria-label="Open Sky Dental Center in Google Maps to view location or get directions"
               >
                 <MapPin className="w-4 h-4" />
                 <span>Open in Google Maps</span>
