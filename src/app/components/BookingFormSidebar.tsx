@@ -64,6 +64,27 @@ const countryCodes = [
   { code: '+49', country: 'DE', flag: '🇩🇪' }
 ]
 
+// Phone length rules by country code (national number, digits only)
+const countryPhoneRules: Record<string, { min: number; max: number }> = {
+  '+971': { min: 9, max: 9 },   // UAE
+  '+1': { min: 10, max: 10 },   // US/Canada
+  '+44': { min: 10, max: 10 },  // UK
+  '+966': { min: 9, max: 9 },   // Saudi Arabia
+  '+965': { min: 8, max: 8 },   // Kuwait
+  '+974': { min: 8, max: 8 },   // Qatar
+  '+973': { min: 8, max: 8 },   // Bahrain
+  '+968': { min: 8, max: 8 },   // Oman
+  '+961': { min: 7, max: 8 },   // Lebanon
+  '+962': { min: 9, max: 9 },   // Jordan
+  '+20': { min: 10, max: 10 },  // Egypt
+  '+91': { min: 10, max: 10 },  // India
+  '+92': { min: 10, max: 10 },  // Pakistan
+  '+33': { min: 9, max: 9 },    // France
+  '+49': { min: 10, max: 11 }   // Germany
+}
+const DEFAULT_PHONE_MIN = 7
+const DEFAULT_PHONE_MAX = 15
+
 // Time slots
 const morningSlots = ['07:00 am', '07:45 am', '08:30 am', '09:15 am', '09:45 am', '10:30 am', '11:15 am']
 const afternoonSlots = ['12:00 pm', '12:45 pm', '01:30 pm', '01:45 pm', '02:30 pm', '03:15 pm', '04:00 pm', '04:45 pm', '05:30 pm']
@@ -97,6 +118,8 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
   const [bookingId, setBookingId] = useState('')
   const [lastBookingDetails, setLastBookingDetails] = useState<typeof formData | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [phoneError, setPhoneError] = useState('')
+  const [emailError, setEmailError] = useState('')
   const datePickerRef = useRef<HTMLDivElement>(null)
   const timePickerRef = useRef<HTMLDivElement>(null)
   const logoBase64Ref = useRef<string | null>(null)
@@ -203,6 +226,13 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '')
+      setFormData(prev => ({ ...prev, phone: digitsOnly }))
+      setPhoneError('')
+      return
+    }
+    if (name === 'email') setEmailError('')
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
@@ -231,6 +261,24 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setPhoneError('')
+    setEmailError('')
+    const email = (formData.email ?? '').trim()
+    const phoneDigits = (formData.phone ?? '').replace(/\D/g, '')
+    const rules = countryPhoneRules[formData.countryCode] ?? { min: DEFAULT_PHONE_MIN, max: DEFAULT_PHONE_MAX }
+    if (!email) {
+      setEmailError('Email is required.')
+      return
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address.')
+      return
+    }
+    if (phoneDigits.length < rules.min || phoneDigits.length > rules.max) {
+      setPhoneError(`Enter a valid ${formData.countryCode} number (${rules.min}–${rules.max} digits).`)
+      return
+    }
     setIsSubmitting(true)
     const id = generateBookingId()
     setBookingId(id)
@@ -383,6 +431,7 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
                                   onClick={() => {
                                     setFormData(prev => ({ ...prev, countryCode: country.code }))
                                     setShowCountryCodeDropdown(false)
+                                    setPhoneError('')
                                   }}
                                   className="w-full px-4 py-2 text-left hover:bg-[#f1f1f1] flex items-center gap-2 text-[14px]"
                                 >
@@ -399,16 +448,19 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
                           name="phone"
                           value={formData.phone}
                           onChange={handleInputChange}
-                          placeholder="+971-XX-XXX-XXXX"
+                          placeholder={formData.countryCode === '+971' ? '50 123 4567' : 'Digits only'}
                           required
-                          className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black flex-1 min-w-0"
+                          inputMode="numeric"
+                          autoComplete="tel-national"
+                          className={`bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black flex-1 min-w-0 ${phoneError ? 'ring-2 ring-red-500' : ''}`}
                         />
                       </div>
+                      {phoneError && <p className="text-red-500 text-[13px]">{phoneError}</p>}
                     </div>
 
                     <div className="flex flex-col gap-[8px]">
                       <label className="text-[14px] font-medium text-black">
-                        Email <span className="text-gray-500">(Optional)</span>
+                        Email <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="email"
@@ -416,8 +468,10 @@ export default function BookingFormSidebar({ isOpen, onClose, preselectedDoctor 
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Enter email address"
-                        className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black"
+                        required
+                        className={`bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black ${emailError ? 'ring-2 ring-red-500' : ''}`}
                       />
+                      {emailError && <p className="text-red-500 text-[13px]">{emailError}</p>}
                     </div>
                   </div>
 

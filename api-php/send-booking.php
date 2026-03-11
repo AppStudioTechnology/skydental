@@ -60,8 +60,9 @@ if (!$clinicResult['success']) {
     ], 500);
 }
 
-$userEmail = $toUser ?: ($booking['email'] ?? null);
-if ($userEmail && !empty(trim($userEmail))) {
+$userEmail = trim((string) ($toUser ?: ($booking['email'] ?? '')));
+$userEmailSent = false;
+if ($userEmail !== '') {
     $userSubject = 'Your appointment request – Sky Dental Center – ' . $bookingId;
     $userHtml = '<p>Dear ' . htmlspecialchars($booking['fullName'] ?? '') . ',</p>'
         . '<p>We have received your appointment request.</p>'
@@ -71,7 +72,8 @@ if ($userEmail && !empty(trim($userEmail))) {
         . '<p><strong>Date:</strong> ' . htmlspecialchars($booking['date'] ?? '') . ' | <strong>Time:</strong> ' . htmlspecialchars($booking['time'] ?? '') . '</p>'
         . '<p>Please find your confirmation details in the attached PDF.</p>'
         . '<p>— Sky Dental Center</p>';
-    cpanel_send_email($from, $userEmail, $userSubject, $userHtml, ['attachments' => $attachments]);
+    $userResult = cpanel_send_email($from, $userEmail, $userSubject, $userHtml, ['attachments' => $attachments]);
+    $userEmailSent = !empty($userResult['success']);
 }
 
-api_json_response(['success' => true, 'bookingId' => $bookingId]);
+api_json_response(['success' => true, 'bookingId' => $bookingId, 'userEmailSent' => $userEmailSent]);
