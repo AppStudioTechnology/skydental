@@ -1,10 +1,17 @@
-# React Router: send all requests to index.html so client-side routes work
-# (required for /about-us, /services, /contact, etc. to work on refresh or direct open)
+# SPA fallback: serve index.html for all routes so client-side routing works
+# (fixes 404 on refresh or direct open of /contact, /about-us, /services, etc.)
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # If the request is for index.html, do nothing
   RewriteRule ^index\.html$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+
+  # If the request is for a real file or directory, do nothing
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Otherwise send to index.html (React Router will handle the path)
+  RewriteRule ^ /index.html [L]
 </IfModule>
