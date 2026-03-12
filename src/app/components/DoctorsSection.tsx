@@ -69,19 +69,19 @@ export default function DoctorsSection() {
           <Carousel
             opts={{
               loop: true,
-              align: 'center',
+              align: 'start',
               dragFree: false,
               slidesToScroll: 1,
               containScroll: 'trimSnaps',
             }}
             plugins={autoplayPlugin ? [autoplayPlugin] : undefined}
-            className="w-full"
+            className="w-full overflow-hidden"
           >
-            <CarouselContent className="-ml-4 md:-ml-6">
+            <CarouselContent className="-ml-3 md:-ml-4">
               {doctorsData.map((doctor) => (
                 <CarouselItem
                   key={doctor.id}
-                  className="pl-4 md:pl-6 basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+                  className="pl-3 md:pl-4 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25%-0.75rem)]"
                 >
                   <DoctorCard
                     doctor={{

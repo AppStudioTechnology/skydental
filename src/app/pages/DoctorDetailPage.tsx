@@ -51,14 +51,14 @@ export default function DoctorDetailPage() {
   return (
     <ScrollSection>
     <div className="bg-white">
-      {/* Hero: Picture left, content right (white bg) - same style for all doctors */}
-      <section ref={heroRef} className="min-h-[480px] flex flex-col lg:flex-row pt-20 lg:pt-24">
-        {/* Left: Doctor image - neutral grey background */}
+      {/* Hero: Picture left (smaller), content right (white bg) - same style for all doctors */}
+      <section ref={heroRef} className="min-h-[400px] flex flex-col lg:flex-row pt-20 lg:pt-24">
+        {/* Left: Doctor image - smaller column, neutral grey background */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="w-full lg:w-[42%] min-h-[320px] lg:min-h-[520px] bg-[#e8e8e8] flex items-center justify-center overflow-hidden"
+          className="w-full lg:w-[32%] lg:max-w-[340px] min-h-[280px] lg:min-h-[400px] lg:max-h-[480px] bg-[#e8e8e8] flex items-center justify-center overflow-hidden shrink-0"
         >
           <img
             src={doctor.aboutImage}
@@ -67,20 +67,32 @@ export default function DoctorDetailPage() {
           />
         </motion.div>
 
-        {/* Right: Content - white background */}
+        {/* Right: Content - white background, more space */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full lg:w-[58%] bg-white flex flex-col justify-center px-6 md:px-10 lg:px-14 py-12 lg:py-16"
+          className="w-full lg:flex-1 min-w-0 bg-white flex flex-col justify-center px-6 md:px-10 lg:px-14 py-12 lg:py-16"
         >
+          {/* Breadcrumbs - at top */}
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-['Arial'] mb-6">
+            <Link to="/" className="flex items-center gap-1 hover:text-gray-700">
+              <Home className="w-4 h-4" />
+              Home
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <Link to="/our-doctors" className="hover:text-gray-700">Doctors</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <span className="text-[#0C0060] font-medium">{doctor.name}</span>
+          </div>
+
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-['Gilda_Display'] font-bold text-black mb-2 tracking-tight">
             {doctor.name}
           </h1>
           <p className="text-base md:text-lg text-black/80 font-['Arial'] mb-6">
             {doctor.title === doctor.specialty ? doctor.specialty : `${doctor.title} | ${doctor.specialty}`}
           </p>
-          <p className="text-[15px] md:text-base text-black/80 font-['Arial'] leading-relaxed mb-8 max-w-2xl">
+          <p className="text-[15px] md:text-base text-black/85 leading-[1.7] max-w-2xl font-serif" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
             {doctor.description}
           </p>
 
@@ -97,7 +109,7 @@ export default function DoctorDetailPage() {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4 mb-8">
+          <div className="flex flex-wrap gap-4">
             <motion.button
               whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
               whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
@@ -119,18 +131,6 @@ export default function DoctorDetailPage() {
               <Phone className="w-5 h-5" />
               <span>Contact Now</span>
             </motion.a>
-          </div>
-
-          {/* Breadcrumbs */}
-          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-['Arial']">
-            <Link to="/" className="flex items-center gap-1 hover:text-gray-700">
-              <Home className="w-4 h-4" />
-              Home
-            </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <Link to="/our-doctors" className="hover:text-gray-700">Doctors</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-[#0C0060] font-medium">{doctor.name}</span>
           </div>
         </motion.div>
       </section>
