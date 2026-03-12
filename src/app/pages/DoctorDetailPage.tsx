@@ -54,11 +54,11 @@ export default function DoctorDetailPage() {
       {/* Hero: Mobile = breadcrumbs → image → details (centered). Desktop = image left, content right */}
       <section
         ref={heroRef}
-        className="min-h-[480px] grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pt-20 lg:pt-24 pb-16 lg:pb-24 px-8 lg:px-14 xl:px-20 items-start lg:items-center"
+        className="min-h-[480px] grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 pt-24 lg:pt-28 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-12 items-start lg:items-center"
         style={{ background: 'linear-gradient(180deg, #e0f4ff 0%, #d4edff 50%, #e8f7fc 100%)' }}
       >
-        {/* 1) Breadcrumbs - first on mobile, top of right column on desktop */}
-        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 font-['Arial'] mb-2 lg:mb-0 lg:col-start-2 lg:row-start-1">
+        {/* 1) Breadcrumbs - first on mobile, top of right column on desktop; extra top margin so not merged with header */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 font-['Arial'] mt-2 mb-4 lg:mb-2 lg:col-start-2 lg:row-start-1">
           <Link to="/" className="flex items-center gap-1 hover:text-gray-800">
             <Home className="w-4 h-4" />
             Home
@@ -88,7 +88,7 @@ export default function DoctorDetailPage() {
           initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full min-w-0 flex flex-col justify-center px-6 md:px-10 lg:px-12 xl:px-16 py-6 lg:py-12 text-center lg:text-left lg:col-start-2 lg:row-start-2"
+          className="w-full min-w-0 flex flex-col justify-center px-4 md:px-6 lg:px-4 xl:px-6 py-6 lg:py-8 text-center lg:text-left lg:col-start-2 lg:row-start-2"
         >
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-['Gilda_Display'] font-bold text-black mb-2 tracking-tight">
             {doctor.name}
