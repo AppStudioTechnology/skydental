@@ -129,7 +129,7 @@ export default function CareersPage() {
         })
         const data = await res.json().catch(() => ({}))
         if (!res.ok) {
-          const msg = data?.message || data?.error || (res.status === 404 ? 'Careers API not found. Ensure api/send-job-application.php is deployed.' : `Request failed (${res.status}). Please try again or email smile@skydc.ae.`)
+          const msg = data?.message || data?.error || 'Failed to send application. Please try again or email smile@skydc.ae.'
           setSubmitError(msg)
           setIsSubmitting(false)
           return
