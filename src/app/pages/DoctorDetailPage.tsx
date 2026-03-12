@@ -51,30 +51,18 @@ export default function DoctorDetailPage() {
   return (
     <ScrollSection>
     <div className="bg-white">
-      {/* Hero: Mobile = breadcrumbs → image → details (centered). Desktop = image left, content right */}
+      {/* Hero: Mobile = image then breadcrumbs+details. Desktop = image left, content right */}
       <section
         ref={heroRef}
-        className="min-h-[480px] grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 pt-24 lg:pt-28 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-12 items-start lg:items-center"
+        className="min-h-[480px] flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-5 pt-24 lg:pt-28 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-12"
         style={{ background: 'linear-gradient(180deg, #e0f4ff 0%, #d4edff 50%, #e8f7fc 100%)' }}
       >
-        {/* 1) Breadcrumbs - first on mobile, top of right column on desktop; extra top margin so not merged with header */}
-        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 font-['Arial'] mt-2 mb-4 lg:mb-2 lg:col-start-2 lg:row-start-1">
-          <Link to="/" className="flex items-center gap-1 hover:text-gray-800">
-            <Home className="w-4 h-4" />
-            Home
-          </Link>
-          <ChevronRight className="w-4 h-4 text-gray-400" />
-          <Link to="/our-doctors" className="hover:text-gray-800">Doctors</Link>
-          <ChevronRight className="w-4 h-4 text-gray-400" />
-          <span className="text-[#0C0060] font-medium">{doctor.name}</span>
-        </div>
-
-        {/* 2) Doctor image - second on mobile, left column on desktop */}
+        {/* Doctor image - left on desktop, top on mobile */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="w-full lg:max-w-[340px] min-h-[280px] lg:min-h-[360px] lg:max-h-[440px] bg-white/70 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center shadow-md mx-auto lg:mx-0 lg:col-start-1 lg:row-start-1 lg:row-span-2"
+          className="w-full lg:w-[32%] lg:max-w-[340px] shrink-0 min-h-[280px] lg:min-h-[360px] lg:max-h-[440px] bg-white/70 rounded-2xl overflow-hidden flex items-center justify-center shadow-md mx-auto lg:mx-0"
         >
           <img
             src={doctor.aboutImage}
@@ -83,13 +71,25 @@ export default function DoctorDetailPage() {
           />
         </motion.div>
 
-        {/* 3) Details - third on mobile, right column on desktop; centered on mobile */}
+        {/* Content: breadcrumbs right above name, then bio, stats, buttons */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full min-w-0 flex flex-col justify-center px-4 md:px-6 lg:px-4 xl:px-6 py-6 lg:py-8 text-center lg:text-left lg:col-start-2 lg:row-start-2"
+          className="flex-1 min-w-0 flex flex-col justify-center px-0 lg:pl-0 text-center lg:text-left"
         >
+          {/* Breadcrumbs - directly above the name */}
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 font-['Arial'] mb-1.5">
+            <Link to="/" className="flex items-center gap-1 hover:text-gray-800">
+              <Home className="w-4 h-4" />
+              Home
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <Link to="/our-doctors" className="hover:text-gray-800">Doctors</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <span className="text-[#0C0060] font-medium">{doctor.name}</span>
+          </div>
+
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-['Gilda_Display'] font-bold text-black mb-2 tracking-tight">
             {doctor.name}
           </h1>
