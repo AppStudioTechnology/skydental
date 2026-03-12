@@ -54,7 +54,7 @@ export default function DoctorDetailPage() {
       {/* Hero: Picture left, content right - light sky blue section bg, centered */}
       <section
         ref={heroRef}
-        className="min-h-[480px] flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 pt-20 lg:pt-24 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-14"
+        className="min-h-[480px] flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 pt-20 lg:pt-24 pb-16 lg:pb-24 px-8 lg:px-14 xl:px-20"
         style={{ background: 'linear-gradient(180deg, #e0f4ff 0%, #d4edff 50%, #e8f7fc 100%)' }}
       >
         {/* Left: Doctor image - centered in column */}
@@ -76,7 +76,7 @@ export default function DoctorDetailPage() {
           initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full lg:flex-1 min-w-0 flex flex-col justify-center px-6 md:px-8 lg:px-10 xl:px-12 py-10 lg:py-12"
+          className="w-full lg:flex-1 min-w-0 flex flex-col justify-center px-6 md:px-10 lg:px-12 xl:px-16 py-10 lg:py-12"
         >
           {/* Breadcrumbs - at top */}
           <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 font-['Arial'] mb-5">
