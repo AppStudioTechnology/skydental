@@ -1,31 +1,71 @@
 'use client'
 
 import { motion, useReducedMotion, useInView } from 'motion/react'
-import { useRef } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
-import Autoplay from 'embla-carousel-autoplay'
 import { useLanguage } from '../context/LanguageContext'
 import { doctorsData as fullDoctorsData } from '../data/doctorsData'
 import {
+  type CarouselApi,
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  useCarousel,
 } from './ui/carousel'
+import { ArrowRight } from 'lucide-react'
+import { Button } from './ui/button'
 
 // All doctors for the carousel (same filter as OurDoctorsPage: hide Dr. Arwa)
 const doctorsData = fullDoctorsData.filter((d) => d.id !== 'dr-arwa-rashed')
 
+/** Next button: at end scroll back to start (Dr. Kinan) so first and last never meet with no gap */
+function DoctorsCarouselNext() {
+  const { scrollNext, canScrollNext, api } = useCarousel()
+  return (
+    <Button
+      variant="outline"
+      size="icon"
+      data-slot="carousel-next"
+      className="absolute top-1/2 -right-12 md:-right-14 -translate-y-1/2 z-20 size-10 md:size-11 rounded-full border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 shadow-lg hover:shadow-xl transition-shadow"
+      aria-label="Next doctor"
+      onClick={() => (canScrollNext ? scrollNext() : api?.scrollTo(0))}
+    >
+      <ArrowRight />
+      <span className="sr-only">Next slide</span>
+    </Button>
+  )
+}
+
+const AUTOPLAY_DELAY_MS = 4500
+
 export default function DoctorsSection() {
   const ref = useRef(null)
+  const emblaRef = useRef<CarouselApi | null>(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const shouldReduceMotion = useReducedMotion()
   const { t } = useLanguage()
 
-  const autoplayPlugin = shouldReduceMotion
-    ? undefined
-    : Autoplay({ delay: 4500, stopOnInteraction: false })
+  const setApi = useCallback((api: CarouselApi | null) => {
+    emblaRef.current = api
+  }, [])
+
+  useEffect(() => {
+    if (shouldReduceMotion || !emblaRef.current) return
+    const api = emblaRef.current
+    const interval = setInterval(() => {
+      if (!api) return
+      const last = api.scrollSnapList().length - 1
+      const selected = api.selectedScrollSnap()
+      if (selected >= last) {
+        api.scrollTo(0)
+      } else {
+        api.scrollNext()
+      }
+    }, AUTOPLAY_DELAY_MS)
+    return () => clearInterval(interval)
+  }, [shouldReduceMotion])
 
   return (
     <section id="doctors" className="py-[80px] px-[16px] md:px-[20px] lg:px-[25px] bg-[#e8f5e9]">
@@ -68,21 +108,21 @@ export default function DoctorsSection() {
         >
           {/* No overflow-hidden on Carousel root so arrows at -left-12/-right-12 stay visible in padded area */}
           <Carousel
+            setApi={setApi}
             opts={{
-              loop: true,
+              loop: false,
               align: 'start',
               dragFree: false,
               slidesToScroll: 1,
               containScroll: 'trimSnaps',
             }}
-            plugins={autoplayPlugin ? [autoplayPlugin] : undefined}
             className="w-full"
           >
-            <CarouselContent className="-ml-3 gap-3 md:-ml-4 md:gap-4 xl:-ml-0 xl:gap-0">
+            <CarouselContent className="-ml-3 gap-3 md:-ml-4 md:gap-4 xl:-ml-0 xl:gap-6">
               {doctorsData.map((doctor) => (
                 <CarouselItem
                   key={doctor.id}
-                  className="pl-3 md:pl-4 min-w-0 shrink-0 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-1.125rem)] xl:pl-0 xl:mr-6 xl:last:mr-0"
+                  className="pl-3 md:pl-4 min-w-0 shrink-0 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-1.125rem)] xl:pl-0"
                 >
                   <DoctorCard
                     doctor={{
@@ -101,10 +141,7 @@ export default function DoctorsSection() {
               className="-left-12 md:-left-14 top-1/2 -translate-y-1/2 z-20 size-10 md:size-11 border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 shadow-lg hover:shadow-xl transition-shadow"
               aria-label="Previous doctor"
             />
-            <CarouselNext
-              className="-right-12 md:-right-14 top-1/2 -translate-y-1/2 z-20 size-10 md:size-11 border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 shadow-lg hover:shadow-xl transition-shadow"
-              aria-label="Next doctor"
-            />
+            <DoctorsCarouselNext />
           </Carousel>
         </motion.div>
       </div>
