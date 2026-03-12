@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion, useInView } from 'motion/react'
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { doctorsData as fullDoctorsData } from '../data/doctorsData'
@@ -43,16 +43,18 @@ const AUTOPLAY_DELAY_MS = 4500
 export default function DoctorsSection() {
   const ref = useRef(null)
   const emblaRef = useRef<CarouselApi | null>(null)
+  const [apiReady, setApiReady] = useState(false)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const shouldReduceMotion = useReducedMotion()
   const { t } = useLanguage()
 
   const setApi = useCallback((api: CarouselApi | null) => {
     emblaRef.current = api
+    if (api) setApiReady(true)
   }, [])
 
   useEffect(() => {
-    if (shouldReduceMotion || !emblaRef.current) return
+    if (shouldReduceMotion || !apiReady || !emblaRef.current) return
     const api = emblaRef.current
     const interval = setInterval(() => {
       if (!api) return
@@ -65,7 +67,7 @@ export default function DoctorsSection() {
       }
     }, AUTOPLAY_DELAY_MS)
     return () => clearInterval(interval)
-  }, [shouldReduceMotion])
+  }, [shouldReduceMotion, apiReady])
 
   return (
     <section id="doctors" className="py-[80px] px-[16px] md:px-[20px] lg:px-[25px] bg-[#e8f5e9]">
