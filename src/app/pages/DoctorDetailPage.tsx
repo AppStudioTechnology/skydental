@@ -51,14 +51,18 @@ export default function DoctorDetailPage() {
   return (
     <ScrollSection>
     <div className="bg-white">
-      {/* Hero: Picture left (smaller), content right (white bg) - same style for all doctors */}
-      <section ref={heroRef} className="min-h-[400px] flex flex-col lg:flex-row pt-20 lg:pt-24">
-        {/* Left: Doctor image - smaller column, neutral grey background */}
+      {/* Hero: Picture left, content right - light sky blue section bg, centered */}
+      <section
+        ref={heroRef}
+        className="min-h-[480px] flex flex-col lg:flex-row lg:items-center gap-8 lg:gap-12 pt-20 lg:pt-24 pb-16 lg:pb-24 px-4 lg:px-8"
+        style={{ background: 'linear-gradient(180deg, #e0f4ff 0%, #d4edff 50%, #e8f7fc 100%)' }}
+      >
+        {/* Left: Doctor image - centered in column */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="w-full lg:w-[32%] lg:max-w-[340px] min-h-[280px] lg:min-h-[400px] lg:max-h-[480px] bg-[#e8e8e8] flex items-center justify-center overflow-hidden shrink-0"
+          className="w-full lg:w-[32%] lg:max-w-[340px] min-h-[280px] lg:min-h-[360px] lg:max-h-[440px] bg-white/70 rounded-2xl overflow-hidden shrink-0 flex items-center justify-center shadow-md mx-auto lg:mx-0"
         >
           <img
             src={doctor.aboutImage}
@@ -67,21 +71,21 @@ export default function DoctorDetailPage() {
           />
         </motion.div>
 
-        {/* Right: Content - white background, more space */}
+        {/* Right: Content - uses full width of column, centered vertically */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
           animate={heroInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="w-full lg:flex-1 min-w-0 bg-white flex flex-col justify-center px-6 md:px-10 lg:px-14 py-12 lg:py-16"
+          className="w-full lg:flex-1 min-w-0 flex flex-col justify-center px-6 md:px-10 lg:px-12 xl:px-16 py-10 lg:py-12"
         >
           {/* Breadcrumbs - at top */}
-          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-['Arial'] mb-6">
-            <Link to="/" className="flex items-center gap-1 hover:text-gray-700">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 font-['Arial'] mb-5">
+            <Link to="/" className="flex items-center gap-1 hover:text-gray-800">
               <Home className="w-4 h-4" />
               Home
             </Link>
             <ChevronRight className="w-4 h-4 text-gray-400" />
-            <Link to="/our-doctors" className="hover:text-gray-700">Doctors</Link>
+            <Link to="/our-doctors" className="hover:text-gray-800">Doctors</Link>
             <ChevronRight className="w-4 h-4 text-gray-400" />
             <span className="text-[#0C0060] font-medium">{doctor.name}</span>
           </div>
@@ -92,7 +96,7 @@ export default function DoctorDetailPage() {
           <p className="text-base md:text-lg text-black/80 font-['Arial'] mb-6">
             {doctor.title === doctor.specialty ? doctor.specialty : `${doctor.title} | ${doctor.specialty}`}
           </p>
-          <p className="text-[15px] md:text-base text-black/85 leading-[1.7] max-w-2xl font-serif" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+          <p className="text-[15px] md:text-base text-black/85 leading-[1.7] w-full max-w-none font-serif" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
             {doctor.description}
           </p>
 
