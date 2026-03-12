@@ -101,7 +101,7 @@ export default function DoctorDetailPage() {
           </p>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-8 mb-8">
             {doctor.stats.map((stat, index) => (
               <div key={index} className="text-center sm:text-left">
                 <div className="text-lg font-['Gilda_Display'] font-semibold text-[#0C0060]">
@@ -140,7 +140,7 @@ export default function DoctorDetailPage() {
       </section>
 
       {/* About Section - anchor for in-page nav; main bio is in hero right column */}
-      <section ref={aboutRef} className="py-8 bg-white border-t border-gray-100" aria-hidden="true" />
+      <section ref={aboutRef} className="bg-white border-t border-gray-100" aria-hidden="true" />
 
       {/* Education & Certification Section */}
       {doctor.id !== 'dr-basma-al-rawi' && doctor.id !== 'dr-elias-daoud-hanna' && doctor.id !== 'dr-hazem-reslan' && doctor.id !== 'dr-mohanned-albasha' && doctor.education.length > 0 && (
