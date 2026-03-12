@@ -138,16 +138,17 @@ export default function ServiceDetailPage() {
                 </div>
               </motion.button>
 
-              <motion.button
+              <motion.a
+                href="tel:+97126677448"
                 whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
                 whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-                className="bg-white text-[#0C0060] font-bold px-8 py-4 rounded-full inline-flex items-center gap-3 hover:bg-gray-50 transition-colors font-['Arial']"
+                className="bg-white text-[#0C0060] font-bold px-8 py-4 rounded-full inline-flex items-center gap-3 hover:bg-gray-50 transition-colors font-['Arial'] no-underline"
               >
                 <span>Call Us Now</span>
                 <div className="w-9 h-9 bg-[#CBFF8F] rounded-full flex items-center justify-center">
                   <ArrowUpRight className="w-5 h-5 text-[#0C0060]" />
                 </div>
-              </motion.button>
+              </motion.a>
             </div>
 
             {/* Breadcrumbs */}

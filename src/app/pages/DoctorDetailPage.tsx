@@ -95,14 +95,15 @@ export default function DoctorDetailPage() {
                 </div>
               </motion.button>
 
-              <motion.button
+              <motion.a
+                href="tel:+97126677448"
                 whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
                 whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-                className="bg-white text-[#0C0060] font-bold px-8 py-4 rounded-full inline-flex items-center gap-3 hover:bg-gray-50 transition-colors font-['Arial']"
+                className="bg-white text-[#0C0060] font-bold px-8 py-4 rounded-full inline-flex items-center gap-3 hover:bg-gray-50 transition-colors font-['Arial'] no-underline"
               >
                 <Phone className="w-5 h-5" />
                 <span>Contact Now</span>
-              </motion.button>
+              </motion.a>
             </div>
 
             {/* Breadcrumbs */}
@@ -461,7 +462,7 @@ export default function DoctorDetailPage() {
                 <div className="space-y-3 text-sm text-black/70 font-['Arial']">
                   <div className="flex items-center gap-2">
                     <Phone className="w-4 h-4 text-[#0C0060]" />
-                    <span>Phone: +1 (555) 123-4567</span>
+                    <span>Phone: +971 26 677 448</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <Calendar className="w-4 h-4 text-[#0C0060]" />
@@ -482,14 +483,15 @@ export default function DoctorDetailPage() {
                   <span>Request Appointment Now</span>
                 </motion.button>
 
-                <motion.button
+                <motion.a
+                  href="tel:+97126677448"
                   whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
                   whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-                  className="bg-white text-[#0C0060] font-bold px-8 py-5 rounded-full inline-flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors font-['Arial'] text-lg w-full"
+                  className="bg-white text-[#0C0060] font-bold px-8 py-5 rounded-full inline-flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors font-['Arial'] text-lg w-full no-underline"
                 >
                   <Phone className="w-5 h-5" />
                   <span>Call Us Now</span>
-                </motion.button>
+                </motion.a>
               </div>
             </div>
           </motion.div>

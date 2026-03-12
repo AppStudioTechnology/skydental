@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import imgImage10 from '../../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.webp'
 
@@ -758,11 +759,24 @@ function getAvailableDates() {
   return dates
 }
 
-function SocialIcon({ children }: { children: React.ReactNode }) {
+function SocialIcon({ children, href = '/contact' }: { children: React.ReactNode; href?: string }) {
+  const isInternal = href.startsWith('/') && !href.startsWith('//')
+  const className = "w-[24px] h-[24px] transition-opacity hover:opacity-70"
+  if (isInternal) {
+    return (
+      <Link to={href} className={className}>
+        <svg className="w-full h-full" fill="none" viewBox="0 0 24 24">
+          {children}
+        </svg>
+      </Link>
+    )
+  }
   return (
     <a
-      href="#"
-      className="w-[24px] h-[24px] transition-opacity hover:opacity-70"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
     >
       <svg className="w-full h-full" fill="none" viewBox="0 0 24 24">
         {children}

@@ -160,7 +160,9 @@ export default function ContactUsPage() {
                 <Phone className="w-8 h-8 text-[#0C0060]" />
               </div>
               <h3 className="text-2xl font-['Gilda_Display'] text-black mb-4">{t('contactPage', 'phone')}</h3>
-              <p className="text-base font-['Arial'] font-bold text-[#0c0060] mb-1">+971 26 677 448</p>
+              <a href="tel:+97126677448" className="text-base font-['Arial'] font-bold text-[#0c0060] mb-1 hover:underline">
+                +971 26 677 448
+              </a>
               <p className="text-xs font-['Arial'] text-black opacity-70">
                 Call us to book appointments or for any enquiries.
               </p>
