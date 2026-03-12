@@ -19,5 +19,5 @@
 </IfModule>
 
 # If rewrites above are ignored (e.g. beta/cPanel), server will 404 for /contact etc.
-# This makes the server serve 404.html instead; that page redirects to /#/contact so the app loads.
+# 404.html redirects to /?redirect=/path; the app then navigates to the clean URL.
 ErrorDocument 404 /404.html

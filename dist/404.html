@@ -8,8 +8,12 @@
     (function() {
       var path = window.location.pathname;
       var search = window.location.search || '';
-      var target = path === '/' || path === '' ? window.location.origin + '/' : window.location.origin + '/' + '#' + path + search;
-      window.location.replace(target);
+      if (path === '/' || path === '') {
+        window.location.replace(window.location.origin + '/');
+      } else {
+        var redirect = encodeURIComponent(path + search);
+        window.location.replace(window.location.origin + '/?redirect=' + redirect);
+      }
     })();
   </script>
 </head>

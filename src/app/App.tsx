@@ -1,6 +1,6 @@
 'use client'
 
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { Suspense, lazy, useEffect, useState, useCallback } from 'react'
 import { useReducedMotion } from 'motion/react'
 import Lenis from 'lenis'
@@ -30,6 +30,21 @@ function PageFallback() {
   return <div className="min-h-[50vh] flex items-center justify-center" aria-hidden />
 }
 
+/** When 404.html redirects to /?redirect=/path, navigate to the clean URL */
+function RedirectHandler() {
+  const { pathname, search } = useLocation()
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (pathname !== '/' || !search) return
+    const params = new URLSearchParams(search)
+    const target = params.get('redirect')
+    if (target && target.startsWith('/')) {
+      navigate(target, { replace: true })
+    }
+  }, [pathname, search, navigate])
+  return null
+}
+
 export default function App() {
   const [mounted, setMounted] = useState(false)
   const [showLoadingScreen, setShowLoadingScreen] = useState(true)
@@ -41,13 +56,6 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    // HashRouter: if we were loaded from a path URL (e.g. /contact) with no hash, redirect to hash URL so the right page shows
-    const path = window.location.pathname
-    if (path && path !== '/' && path !== '/index.html' && !window.location.hash) {
-      window.location.replace(window.location.origin + '/' + '#' + path + window.location.search)
-      return
-    }
-    // Disable browser scroll restoration
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
     }
@@ -89,9 +97,10 @@ export default function App() {
         <LoadingScreen visible={showLoadingScreen} onComplete={handleLoadingComplete} />
       )}
       {mounted && (
-        <HashRouter>
+        <BrowserRouter>
           <LanguageProvider>
             <BookingProvider>
+              <RedirectHandler />
               <ScrollToTop />
               <CustomCursor />
               <div className="bg-white min-h-screen">
@@ -117,7 +126,7 @@ export default function App() {
               </div>
             </BookingProvider>
           </LanguageProvider>
-        </HashRouter>
+        </BrowserRouter>
       )}
     </>
   )
