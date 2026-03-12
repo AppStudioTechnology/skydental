@@ -43,6 +43,7 @@ All forms (Request Appointment, Contact, Careers) send to **smile@skydc.ae** (co
      ```
 2. **Upload**
    - Contents of `dist/` → beta folder (e.g. document root for beta.skydc.ae).
+   - **Include `.htaccess`** (Vite copies it from `public/` to `dist/`). In cPanel File Manager, enable **Show Hidden Files** (Settings → check "Show Hidden Files") so `.htaccess` is visible and uploaded; otherwise refresh on `/about-us` or `/contact` will 404.
    - Contents of `api-php/` → `api/` inside that folder (so `https://beta.skydc.ae/api/send-booking.php` etc. exist).
 3. **Server config**
    - In `api/`, copy `config.sample.php` to `config.php`, set `FROM_EMAIL` and recipients (e.g. smile@skydc.ae).
@@ -93,3 +94,21 @@ If the three API URLs are **not** set, the app uses `window.location.origin + '/
 - `config.sample.php` – Copy to `config.php` and set emails (do not commit `config.php`).
 
 See **api-php/README.md** for full cPanel setup and troubleshooting.
+
+---
+
+## 404 on cPanel when refreshing /about-us, /contact, etc.
+
+The app is a single-page app (SPA): the server must serve `index.html` for routes like `/about-us` so React Router can handle them. On Vercel this is configured for you; on cPanel you need `.htaccess` to be active.
+
+### 1. Ensure `.htaccess` is uploaded
+- After `npm run build`, `dist/.htaccess` exists (copied from `public/.htaccess`).
+- Upload **all** contents of `dist/`, including `.htaccess`.
+- In **cPanel → File Manager**, enable **Show Hidden Files** (Settings → check "Show Hidden Files") so you can see and upload `.htaccess`. If you already uploaded without it, upload `.htaccess` into the beta (or live) document root.
+
+### 2. If 404 still happens: enable `.htaccess` (AllowOverride)
+Some hosts disable `.htaccess` for the domain or folder. Then the server ignores our rules and returns 404 for `/about-us`.
+
+- In **cPanel**, check if there is an option for the domain/subdomain (e.g. **Domains** → **Domains** or **Subdomains** → **beta.skydc.ae**) to set **AllowOverride** to **All** for the document root.
+- If you don’t see it, **contact your host** and ask: “Please enable AllowOverride All for the document root of beta.skydc.ae (and www.skydc.ae) so .htaccess rules apply for the SPA.”
+- After they enable it, refresh https://beta.skydc.ae/about-us — it should load the About Us page instead of 404.
