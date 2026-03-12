@@ -121,7 +121,7 @@ export default function DoctorsSection() {
             <CarouselContent className="-ml-0">
               {doctorsData.map((doctor) => (
                 <CarouselItem key={doctor.id} className="pl-0 basis-full min-w-0 shrink-0">
-                  <div className="max-w-[360px] sm:max-w-[400px] md:max-w-[440px] mx-auto px-2">
+                  <div className="max-w-[400px] sm:max-w-[460px] md:max-w-[520px] mx-auto px-2">
                     <DoctorCard
                     doctor={{
                       id: doctor.id,
