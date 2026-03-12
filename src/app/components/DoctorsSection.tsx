@@ -160,7 +160,7 @@ function DoctorCard({
   return (
     <div className="group flex flex-col">
       <div className="bg-white rounded-[20px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-        <div className="relative w-full aspect-[3/4] overflow-hidden isolate">
+        <div className="relative w-full aspect-[3/5] overflow-hidden isolate">
           {doctor.imageSide && (
             <img
               src={doctor.imageSide}
