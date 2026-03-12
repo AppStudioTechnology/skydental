@@ -66,6 +66,7 @@ export default function DoctorsSection() {
           transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
           className="relative px-14 md:px-16 lg:px-20"
         >
+          {/* No overflow-hidden on Carousel root so arrows at -left-12/-right-12 stay visible in padded area */}
           <Carousel
             opts={{
               loop: true,
@@ -75,13 +76,13 @@ export default function DoctorsSection() {
               containScroll: 'trimSnaps',
             }}
             plugins={autoplayPlugin ? [autoplayPlugin] : undefined}
-            className="w-full overflow-hidden"
+            className="w-full"
           >
-            <CarouselContent className="-ml-3 md:-ml-4">
+            <CarouselContent className="-ml-3 gap-3 md:-ml-4 md:gap-4 xl:-ml-0">
               {doctorsData.map((doctor) => (
                 <CarouselItem
                   key={doctor.id}
-                  className="pl-3 md:pl-4 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25%-0.5625rem)]"
+                  className="pl-3 md:pl-4 min-w-0 shrink-0 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-0.75rem)] xl:pl-0"
                 >
                   <DoctorCard
                     doctor={{
