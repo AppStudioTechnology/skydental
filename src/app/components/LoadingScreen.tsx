@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'motion/react'
 
-const LOADING_LOGO_SRC = '/logos/loading-logo.png'
+const LOADING_LOGO_SRC = '/logos/loading-logo.webp'
 
 interface LoadingScreenProps {
   onComplete?: () => void

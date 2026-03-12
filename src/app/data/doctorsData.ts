@@ -1,29 +1,29 @@
 // Doctor front-view photos from assets
-import drSaifImg from '../../assets/Drs Front View Pictures/dr saif.jpg'
-import drBasmaImg from '../../assets/Drs Front View Pictures/dr basma.jpg'
-import drClaudeImg from '../../assets/Drs Front View Pictures/dr claude.jpg'
-import drEliasImg from '../../assets/Drs Front View Pictures/dr elias.jpg'
-import drAmrHussonImg from '../../assets/Drs Front View Pictures/dr amr husson.jpg'
-import drShridharImg from '../../assets/Drs Front View Pictures/dr shridhar.jpg'
-import drMuhammadAbdulrazakImg from '../../assets/Drs Front View Pictures/dr muhammad abdulrazak.jpg'
-import drHazemImg from '../../assets/Drs Front View Pictures/dr hazem.jpg'
-import drKinanImg from '../../assets/Drs Front View Pictures/dr kinan mohammed.jpg'
-import drMohanedImg from '../../assets/Drs Front View Pictures/dr mohaned albasha.jpg'
-import drReemImg from '../../assets/Drs Front View Pictures/dr reem.jpg'
-import drArwaImg from '../../assets/Drs Front View Pictures/dr arwa.jpg'
+import drSaifImg from '../../assets/Drs Front View Pictures/dr saif.webp'
+import drBasmaImg from '../../assets/Drs Front View Pictures/dr basma.webp'
+import drClaudeImg from '../../assets/Drs Front View Pictures/dr claude.webp'
+import drEliasImg from '../../assets/Drs Front View Pictures/dr elias.webp'
+import drAmrHussonImg from '../../assets/Drs Front View Pictures/dr amr husson.webp'
+import drShridharImg from '../../assets/Drs Front View Pictures/dr shridhar.webp'
+import drMuhammadAbdulrazakImg from '../../assets/Drs Front View Pictures/dr muhammad abdulrazak.webp'
+import drHazemImg from '../../assets/Drs Front View Pictures/dr hazem.webp'
+import drKinanImg from '../../assets/Drs Front View Pictures/dr kinan mohammed.webp'
+import drMohanedImg from '../../assets/Drs Front View Pictures/dr mohaned albasha.webp'
+import drReemImg from '../../assets/Drs Front View Pictures/dr reem.webp'
+import drArwaImg from '../../assets/Drs Front View Pictures/dr arwa.webp'
 // Doctor side-view photos (hover state)
-import drSaifSideImg from '../../assets/Drs Side View Pictures/dr saif.jpg'
-import drBasmaSideImg from '../../assets/Drs Side View Pictures/dr basma.jpg'
-import drClaudeSideImg from '../../assets/Drs Side View Pictures/dr claude.jpg'
-import drEliasSideImg from '../../assets/Drs Side View Pictures/dr elias.jpg'
-import drAmrHussonSideImg from '../../assets/Drs Side View Pictures/dr amr husson.jpg'
-import drShridharSideImg from '../../assets/Drs Side View Pictures/dr shridhar munje.jpg'
-import drMuhammadAbdulrazakSideImg from '../../assets/Drs Side View Pictures/dr mohammad abdulrazak.jpg'
-import drHazemSideImg from '../../assets/Drs Side View Pictures/dr hazem.jpg'
-import drKinanSideImg from '../../assets/Drs Side View Pictures/dr kinan mohammed.jpg'
-import drMohanedSideImg from '../../assets/Drs Side View Pictures/dr mohanned albasha.jpg'
-import drReemSideImg from '../../assets/Drs Side View Pictures/dr reem.jpg'
-import drArwaSideImg from '../../assets/Drs Side View Pictures/dr Arwa.jpg'
+import drSaifSideImg from '../../assets/Drs Side View Pictures/dr saif.webp'
+import drBasmaSideImg from '../../assets/Drs Side View Pictures/dr basma.webp'
+import drClaudeSideImg from '../../assets/Drs Side View Pictures/dr claude.webp'
+import drEliasSideImg from '../../assets/Drs Side View Pictures/dr elias.webp'
+import drAmrHussonSideImg from '../../assets/Drs Side View Pictures/dr amr husson.webp'
+import drShridharSideImg from '../../assets/Drs Side View Pictures/dr shridhar munje.webp'
+import drMuhammadAbdulrazakSideImg from '../../assets/Drs Side View Pictures/dr mohammad abdulrazak.webp'
+import drHazemSideImg from '../../assets/Drs Side View Pictures/dr hazem.webp'
+import drKinanSideImg from '../../assets/Drs Side View Pictures/dr kinan mohammed.webp'
+import drMohanedSideImg from '../../assets/Drs Side View Pictures/dr mohanned albasha.webp'
+import drReemSideImg from '../../assets/Drs Side View Pictures/dr reem.webp'
+import drArwaSideImg from '../../assets/Drs Side View Pictures/dr Arwa.webp'
 
 export interface DoctorDetail {
   id: string
@@ -955,8 +955,8 @@ export const doctorsData: DoctorDetail[] = [
     name: 'Dr. Arwa Rashed Almarshoodi',
     title: 'General Dental Practitioner',
     specialty: 'General Dental Practitioner',
-    image: '/assets/images/doctor9.png',
-    aboutImage: '/assets/images/doctor9.png',
+    image: '/assets/images/doctor9.webp',
+    aboutImage: '/assets/images/doctor9.webp',
     description: 'Dr. Arwa Rashed Almarshoodi is a distinguished Prosthodontic Specialist who transforms lives by restoring oral function, comfort, and aesthetics with exceptional precision. Through her advanced training and meticulous approach to comprehensive restorative care, she empowers patients to regain their confidence, rediscover their smiles, and achieve long-term oral health. Her clinical philosophy is grounded in the belief that every patient deserves a personalised, functional, and aesthetically harmonious smile—crafted through evidence-based practice and artistic attention to detail.',
     stats: [
       { label: 'Specialist', value: 'Prosthodontic Specialist' },

@@ -1,4 +1,4 @@
-import imgRectangle161125373 from "../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.png";
+import imgRectangle161125373 from "../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.webp";
 
 function MaskGroup() {
   return (

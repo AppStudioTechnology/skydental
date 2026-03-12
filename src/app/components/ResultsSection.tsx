@@ -4,9 +4,9 @@ import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
 import { useRef, useState, useCallback, useEffect } from 'react'
 
-// Update these paths to your new high-quality images in the public folder
-const BEFORE_IMAGE = '/assets/images/before-treatment.jp.png'
-const AFTER_IMAGE = '/assets/images/after-treatment.jpg.jpg'
+// Compressed WebP images (run: npm run compress:images)
+const BEFORE_IMAGE = '/assets/images/before-treatment.webp'
+const AFTER_IMAGE = '/assets/images/after-treatment.webp'
 
 export default function ResultsSection() {
   const ref = useRef(null)

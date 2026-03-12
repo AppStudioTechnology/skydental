@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import imgImage10 from '../../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.png'
+import imgImage10 from '../../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.webp'
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [

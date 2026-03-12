@@ -7,14 +7,14 @@ import { Shield } from 'lucide-react'
 const insurancePartners = [
   { id: '1', name: 'Thiqa', logo: '/logos/thiqa.webp' },
   { id: '2', name: 'Daman', logo: '/logos/daman.webp' },
-  { id: '3', name: 'ADNIC', logo: '/logos/adnic.png' },
-  { id: '4', name: 'NAS', logo: '/logos/nas.png' },
+  { id: '3', name: 'ADNIC', logo: '/logos/adnic.webp' },
+  { id: '4', name: 'NAS', logo: '/logos/nas.webp' },
   { id: '5', name: 'Neuron', logo: '/logos/neuron.webp' },
-  { id: '6', name: 'AXA GIG', logo: '/logos/axagig.png' },
-  { id: '7', name: 'NextCare', logo: '/logos/nextcare.png' },
-  { id: '8', name: 'MedNet', logo: '/logos/mednet.png' },
-  { id: '9', name: 'Cigna', logo: '/logos/cigna.png' },
-  { id: '10', name: 'SAICO', logo: '/logos/saico.png' },
+  { id: '6', name: 'AXA GIG', logo: '/logos/axagig.webp' },
+  { id: '7', name: 'NextCare', logo: '/logos/nextcare.webp' },
+  { id: '8', name: 'MedNet', logo: '/logos/mednet.webp' },
+  { id: '9', name: 'Cigna', logo: '/logos/cigna.webp' },
+  { id: '10', name: 'SAICO', logo: '/logos/saico.webp' },
 ]
 
 function PartnerCard({ partner }: { partner: typeof insurancePartners[0] }) {

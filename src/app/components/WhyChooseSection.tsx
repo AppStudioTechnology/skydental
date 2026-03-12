@@ -4,8 +4,8 @@ import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import { useBooking } from '../context/BookingContext'
 import { useLanguage } from '../context/LanguageContext'
-// Image is in public folder, using direct path
-const imgImage1 = '/assets/images/woman-patient-in-dental-clinic-being-examined-by-a-2025-04-01-13-09-56-utc.png'
+// Compressed WebP (run npm run compress:images to regenerate)
+const imgImage1 = '/assets/images/woman-patient.webp'
 
 export default function WhyChooseSection() {
   const ref = useRef(null)

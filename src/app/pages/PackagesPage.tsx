@@ -5,9 +5,9 @@ import { useRef, useState } from 'react'
 import { ArrowUpRight, Check, GraduationCap, HeartPulse, Sparkles, Smile, Percent, Sparkle } from 'lucide-react'
 import { usePageSEO } from '../hooks/usePageSEO'
 import { useBooking } from '../context/BookingContext'
-import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.png"
-import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png"
-import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png"
+import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.webp"
+import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.webp"
+import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.webp"
 import ScrollSection from '../components/ScrollSection'
 
 interface Package {
@@ -100,7 +100,7 @@ const paymentCards = [
     id: 'homat-al-watan',
     name: 'Homat Al Watan',
     description: 'We proudly accept Homat Al Watan cards, providing exclusive benefits for UAE Armed Forces members, veterans, and their families.',
-    logo: '/logos/homatalwatan.png',
+    logo: '/logos/homatalwatan.webp',
     color: '#0C0060'
   },
   {
@@ -114,7 +114,7 @@ const paymentCards = [
     id: 'tamara',
     name: 'Tamara',
     description: 'Benefit from flexible payment solutions with Tamara, allowing you to manage your dental care costs comfortably and transparently.',
-    logo: '/logos/tamara.png',
+    logo: '/logos/tamara.webp',
     color: '#000000'
   },
   {

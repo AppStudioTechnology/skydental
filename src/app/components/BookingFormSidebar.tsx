@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 import { generateBookingPdf } from '../utils/generateBookingPdf'
 
-const LOADING_LOGO_URL = '/logos/loading-logo.png'
+const LOADING_LOGO_URL = '/logos/loading-logo.webp'
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [

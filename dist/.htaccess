@@ -18,7 +18,6 @@
   RewriteRule ^ /index.html [L]
 </IfModule>
 
-# Fallback if mod_rewrite rules above are ignored (e.g. AllowOverride limits):
-# Uncomment the line below to serve index.html when server would return 404.
-# Note: response may still be 404 status; uncomment only if rewrites don't work.
-# ErrorDocument 404 /index.html
+# If rewrites above are ignored (e.g. beta/cPanel), server will 404 for /contact etc.
+# This makes the server serve 404.html instead; that page redirects to /#/contact so the app loads.
+ErrorDocument 404 /404.html

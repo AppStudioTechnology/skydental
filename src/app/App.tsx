@@ -1,28 +1,34 @@
 'use client'
 
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { useEffect, useState, useCallback } from 'react'
+import { Suspense, lazy, useEffect, useState, useCallback } from 'react'
 import { useReducedMotion } from 'motion/react'
 import Lenis from 'lenis'
 import Header from './components/Header'
 import ScrollToTop from './components/ScrollToTop'
 import LoadingScreen from './components/LoadingScreen'
-import HomePage from './pages/HomePage'
-import AboutUsPage from './pages/AboutUsPage'
-import OurDoctorsPageNew from './pages/OurDoctorsPageNew'
-import DoctorDetailPage from './pages/DoctorDetailPage'
-import ServicesPage from './pages/ServicesPage'
-import ServiceDetailPage from './pages/ServiceDetailPage'
-import PackagesPage from './pages/PackagesPage'
-import PatientGuidePage from './pages/PatientGuidePage'
-import FAQsPage from './pages/FAQsPage'
-import CareersPage from './pages/CareersPage'
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage'
-import ContactUsPage from './pages/ContactUsPage'
 import Footer from './components/Footer'
 import { BookingProvider } from './context/BookingContext'
 import { LanguageProvider } from './context/LanguageContext'
 import CustomCursor from './components/CustomCursor'
+
+// Home page loads immediately for fast first paint; other pages load on demand
+import HomePage from './pages/HomePage'
+const AboutUsPage = lazy(() => import('./pages/AboutUsPage'))
+const OurDoctorsPageNew = lazy(() => import('./pages/OurDoctorsPageNew'))
+const DoctorDetailPage = lazy(() => import('./pages/DoctorDetailPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage'))
+const PackagesPage = lazy(() => import('./pages/PackagesPage'))
+const PatientGuidePage = lazy(() => import('./pages/PatientGuidePage'))
+const FAQsPage = lazy(() => import('./pages/FAQsPage'))
+const CareersPage = lazy(() => import('./pages/CareersPage'))
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage'))
+const ContactUsPage = lazy(() => import('./pages/ContactUsPage'))
+
+function PageFallback() {
+  return <div className="min-h-[50vh] flex items-center justify-center" aria-hidden />
+}
 
 export default function App() {
   const [mounted, setMounted] = useState(false)
@@ -51,7 +57,7 @@ export default function App() {
   // Hide loading screen after app is mounted and a short delay for smooth transition
   useEffect(() => {
     if (!mounted) return
-    const t = setTimeout(() => setShowLoadingScreen(false), 400)
+    const t = setTimeout(() => setShowLoadingScreen(false), 280)
     return () => clearTimeout(t)
   }, [mounted])
 
@@ -90,6 +96,7 @@ export default function App() {
               <CustomCursor />
               <div className="bg-white min-h-screen">
                 <Header />
+                <Suspense fallback={<PageFallback />}>
                 <Routes>
                   <Route path="/" element={<HomePage />} />
                   <Route path="/about-us" element={<AboutUsPage />} />
@@ -105,6 +112,7 @@ export default function App() {
                   <Route path="/contact" element={<ContactUsPage />} />
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
+                </Suspense>
                 <Footer />
               </div>
             </BookingProvider>

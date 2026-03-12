@@ -1,11 +1,18 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
 import { motion, useReducedMotion } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null)
   const shouldReduceMotion = useReducedMotion()
   const { t } = useLanguage()
+
+  // Force video to start loading immediately (helps on slow connections)
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.load()
+  }, [])
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -29,9 +36,10 @@ export default function HeroSection() {
 
   return (
     <section id="home" className="relative w-full min-h-[70vh] h-[85vh] md:h-[90vh] lg:h-screen overflow-hidden">
-      {/* Background Video */}
-      <div className="absolute inset-0 rounded-none overflow-hidden">
+      {/* Background Video - dark bg shows while video loads */}
+      <div className="absolute inset-0 rounded-none overflow-hidden bg-[#0a0a0a]">
         <video 
+          ref={videoRef}
           autoPlay 
           loop 
           playsInline 

@@ -116,7 +116,7 @@ export default function CustomCursor() {
     >
       <div className="w-10 h-10 md:w-12 md:h-12">
         <img 
-          src="/logos/tooth-logo.png" 
+          src="/logos/tooth-logo.webp" 
           alt="Sky Dental Logo" 
           className="w-full h-full object-contain"
         />

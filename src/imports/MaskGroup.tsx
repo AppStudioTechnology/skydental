@@ -1,4 +1,4 @@
-import imgRectangle161125373 from "../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.png";
+import imgRectangle161125373 from "../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.webp";
 
 export default function MaskGroup() {
   return (

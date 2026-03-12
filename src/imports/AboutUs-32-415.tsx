@@ -1,15 +1,15 @@
 import svgPaths from "./svg-g5qboqlgzy";
-import imgRectangle161125373 from "../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.png";
-import imgImage from "../assets/e7f6b19877321e15ce763eaa93af6f8852c4f043.png";
-import imgImage1 from "../assets/84d74e9e31f1ec8d69abcb8a68911f4778c66904.png";
-import imgRectangle from "../assets/56a1ec86e8d10bf5bdff13be631a0c01c87288e1.png";
-import imgRectangle1 from "../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.png";
-import imgRectangle2 from "../assets/1eb775b58dcc66b3cb22d721b6247b33ea0d3e5b.png";
-import imgRectangle3 from "../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png";
-import imgRectangle4 from "../assets/ba42c02f6b8903ac7548eff82a847d9f5943fd02.png";
-import imgImage2 from "../assets/e2295a1a1a2bc348414dcc117de577c691164137.png";
-import imgImage3 from "../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png";
-import imgRectangle161125374 from "../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.png";
+import imgRectangle161125373 from "../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.webp";
+import imgImage from "../assets/e7f6b19877321e15ce763eaa93af6f8852c4f043.webp";
+import imgImage1 from "../assets/84d74e9e31f1ec8d69abcb8a68911f4778c66904.webp";
+import imgRectangle from "../assets/56a1ec86e8d10bf5bdff13be631a0c01c87288e1.webp";
+import imgRectangle1 from "../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.webp";
+import imgRectangle2 from "../assets/1eb775b58dcc66b3cb22d721b6247b33ea0d3e5b.webp";
+import imgRectangle3 from "../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.webp";
+import imgRectangle4 from "../assets/ba42c02f6b8903ac7548eff82a847d9f5943fd02.webp";
+import imgImage2 from "../assets/e2295a1a1a2bc348414dcc117de577c691164137.webp";
+import imgImage3 from "../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.webp";
+import imgRectangle161125374 from "../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.webp";
 
 function MaskGroup() {
   return (

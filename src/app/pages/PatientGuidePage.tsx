@@ -7,10 +7,10 @@ import { Home, ChevronRight, Check, FileText, ClipboardList, Shield, DollarSign,
 import { useBooking } from '../context/BookingContext'
 import { usePageSEO } from '../hooks/usePageSEO'
 import ScrollSection from '../components/ScrollSection'
-import imgDentalCare from "../../assets/7e26eb0c35bbd0356cd593caf48b0b5a702f7753.png"
-import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.png"
-import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png"
-import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png"
+import imgDentalCare from "../../assets/7e26eb0c35bbd0356cd593caf48b0b5a702f7753.webp"
+import imgImage from "../../assets/e2295a1a1a2bc348414dcc117de577c691164137.webp"
+import imgImage1 from "../../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.webp"
+import imgImage2 from "../../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.webp"
 
 interface FirstVisitStep {
   id: string
@@ -77,14 +77,14 @@ const secondOpinionCards: SecondOpinionCard[] = [
 const insurancePartners: InsurancePartner[] = [
   { id: '1', name: 'Thiqa', logo: '/logos/thiqa.webp' },
   { id: '2', name: 'Daman', logo: '/logos/daman.webp' },
-  { id: '3', name: 'ADNIC', logo: '/logos/adnic.png' },
-  { id: '4', name: 'NAS', logo: '/logos/nas.png' },
+  { id: '3', name: 'ADNIC', logo: '/logos/adnic.webp' },
+  { id: '4', name: 'NAS', logo: '/logos/nas.webp' },
   { id: '5', name: 'Neuron', logo: '/logos/neuron.webp' },
-  { id: '6', name: 'AXA GIG', logo: '/logos/axagig.png' },
-  { id: '7', name: 'NextCare', logo: '/logos/nextcare.png' },
-  { id: '8', name: 'MedNet', logo: '/logos/mednet.png' },
-  { id: '9', name: 'Cigna', logo: '/logos/cigna.png' },
-  { id: '10', name: 'SAICO', logo: '/logos/saico.png' },
+  { id: '6', name: 'AXA GIG', logo: '/logos/axagig.webp' },
+  { id: '7', name: 'NextCare', logo: '/logos/nextcare.webp' },
+  { id: '8', name: 'MedNet', logo: '/logos/mednet.webp' },
+  { id: '9', name: 'Cigna', logo: '/logos/cigna.webp' },
+  { id: '10', name: 'SAICO', logo: '/logos/saico.webp' },
 ]
 
 function PatientGuidePartnerCard({ partner }: { partner: InsurancePartner }) {

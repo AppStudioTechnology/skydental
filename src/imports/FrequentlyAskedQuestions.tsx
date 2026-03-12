@@ -1,9 +1,9 @@
 import svgPaths from "./svg-7onwa8j4is";
-import imgRectangle161125373 from "../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.png";
-import imgImage from "../assets/e2295a1a1a2bc348414dcc117de577c691164137.png";
-import imgImage1 from "../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.png";
-import imgImage2 from "../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.png";
-import imgRectangle161125374 from "../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.png";
+import imgRectangle161125373 from "../assets/531a2b1be40c3f390e42e72de4c6233edf51733e.webp";
+import imgImage from "../assets/e2295a1a1a2bc348414dcc117de577c691164137.webp";
+import imgImage1 from "../assets/c5fbf2bb2ed01ea6f6ce38835da33519e2db95fe.webp";
+import imgImage2 from "../assets/27cea6501d6677b5b8f9f08502ce76c7a193f7f8.webp";
+import imgRectangle161125374 from "../assets/0279a12caadec65ec1eff7a13c4a4eb8aa32c2fa.webp";
 
 function MaskGroup() {
   return (
