@@ -1,6 +1,6 @@
 'use client'
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { useEffect, useState, useCallback } from 'react'
 import { useReducedMotion } from 'motion/react'
 import Lenis from 'lenis'
@@ -35,6 +35,12 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    // HashRouter: if we were loaded from a path URL (e.g. /contact) with no hash, redirect to hash URL so the right page shows
+    const path = window.location.pathname
+    if (path && path !== '/' && path !== '/index.html' && !window.location.hash) {
+      window.location.replace(window.location.origin + '/' + '#' + path + window.location.search)
+      return
+    }
     // Disable browser scroll restoration
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
@@ -77,7 +83,7 @@ export default function App() {
         <LoadingScreen visible={showLoadingScreen} onComplete={handleLoadingComplete} />
       )}
       {mounted && (
-        <BrowserRouter>
+        <HashRouter>
           <LanguageProvider>
             <BookingProvider>
               <ScrollToTop />
@@ -103,7 +109,7 @@ export default function App() {
               </div>
             </BookingProvider>
           </LanguageProvider>
-        </BrowserRouter>
+        </HashRouter>
       )}
     </>
   )

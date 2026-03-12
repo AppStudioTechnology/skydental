@@ -1,5 +1,7 @@
 # SPA fallback: serve index.html for all routes so client-side routing works
 # (fixes 404 on refresh or direct open of /contact, /about-us, /services, etc.)
+# Required for React Router on Apache / LiteSpeed. If 404 persists, ask host to enable AllowOverride or use server config (see DEPLOY-CPANEL-STEPS.md).
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -15,3 +17,7 @@
   # Otherwise send to index.html (React Router will handle the path)
   RewriteRule ^ /index.html [L]
 </IfModule>
+
+# If rewrites above are ignored (e.g. beta/cPanel), server will 404 for /contact etc.
+# This makes the server serve 404.html instead; that page redirects to /#/contact so the app loads.
+ErrorDocument 404 /404.html

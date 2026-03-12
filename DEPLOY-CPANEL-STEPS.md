@@ -101,3 +101,54 @@ If something fails:
 - [ ] All three forms tested and emails received at smile@skydc.ae.
 
 You’re live when the site loads and all three forms send emails to smile@skydc.ae.
+
+---
+
+## 404 when refreshing inner pages (e.g. /contact, /about-us) on beta/cPanel
+
+If the site works on Vercel but **beta.skydc.ae** (or skydc.ae) shows **404** when you refresh a page like `/contact` or open a direct link to it, the server is not applying the SPA fallback.
+
+### 1. Confirm `.htaccess` is on the server
+
+- In cPanel **File Manager**, open **public_html** (or the folder where the site is deployed).
+- Check that **`.htaccess`** exists at the same level as **`index.html`**.
+- If you don’t see it: enable “Show Hidden Files” (e.g. Settings → check “Show Hidden Files”). If it’s missing, upload the **`.htaccess`** from your project’s **`dist`** folder (or from **`public`** before build).
+
+### 2. Ask your host to allow `.htaccess` or add the rewrite
+
+Many cPanel/LiteSpeed hosts **ignore `.htaccess`** unless **AllowOverride** is enabled for that directory. Contact support and send them something like this:
+
+**Subject:** Enable .htaccess RewriteRules (or AllowOverride) for SPA routing
+
+**Message:**
+
+> My site is a single-page application (SPA). All requests that don’t match a real file (e.g. `/contact`, `/about-us`) need to be served `index.html` so the app can handle routing.  
+>
+> Please either:
+> 1. **Enable AllowOverride** for my document root (so my `.htaccess` rewrite rules apply), or  
+> 2. **Add this rewrite** in the server/virtual host config for my domain:
+>
+> **Apache / LiteSpeed:**
+> ```apache
+> <Directory "/path/to/document/root">
+>   RewriteEngine On
+>   RewriteCond %{REQUEST_FILENAME} !-f
+>   RewriteCond %{REQUEST_FILENAME} !-d
+>   RewriteRule ^ index.html [L]
+> </Directory>
+> ```
+>
+> (Replace `/path/to/document/root` with the actual path to public_html or the folder where index.html lives.)
+
+Once the server applies this (via `.htaccess` or server config), refreshing `/contact` or opening direct links will work.
+
+### 3. Last resort: `ErrorDocument 404` (if host won’t change rewrites)
+
+If the host will not enable rewrites, you can try serving `index.html` when the server would return 404:
+
+1. In your project, open **`public/.htaccess`**.
+2. Find the commented line: `# ErrorDocument 404 /index.html`
+3. Uncomment it so it reads: `ErrorDocument 404 /index.html`
+4. Save, run **`npm run build`**, and upload the new **`dist/.htaccess`** to the server.
+
+Note: the response may still be HTTP 404 (only the body is `index.html`). Use this only if you cannot get the proper rewrite applied.
