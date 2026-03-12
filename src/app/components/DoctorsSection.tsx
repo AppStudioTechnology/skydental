@@ -78,16 +78,16 @@ export default function DoctorsSection() {
             plugins={autoplayPlugin ? [autoplayPlugin] : undefined}
             className="w-full"
           >
-            <CarouselContent className="-ml-3 gap-3 md:-ml-4 md:gap-4 xl:-ml-0">
+            <CarouselContent className="-ml-3 gap-3 md:-ml-4 md:gap-4 xl:-ml-0 xl:gap-6">
               {doctorsData.map((doctor) => (
                 <CarouselItem
                   key={doctor.id}
-                  className="pl-3 md:pl-4 min-w-0 shrink-0 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-0.75rem)] xl:pl-0"
+                  className="pl-3 md:pl-4 min-w-0 shrink-0 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-1.125rem)] xl:pl-0"
                 >
                   <DoctorCard
                     doctor={{
                       id: doctor.id,
-                      name: doctor.name,
+                      name: doctor.name.replace(/,?\s*DDS\s*$/i, '').trim(),
                       image: doctor.image,
                       imageSide: doctor.imageSide,
                     }}
