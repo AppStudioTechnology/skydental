@@ -63,7 +63,7 @@ export default function DoctorDetailPage() {
             initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
-            className="w-full lg:col-span-6 min-h-[280px] lg:min-h-[360px] lg:max-h-[440px] bg-white/70 rounded-2xl overflow-hidden flex items-center justify-center shadow-md mx-auto lg:mx-0 max-w-sm lg:max-w-none"
+            className="w-full lg:col-span-2 min-h-[280px] lg:min-h-[360px] lg:max-h-[440px] bg-white/70 rounded-2xl overflow-hidden flex items-center justify-center shadow-md mx-auto lg:mx-0 max-w-sm lg:max-w-none"
           >
             <img
               src={doctor.aboutImage}
@@ -77,7 +77,7 @@ export default function DoctorDetailPage() {
             initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
             animate={heroInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="w-full lg:col-span-6 min-w-0 flex flex-col justify-center py-10 lg:py-0 lg:pl-2"
+            className="w-full lg:col-span-10 min-w-0 flex flex-col justify-center py-10 lg:py-0 lg:pl-2"
           >
           {/* Breadcrumbs - at top */}
           <div className="flex flex-wrap items-center gap-2 text-sm text-gray-600 font-['Arial'] mb-5">
