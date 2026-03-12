@@ -40,13 +40,18 @@ Use this folder when the site is hosted **on cPanel**. Emails are sent using you
 
 ### 4. Point the frontend to these URLs
 
-When you build the site for cPanel, set:
+When you build the site for cPanel, set (see `.env.beta.example` and `.env.production.example` in project root):
 
-- `VITE_BOOKING_API_URL=https://skydc.ae/api/send-booking.php`
-- `VITE_JOB_APPLICATION_API_URL=https://skydc.ae/api/send-job-application.php`
-- `VITE_CONTACT_API_URL=https://skydc.ae/api/send-contact-message.php`
+- **Beta:** `https://beta.skydc.ae/api/...`
+- **Live:** `https://www.skydc.ae/api/...`
 
-Replace `skydc.ae` with your domain. Then run `npm run build` and upload the `dist/` contents to cPanel (e.g. into `public_html`).
+Example for live (www.skydc.ae):
+
+- `VITE_BOOKING_API_URL=https://www.skydc.ae/api/send-booking.php`
+- `VITE_JOB_APPLICATION_API_URL=https://www.skydc.ae/api/send-job-application.php`
+- `VITE_CONTACT_API_URL=https://www.skydc.ae/api/send-contact-message.php`
+
+Then run `npm run build` and upload the `dist/` contents to cPanel (e.g. into `public_html` for live).
 
 ### 5. Test
 
@@ -70,7 +75,7 @@ Use this to test on **beta** before going live. Your “server” is cPanel: no 
 4. **Config on server:** In `api/`, copy `config.sample.php` to `config.php` and set FROM_EMAIL and recipients to **smile@skydc.ae**.
 5. **Test:** Open **https://beta.skydc.ae**, submit the forms. Emails go via cPanel to smile@skydc.ae.
 
-When ready for **live**, repeat with live URLs (e.g. `https://skydc.ae/api/...`) and upload to **public_html** and **public_html/api/**.
+When ready for **live** (www.skydc.ae), repeat with live URLs (`https://www.skydc.ae/api/...`) and upload to **public_html** and **public_html/api/**.
 
 ---
 

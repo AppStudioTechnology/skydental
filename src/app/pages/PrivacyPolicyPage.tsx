@@ -521,8 +521,8 @@ export default function PrivacyPolicyPage() {
                 </p>
                 <p>
                   <strong className="text-black">Website:</strong>{' '}
-                  <a href="https://skydentalcenter.ae" className="text-[#0C0060] hover:underline" target="_blank" rel="noopener noreferrer">
-                    www.skydentalcenter.ae
+                  <a href="https://www.skydc.ae" className="text-[#0C0060] hover:underline" target="_blank" rel="noopener noreferrer">
+                    www.skydc.ae
                   </a>
                 </p>
               </div>
