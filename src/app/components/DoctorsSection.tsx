@@ -118,13 +118,11 @@ export default function DoctorsSection() {
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-3 gap-3 md:-ml-4 md:gap-4 xl:-ml-0 xl:gap-6">
+            <CarouselContent className="-ml-0">
               {doctorsData.map((doctor) => (
-                <CarouselItem
-                  key={doctor.id}
-                  className="pl-3 md:pl-4 min-w-0 shrink-0 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-1.125rem)] xl:pl-0"
-                >
-                  <DoctorCard
+                <CarouselItem key={doctor.id} className="pl-0 basis-full min-w-0 shrink-0">
+                  <div className="max-w-[360px] sm:max-w-[400px] md:max-w-[440px] mx-auto px-2">
+                    <DoctorCard
                     doctor={{
                       id: doctor.id,
                       name: doctor.name.replace(/,?\s*DDS\s*$/i, '').trim(),
@@ -134,6 +132,7 @@ export default function DoctorsSection() {
                     specialty={doctor.specialty}
                     viewDetails={t('common', 'viewDetails')}
                   />
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
