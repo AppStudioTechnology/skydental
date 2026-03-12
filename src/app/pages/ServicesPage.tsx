@@ -67,7 +67,7 @@ function ServiceCard({ service, title, description, learnMore, index }: { servic
           </div>
 
           {/* Title */}
-          <h3 className="text-[1.5rem] md:text-[1.625rem] font-['Gilda_Display'] text-black mb-3 tracking-tight leading-tight">
+          <h3 className="text-[1.5rem] md:text-[1.625rem] font-['Gilda_Display'] font-bold text-black mb-3 tracking-tight leading-tight">
             {title}
           </h3>
           <p className="text-[0.9375rem] text-black/70 font-['Arial'] leading-[1.6] mb-7 max-w-[32ch]">

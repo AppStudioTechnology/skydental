@@ -4,7 +4,10 @@ import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
+import { generateBookingPdf } from '../utils/generateBookingPdf'
 import imgImage10 from '../../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.webp'
+
+const LOADING_LOGO_URL = '/logos/loading-logo.webp'
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [
@@ -45,6 +48,27 @@ const serviceToDoctors: Record<string, string[]> = {
   'Cosmetic bonding / contouring': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
   'Pediatric Dentistry': ['Dr. Basma Alrawi']
 }
+
+// Phone length rules by country code (national number, digits only)
+const countryPhoneRules: Record<string, { min: number; max: number }> = {
+  '+971': { min: 9, max: 9 },
+  '+1': { min: 10, max: 10 },
+  '+44': { min: 10, max: 10 },
+  '+966': { min: 9, max: 9 },
+  '+965': { min: 8, max: 8 },
+  '+974': { min: 8, max: 8 },
+  '+973': { min: 8, max: 8 },
+  '+968': { min: 8, max: 8 },
+  '+961': { min: 7, max: 8 },
+  '+962': { min: 9, max: 9 },
+  '+20': { min: 10, max: 10 },
+  '+91': { min: 10, max: 10 },
+  '+92': { min: 10, max: 10 },
+  '+33': { min: 9, max: 9 },
+  '+49': { min: 10, max: 11 }
+}
+const DEFAULT_PHONE_MIN = 7
+const DEFAULT_PHONE_MAX = 15
 
 // Country codes
 const countryCodes = [
@@ -91,15 +115,19 @@ export default function ContactSection() {
   const [showTimePicker, setShowTimePicker] = useState(false)
   const [showCountryCodeDropdown, setShowCountryCodeDropdown] = useState(false)
   const [availableDoctors, setAvailableDoctors] = useState<string[]>([])
-  const [showOTPModal, setShowOTPModal] = useState(false)
-  const [otp, setOtp] = useState('')
-  const [otpSent, setOtpSent] = useState(false)
-  const [otpVerified, setOtpVerified] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [bookingId, setBookingId] = useState('')
-  const [generatedOTP, setGeneratedOTP] = useState('')
+  const [lastBookingDetails, setLastBookingDetails] = useState<typeof formData | null>(null)
+  const [userEmailSent, setUserEmailSent] = useState<boolean | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [phoneError, setPhoneError] = useState('')
+  const [emailError, setEmailError] = useState('')
   const datePickerRef = useRef<HTMLDivElement>(null)
   const timePickerRef = useRef<HTMLDivElement>(null)
   const countryCodeRef = useRef<HTMLDivElement>(null)
+  const logoBase64Ref = useRef<string | null>(null)
+  const logoNaturalWidthRef = useRef<number>(1)
+  const logoNaturalHeightRef = useRef<number>(1)
 
   // Update available doctors when service changes
   useEffect(() => {
@@ -142,8 +170,39 @@ export default function ContactSection() {
     }
   }, [])
 
+  // Preload loading logo as base64 for PDF
+  useEffect(() => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      try {
+        logoNaturalWidthRef.current = img.naturalWidth
+        logoNaturalHeightRef.current = img.naturalHeight
+        const canvas = document.createElement('canvas')
+        canvas.width = img.naturalWidth
+        canvas.height = img.naturalHeight
+        const ctx = canvas.getContext('2d')
+        if (ctx) {
+          ctx.drawImage(img, 0, 0)
+          const dataUrl = canvas.toDataURL('image/png')
+          logoBase64Ref.current = dataUrl.includes(',') ? dataUrl.split(',')[1] : dataUrl
+        }
+      } catch {
+        logoBase64Ref.current = null
+      }
+    }
+    img.src = LOADING_LOGO_URL
+  }, [])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
+    if (name === 'phone') {
+      const digitsOnly = value.replace(/\D/g, '')
+      setFormData(prev => ({ ...prev, phone: digitsOnly }))
+      setPhoneError('')
+      return
+    }
+    if (name === 'email') setEmailError('')
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
@@ -157,12 +216,6 @@ export default function ContactSection() {
     setShowTimePicker(false)
   }
 
-  // Generate OTP (fixed for testing)
-  const generateOTP = () => {
-    return '123456'
-  }
-
-  // Generate a booking ID
   const generateBookingId = () => {
     const prefix = 'SKY'
     const timestamp = Date.now().toString().slice(-6)
@@ -170,51 +223,86 @@ export default function ContactSection() {
     return `${prefix}-${timestamp}-${random}`
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Generate OTP and booking ID
-    const otp = generateOTP()
-    const bookingId = generateBookingId()
-    
-    setGeneratedOTP(otp)
-    setBookingId(bookingId)
-    setOtpSent(true)
-    setShowOTPModal(true)
-    setOtp('')
-    setOtpVerified(false)
-    
-    // In a real app, you would send the OTP to the phone number via SMS
-    console.log(`OTP sent to ${formData.countryCode}${formData.phone}: ${otp}`)
-  }
+  const BOOKING_API_URL =
+    (import.meta.env.VITE_BOOKING_API_URL as string | undefined) ||
+    (typeof window !== 'undefined' ? `${window.location.origin}/api/send-booking.php` : '')
 
-  const handleOTPVerify = () => {
-    if (otp === generatedOTP) {
-      setOtpVerified(true)
-    } else {
-      alert('Invalid OTP. Please try again.')
-      setOtp('')
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setPhoneError('')
+    setEmailError('')
+    const email = (formData.email ?? '').trim()
+    const phoneDigits = (formData.phone ?? '').replace(/\D/g, '')
+    const rules = countryPhoneRules[formData.countryCode] ?? { min: DEFAULT_PHONE_MIN, max: DEFAULT_PHONE_MAX }
+    if (!email) {
+      setEmailError('Email is required.')
+      return
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setEmailError('Please enter a valid email address.')
+      return
+    }
+    if (phoneDigits.length < rules.min || phoneDigits.length > rules.max) {
+      setPhoneError(`Enter a valid ${formData.countryCode} number (${rules.min}–${rules.max} digits).`)
+      return
+    }
+    setIsSubmitting(true)
+    const id = generateBookingId()
+    setBookingId(id)
+    setLastBookingDetails({ ...formData })
+
+    try {
+      const { blob, base64 } = generateBookingPdf(id, formData, {
+        logoBase64: logoBase64Ref.current ?? undefined,
+        logoNaturalWidth: logoNaturalWidthRef.current,
+        logoNaturalHeight: logoNaturalHeightRef.current
+      })
+
+      if (BOOKING_API_URL) {
+        try {
+          const res = await fetch(BOOKING_API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              bookingId: id,
+              booking: formData,
+              pdfBase64: base64,
+              toUser: formData.email || undefined
+            })
+          })
+          const data = await res.json().catch(() => ({}))
+          const sent = (data as { userEmailSent?: boolean }).userEmailSent
+          setUserEmailSent(typeof sent === 'boolean' ? sent : null)
+        } catch {
+          setUserEmailSent(null)
+        }
+      } else {
+        setUserEmailSent(null)
+      }
+
+      setShowSuccessModal(true)
+      setFormData({
+        fullName: '',
+        email: '',
+        countryCode: '+971',
+        phone: '',
+        service: '',
+        doctor: '',
+        date: '',
+        time: '',
+        message: ''
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
-  const handleCloseModal = () => {
-    setShowOTPModal(false)
-    setOtp('')
-    setOtpSent(false)
-    setOtpVerified(false)
-    setGeneratedOTP('')
+  const handleCloseSuccessModal = () => {
+    setShowSuccessModal(false)
     setBookingId('')
-    // Reset form
-    setFormData({
-      fullName: '',
-      email: '',
-      countryCode: '+971',
-      phone: '',
-      service: '',
-      doctor: '',
-      date: '',
-      time: '',
-      message: ''
-    })
+    setLastBookingDetails(null)
+    setUserEmailSent(null)
   }
 
   return (
@@ -285,14 +373,14 @@ export default function ContactSection() {
                 <div className="flex flex-col gap-[16px] sm:gap-[20px]">
                   <div className="flex flex-col gap-[8px]">
                     <label className="text-[14px] font-medium text-black">
-                      {t('common', 'fullName')} <span className="text-red-500">*</span>
+                      Full Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleInputChange}
-                      placeholder={t('common', 'placeholderFullName')}
+                      placeholder="Full name"
                       required
                       className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black"
                     />
@@ -300,10 +388,9 @@ export default function ContactSection() {
 
                   <div className="flex flex-col gap-[8px]">
                     <label className="text-[14px] font-medium text-black">
-                      {t('common', 'phoneNumber')} <span className="text-red-500">*</span>
+                      Phone Number <span className="text-red-500">*</span>
                     </label>
                     <div className="flex gap-2">
-                      {/* Country Code Selector */}
                       <div className="relative flex-shrink-0" ref={countryCodeRef}>
                         <button
                           type="button"
@@ -325,6 +412,7 @@ export default function ContactSection() {
                                 onClick={() => {
                                   setFormData(prev => ({ ...prev, countryCode: country.code }))
                                   setShowCountryCodeDropdown(false)
+                                  setPhoneError('')
                                 }}
                                 className="w-full px-4 py-2 text-left hover:bg-[#f1f1f1] flex items-center gap-2 text-[14px]"
                               >
@@ -336,31 +424,35 @@ export default function ContactSection() {
                           </div>
                         )}
                       </div>
-                      {/* Phone Input */}
                       <input
                         type="tel"
                         name="phone"
                         value={formData.phone}
                         onChange={handleInputChange}
-                        placeholder="+971-XX-XXX-XXXX"
+                        placeholder={formData.countryCode === '+971' ? '50 123 4567' : 'Digits only'}
                         required
-                        className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black flex-1 min-w-0"
+                        inputMode="numeric"
+                        autoComplete="tel-national"
+                        className={`bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black flex-1 min-w-0 ${phoneError ? 'ring-2 ring-red-500' : ''}`}
                       />
                     </div>
+                    {phoneError && <p className="text-red-500 text-[13px]">{phoneError}</p>}
                   </div>
 
                   <div className="flex flex-col gap-[8px]">
                     <label className="text-[14px] font-medium text-black">
-                      {t('common', 'emailOptional')}
+                      Email <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      placeholder={t('common', 'placeholderEmail')}
-                      className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black"
+                      placeholder="Enter email address"
+                      required
+                      className={`bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black ${emailError ? 'ring-2 ring-red-500' : ''}`}
                     />
+                    {emailError && <p className="text-red-500 text-[13px]">{emailError}</p>}
                   </div>
                 </div>
 
@@ -372,7 +464,7 @@ export default function ContactSection() {
                       {/* Service Input */}
                       <div className="relative flex-1 w-full">
                         <label className="text-[14px] font-medium text-black mb-[8px] block">
-                          {t('common', 'service')} <span className="text-red-500">*</span>
+                          Service <span className="text-red-500">*</span>
                         </label>
                         <select
                           name="service"
@@ -381,17 +473,16 @@ export default function ContactSection() {
                           required
                           className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNDEgOC41OEwxMiAxMy4xN0wxNi41OSA4LjU4TDE4IDEwTDEyIDE2TDYgMTBMNy40MSA4LjU4WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==')] bg-no-repeat bg-[right_16px_center] sm:bg-[right_24px_center] w-full"
                         >
-                          <option value="">{t('common', 'selectService')}</option>
+                          <option value="">Select service</option>
                           {services.map(service => (
                             <option key={service} value={service}>{service}</option>
                           ))}
                         </select>
                       </div>
 
-                      {/* Doctor Input */}
                       <div className="relative flex-1 w-full">
                         <label className="text-[14px] font-medium text-black mb-[8px] block">
-                          {t('common', 'doctor')} <span className="text-red-500">*</span>
+                          Doctor <span className="text-red-500">*</span>
                         </label>
                         <select
                           name="doctor"
@@ -401,7 +492,7 @@ export default function ContactSection() {
                           disabled={!formData.service}
                           className="bg-[#f1f1f1] h-[55px] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black appearance-none bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTcuNDEgOC41OEwxMiAxMy4xN0wxNi41OSA4LjU4TDE4IDEwTDEyIDE2TDYgMTBMNy40MSA4LjU4WiIgZmlsbD0iYmxhY2siLz4KPC9zdmc+Cg==')] bg-no-repeat bg-[right_16px_center] sm:bg-[right_24px_center] disabled:opacity-50 disabled:cursor-not-allowed w-full"
                         >
-                          <option value="">{t('common', 'selectDoctor')}</option>
+                          <option value="">Select doctor</option>
                           {formData.service && availableDoctors.map(doctor => (
                             <option key={doctor} value={doctor}>{doctor}</option>
                           ))}
@@ -416,7 +507,7 @@ export default function ContactSection() {
                       {/* Date Input */}
                       <div className="relative flex-1 w-full" ref={datePickerRef}>
                         <label className="text-[14px] font-medium text-black mb-[8px] block">
-                          {t('common', 'date')} <span className="text-red-500">*</span>
+                          Date <span className="text-red-500">*</span>
                         </label>
                         <button
                           type="button"
@@ -433,7 +524,7 @@ export default function ContactSection() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span className={`truncate ${formData.date ? 'font-semibold text-black' : 'text-gray-500'}`}>
-                              {formData.date || t('common', 'selectDate')}
+                              {formData.date || 'Select date'}
                             </span>
                           </div>
                           <svg className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -450,9 +541,9 @@ export default function ContactSection() {
                       </div>
 
                       {/* Time Input */}
-                      <div className="relative flex-1 w-full" ref={timePickerRef}>
+                        <div className="relative flex-1 w-full" ref={timePickerRef}>
                         <label className="text-[14px] font-medium text-black mb-[8px] block">
-                          {t('common', 'time')} <span className="text-red-500">*</span>
+                          Time <span className="text-red-500">*</span>
                         </label>
                         <button
                           type="button"
@@ -462,9 +553,9 @@ export default function ContactSection() {
                             formData.time ? 'bg-[#e0edff]' : ''
                           }`}
                         >
-                          <span className={`truncate flex-1 ${formData.time ? 'font-semibold text-black' : 'text-gray-500'}`}>
-                            {formData.time || t('common', 'selectTime')}
-                          </span>
+                            <span className={`truncate flex-1 ${formData.time ? 'font-semibold text-black' : 'text-gray-500'}`}>
+                              {formData.time || 'Select time'}
+                            </span>
                           <svg className="w-5 h-5 text-gray-400 flex-shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
@@ -477,7 +568,7 @@ export default function ContactSection() {
                           />
                         )}
                         {!formData.date && formData.service && formData.doctor && (
-                          <p className="text-[12px] text-gray-500 mt-1">{t('common', 'selectDateFirst')}</p>
+                          <p className="text-[12px] text-gray-500 mt-1">Select date first</p>
                         )}
                       </div>
                     </div>
@@ -490,22 +581,22 @@ export default function ContactSection() {
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      placeholder={t('common', 'placeholderMessage')}
+                      placeholder="Add any special instructions or notes..."
                       rows={4}
                       className="bg-[#f1f1f1] px-[16px] sm:px-[24px] py-[16px] rounded-[12px] text-[14px] text-black resize-none"
                     />
                 </div>
 
-                {/* Action Buttons */}
                 <div className="pt-[8px]">
                   <motion.button
                     type="submit"
+                    disabled={isSubmitting}
                     initial={{ y: 30, opacity: 0 }}
                     animate={isInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
                     transition={{ delay: shouldReduceMotion ? 0 : 0.5, duration: shouldReduceMotion ? 0 : 0.6 }}
-                    className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-[#0C0060] hover:bg-[#B1FF57] transition-colors"
+                    className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-[#0C0060] hover:bg-[#B1FF57] transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    {t('common', 'requestAppointment')}
+                    {isSubmitting ? 'Sending...' : t('common', 'requestAppointment')}
                   </motion.button>
                 </div>
               </form>
@@ -514,18 +605,15 @@ export default function ContactSection() {
         </motion.div>
       </div>
 
-      {/* OTP Verification Modal */}
-      {showOTPModal && (
-        <OTPVerificationModal
-          phoneNumber={`${formData.countryCode}${formData.phone}`}
-          otp={otp}
-          setOtp={setOtp}
-          otpSent={otpSent}
-          otpVerified={otpVerified}
-          onVerify={handleOTPVerify}
-          onClose={handleCloseModal}
+      {showSuccessModal && lastBookingDetails && (
+        <ContactSectionBookingSuccessModal
           bookingId={bookingId}
-          bookingDetails={formData}
+          bookingDetails={lastBookingDetails}
+          userEmailSent={userEmailSent}
+          logoBase64={logoBase64Ref.current ?? undefined}
+          logoNaturalWidth={logoNaturalWidthRef.current}
+          logoNaturalHeight={logoNaturalHeightRef.current}
+          onClose={handleCloseSuccessModal}
         />
       )}
     </section>
@@ -785,148 +873,144 @@ function SocialIcon({ children, href = '/contact' }: { children: React.ReactNode
   )
 }
 
-// OTP Verification Modal Component
-function OTPVerificationModal({
-  phoneNumber,
-  otp,
-  setOtp,
-  otpSent,
-  otpVerified,
-  onVerify,
-  onClose,
+// Success modal (same as Request Appointment sidebar)
+function ContactSectionBookingSuccessModal({
   bookingId,
-  bookingDetails
+  bookingDetails,
+  userEmailSent,
+  logoBase64,
+  logoNaturalWidth,
+  logoNaturalHeight,
+  onClose
 }: {
-  phoneNumber: string
-  otp: string
-  setOtp: (otp: string) => void
-  otpSent: boolean
-  otpVerified: boolean
-  onVerify: () => void
-  onClose: () => void
   bookingId: string
   bookingDetails: {
     fullName: string
     email: string
+    countryCode?: string
+    phone?: string
     service: string
     doctor: string
     date: string
     time: string
+    message?: string
   }
+  userEmailSent?: boolean | null
+  logoBase64?: string
+  logoNaturalWidth?: number
+  logoNaturalHeight?: number
+  onClose: () => void
 }) {
-  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 6)
-    setOtp(value)
+  const handleDownloadPdf = () => {
+    const details = {
+      fullName: bookingDetails.fullName,
+      email: bookingDetails.email,
+      countryCode: bookingDetails.countryCode ?? '+971',
+      phone: bookingDetails.phone ?? '',
+      service: bookingDetails.service,
+      doctor: bookingDetails.doctor,
+      date: bookingDetails.date,
+      time: bookingDetails.time,
+      message: bookingDetails.message
+    }
+    const { blob } = generateBookingPdf(bookingId, details, {
+      logoBase64: logoBase64 ?? undefined,
+      logoNaturalWidth: logoNaturalWidth ?? 1,
+      logoNaturalHeight: logoNaturalHeight ?? 1
+    })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `Sky-Dental-Booking-${bookingId}.pdf`
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1001] p-4">
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
         className="bg-white rounded-[24px] shadow-2xl max-w-[500px] w-full p-8 relative"
       >
-        {/* Close Button */}
         <button
           onClick={onClose}
           className="absolute top-6 right-6 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
+          aria-label="Close"
         >
           <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {!otpVerified ? (
-          <>
-            {/* OTP Verification Step */}
-            <div className="mb-6">
-              <h3 className="text-[24px] font-bold text-black mb-2" style={{ fontFamily: "'Gilda Display', serif" }}>
-                Verify Your Phone Number
-              </h3>
-              <p className="text-[14px] text-gray-600">
-                We've sent a 6-digit OTP to <span className="font-semibold text-black">{phoneNumber}</span>
-              </p>
-            </div>
+        <div className="mb-6">
+          <div className="w-16 h-16 bg-[#CBFF8F] rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-[#0C0060]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-[24px] font-bold text-black mb-2 text-center" style={{ fontFamily: "'Gilda Display', serif" }}>
+            Your request has been sent
+          </h3>
+          <p className="text-[14px] text-gray-600 text-center">
+            {bookingDetails.email
+              ? userEmailSent === false
+                ? 'The clinic has received your request at smile@skydc.ae. We tried to send a copy to your email but it may not have arrived—please check your spam folder and use the Download PDF button below to save your confirmation.'
+                : userEmailSent === true
+                  ? 'A copy of your request has been sent to your email, and the clinic has received your appointment request at smile@skydc.ae.'
+                  : 'The clinic has received your request at smile@skydc.ae. If you do not see an email from us, check your spam folder or use the Download PDF button below.'
+              : 'The clinic has received your appointment request at smile@skydc.ae.'}
+          </p>
+        </div>
 
-            <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <label className="text-[14px] font-medium text-black">
-                  Enter OTP <span className="text-red-500">*</span>
-                </label>
-                <input
-                  type="text"
-                  value={otp}
-                  onChange={handleOtpChange}
-                  placeholder="000000"
-                  maxLength={6}
-                  className="bg-[#f1f1f1] h-[55px] px-[24px] py-[16px] rounded-[12px] text-[14px] text-black text-center tracking-[8px] text-[20px] font-semibold"
-                />
-              </div>
-
-              <button
-                onClick={onVerify}
-                disabled={otp.length !== 6}
-                className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-black hover:bg-[#B1FF57] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                Verify OTP
-              </button>
+        <div className="bg-[#f1f1f1] rounded-[16px] p-6 mb-6">
+          <div className="space-y-4">
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Booking ID</span>
+              <span className="text-[16px] font-bold text-black">{bookingId}</span>
             </div>
-          </>
-        ) : (
-          <>
-            {/* Booking Confirmation Step */}
-            <div className="mb-6">
-              <div className="w-16 h-16 bg-[#CBFF8F] rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-[#0C0060]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="text-[24px] font-bold text-black mb-2 text-center" style={{ fontFamily: "'Gilda Display', serif" }}>
-                Appointment Confirmed!
-              </h3>
-              <p className="text-[14px] text-gray-600 text-center">
-                Your appointment has been successfully booked
-              </p>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Name</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.fullName}</span>
             </div>
-
-            <div className="bg-[#f1f1f1] rounded-[16px] p-6 mb-6">
-              <div className="space-y-4">
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Booking ID</span>
-                  <span className="text-[16px] font-bold text-black">{bookingId}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Name</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.fullName}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Service</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.service}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Doctor</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.doctor}</span>
-                </div>
-                <div className="flex justify-between items-center pb-3 border-b border-gray-300">
-                  <span className="text-[14px] text-gray-600">Date</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.date}</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-[14px] text-gray-600">Time</span>
-                  <span className="text-[16px] font-semibold text-black">{bookingDetails.time}</span>
-                </div>
-              </div>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Service</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.service}</span>
             </div>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Doctor</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.doctor}</span>
+            </div>
+            <div className="flex justify-between items-center pb-3 border-b border-gray-300">
+              <span className="text-[14px] text-gray-600">Date</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.date}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[14px] text-gray-600">Time</span>
+              <span className="text-[16px] font-semibold text-black">{bookingDetails.time}</span>
+            </div>
+          </div>
+        </div>
 
-            <button
-              onClick={onClose}
-              className="w-full bg-[#0C0060] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-white hover:bg-[#7db3ff] transition-colors"
-            >
-              Close
-            </button>
-          </>
-        )}
+        <div className="flex flex-col gap-3">
+          <button
+            type="button"
+            onClick={handleDownloadPdf}
+            className="w-full bg-[#CBFF8F] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-[#0C0060] hover:bg-[#B1FF57] transition-colors flex items-center justify-center gap-2"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Download PDF
+          </button>
+          <button
+            onClick={onClose}
+            className="w-full bg-[#0C0060] h-[50px] px-[24px] py-[16px] rounded-[12px] text-[14px] font-medium text-white hover:bg-[#7db3ff] transition-colors"
+          >
+            Close
+          </button>
+        </div>
       </motion.div>
     </div>
   )

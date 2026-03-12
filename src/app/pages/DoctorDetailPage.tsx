@@ -51,134 +51,92 @@ export default function DoctorDetailPage() {
   return (
     <ScrollSection>
     <div className="bg-white">
-      {/* Hero Section */}
-      <section 
-        ref={heroRef}
-        className="relative min-h-[400px] overflow-hidden pt-24 pb-16"
-        style={{
-          background: 'linear-gradient(160.216deg, rgb(224, 237, 255) 0%, rgb(255, 255, 255) 50%, rgb(224, 237, 255) 100%)'
-        }}
-      >
-        {/* Decorative blurs */}
-        <div className="absolute -left-24 top-40 w-64 h-64 bg-[rgba(203,255,143,0.3)] rounded-full blur-[64px]" />
-        <div className="absolute right-32 top-20 w-64 h-64 bg-[rgba(12,0,96,0.1)] rounded-full blur-[64px]" />
+      {/* Hero: Picture left, content right (white bg) - same style for all doctors */}
+      <section ref={heroRef} className="min-h-[480px] flex flex-col lg:flex-row pt-20 lg:pt-24">
+        {/* Left: Doctor image - neutral grey background */}
+        <motion.div
+          initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
+          animate={heroInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="w-full lg:w-[42%] min-h-[320px] lg:min-h-[520px] bg-[#e8e8e8] flex items-center justify-center overflow-hidden"
+        >
+          <img
+            src={doctor.aboutImage}
+            alt={doctor.name}
+            className="w-full h-full object-cover object-top"
+          />
+        </motion.div>
 
-        <div className="container mx-auto px-6 py-20 relative z-10">
-          <motion.div
-            initial={shouldReduceMotion ? {} : { opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            {/* Name */}
-            <h1 className="text-5xl md:text-6xl font-['Gilda_Display'] text-black mb-4 tracking-tight">
-              {doctor.name}
-            </h1>
+        {/* Right: Content - white background */}
+        <motion.div
+          initial={shouldReduceMotion ? {} : { opacity: 0, x: 24 }}
+          animate={heroInView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="w-full lg:w-[58%] bg-white flex flex-col justify-center px-6 md:px-10 lg:px-14 py-12 lg:py-16"
+        >
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-['Gilda_Display'] font-bold text-black mb-2 tracking-tight">
+            {doctor.name}
+          </h1>
+          <p className="text-base md:text-lg text-black/80 font-['Arial'] mb-6">
+            {doctor.title === doctor.specialty ? doctor.specialty : `${doctor.title} | ${doctor.specialty}`}
+          </p>
+          <p className="text-[15px] md:text-base text-black/80 font-['Arial'] leading-relaxed mb-8 max-w-2xl">
+            {doctor.description}
+          </p>
 
-            {/* Title & Specialty */}
-            <p className="text-xl text-black/70 font-['Arial'] mb-8">
-              {doctor.title} | {doctor.specialty}
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
-              <motion.button
-                whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-                whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-                onClick={() => openBookingSidebar(doctor.name)}
-                className="bg-[#CBFF8F] text-[#0C0060] font-bold px-8 py-4 rounded-full inline-flex items-center gap-3 hover:bg-[#b8ff6d] transition-colors font-['Arial']"
-              >
-                <Calendar className="w-5 h-5" />
-                <span>Request Appointment</span>
-                <div className="w-9 h-9 bg-[#0C0060] rounded-full flex items-center justify-center">
-                  <ArrowUpRight className="w-5 h-5 text-[#CBFF8F]" />
+          {/* Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
+            {doctor.stats.map((stat, index) => (
+              <div key={index} className="text-center sm:text-left">
+                <div className="text-lg font-['Gilda_Display'] font-semibold text-[#0C0060]">
+                  {stat.value}
                 </div>
-              </motion.button>
-
-              <motion.a
-                href="tel:+97126677448"
-                whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
-                whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
-                className="bg-white text-[#0C0060] font-bold px-8 py-4 rounded-full inline-flex items-center gap-3 hover:bg-gray-50 transition-colors font-['Arial'] no-underline"
-              >
-                <Phone className="w-5 h-5" />
-                <span>Contact Now</span>
-              </motion.a>
-            </div>
-
-            {/* Breadcrumbs */}
-            <div className="flex items-center justify-center gap-2 text-sm">
-              <Link to="/" className="flex items-center gap-1 text-gray-500 hover:text-gray-700">
-                <Home className="w-4 h-4" />
-                <span className="font-['Arial']">Home</span>
-              </Link>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-              <Link to="/our-doctors" className="text-gray-500 hover:text-gray-700 font-['Arial']">
-                Doctors
-              </Link>
-              <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="text-[#0C0060] font-['Arial']">{doctor.name}</span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section ref={aboutRef} className="py-24 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-24 items-start">
-              {/* Text Content */}
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, x: -30 }}
-                animate={aboutInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8 }}
-              >
-                <h2 className="text-4xl md:text-5xl font-['Gilda_Display'] text-black mb-6 tracking-tight">
-                  About {doctor.name.split(' ')[1]}
-                </h2>
-                <p className="text-base text-black/70 font-['Arial'] leading-relaxed mb-10">
-                  {doctor.description}
-                </p>
-
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-6">
-                  {doctor.stats.map((stat, index) => (
-                    <motion.div
-                      key={index}
-                      initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
-                      animate={aboutInView ? { opacity: 1, y: 0 } : {}}
-                      transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                      className="text-center"
-                    >
-                      <div className="text-xl md:text-xl font-['Gilda_Display'] text-[#0C0060] mb-2">
-                        {stat.value}
-                      </div>
-                      <div className="text-sm text-black/60 font-['Arial']">
-                        {stat.label}
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-
-              {/* Image only - height capped to align with left column */}
-              <motion.div
-                initial={shouldReduceMotion ? {} : { opacity: 0, x: 30 }}
-                animate={aboutInView ? { opacity: 1, x: 0 } : {}}
-                transition={{ duration: 0.8 }}
-                className="relative w-full h-[420px] overflow-hidden"
-              >
-                <img
-                  src={doctor.aboutImage}
-                  alt={doctor.name}
-                  className="w-full h-full object-contain object-center"
-                />
-              </motion.div>
-            </div>
+                <div className="text-sm text-black/60 font-['Arial']">{stat.label}</div>
+              </div>
+            ))}
           </div>
-        </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap gap-4 mb-8">
+            <motion.button
+              whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+              onClick={() => openBookingSidebar(doctor.name)}
+              className="bg-[#CBFF8F] text-[#0C0060] font-bold px-6 py-3 rounded-full inline-flex items-center gap-2 hover:bg-[#B1FF57] transition-colors font-['Arial'] text-sm md:text-base"
+            >
+              <Calendar className="w-5 h-5" />
+              <span>Request Appointment</span>
+              <div className="w-8 h-8 bg-[#0C0060] rounded-full flex items-center justify-center">
+                <ArrowUpRight className="w-4 h-4 text-[#CBFF8F]" />
+              </div>
+            </motion.button>
+            <motion.a
+              href="tel:+97126677448"
+              whileHover={shouldReduceMotion ? {} : { scale: 1.02 }}
+              whileTap={shouldReduceMotion ? {} : { scale: 0.98 }}
+              className="bg-[#0C0060] text-white font-bold px-6 py-3 rounded-full inline-flex items-center gap-2 hover:bg-[#0a0052] transition-colors font-['Arial'] no-underline text-sm md:text-base"
+            >
+              <Phone className="w-5 h-5" />
+              <span>Contact Now</span>
+            </motion.a>
+          </div>
+
+          {/* Breadcrumbs */}
+          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-['Arial']">
+            <Link to="/" className="flex items-center gap-1 hover:text-gray-700">
+              <Home className="w-4 h-4" />
+              Home
+            </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <Link to="/our-doctors" className="hover:text-gray-700">Doctors</Link>
+            <ChevronRight className="w-4 h-4 text-gray-400" />
+            <span className="text-[#0C0060] font-medium">{doctor.name}</span>
+          </div>
+        </motion.div>
       </section>
+
+      {/* About Section - anchor for in-page nav; main bio is in hero right column */}
+      <section ref={aboutRef} className="py-8 bg-white border-t border-gray-100" aria-hidden="true" />
 
       {/* Education & Certification Section */}
       {doctor.id !== 'dr-basma-al-rawi' && doctor.id !== 'dr-elias-daoud-hanna' && doctor.id !== 'dr-hazem-reslan' && doctor.id !== 'dr-mohanned-albasha' && doctor.education.length > 0 && (

@@ -115,7 +115,7 @@ export default function ServiceDetailPage() {
             className="max-w-4xl mx-auto text-center"
           >
             {/* Title */}
-            <h1 className="text-5xl md:text-6xl font-['Gilda_Display'] text-black mb-6 tracking-tight">
+            <h1 className="text-5xl md:text-6xl font-['Gilda_Display'] font-bold text-black mb-6 tracking-tight">
               {service.hero.title}
             </h1>
 
@@ -162,7 +162,7 @@ export default function ServiceDetailPage() {
                 Services
               </Link>
               <ChevronRight className="w-4 h-4 text-gray-400" />
-              <span className="text-[#0C0060] font-['Arial']">{service.title}</span>
+              <span className="text-[#0C0060] font-['Arial'] font-bold">{service.title}</span>
             </div>
           </motion.div>
         </div>
@@ -177,7 +177,7 @@ export default function ServiceDetailPage() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-5xl font-['Gilda_Display'] text-black mb-6 tracking-tight">
+            <h2 className="text-5xl font-['Gilda_Display'] font-bold text-black mb-6 tracking-tight">
               Our {service.title} Services
             </h2>
             <p className="text-lg text-black/70 font-['Arial'] leading-relaxed max-w-3xl mx-auto">
