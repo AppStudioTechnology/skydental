@@ -118,20 +118,24 @@ export default function DoctorsSection() {
             }}
             className="w-full"
           >
-            <CarouselContent className="-ml-0">
+            <CarouselContent className="-ml-0 md:-ml-4 md:gap-4 xl:-ml-0 xl:gap-6">
               {doctorsData.map((doctor) => (
-                <CarouselItem key={doctor.id} className="pl-0 basis-full min-w-0 shrink-0">
-                  <div className="max-w-[400px] sm:max-w-[460px] md:max-w-[520px] mx-auto px-2">
+                <CarouselItem
+                  key={doctor.id}
+                  className="pl-0 basis-full min-w-0 shrink-0 md:pl-4 md:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25cqw-1.125rem)] xl:pl-0"
+                >
+                  {/* Single big card on mobile; no wrapper on desktop so 4 cards show in row */}
+                  <div className="max-w-[360px] sm:max-w-[400px] mx-auto px-2 md:max-w-none md:mx-0 md:px-0">
                     <DoctorCard
-                    doctor={{
-                      id: doctor.id,
-                      name: doctor.name.replace(/,?\s*DDS\s*$/i, '').trim(),
-                      image: doctor.image,
-                      imageSide: doctor.imageSide,
-                    }}
-                    specialty={doctor.specialty}
-                    viewDetails={t('common', 'viewDetails')}
-                  />
+                      doctor={{
+                        id: doctor.id,
+                        name: doctor.name.replace(/,?\s*DDS\s*$/i, '').trim(),
+                        image: doctor.image,
+                        imageSide: doctor.imageSide,
+                      }}
+                      specialty={doctor.specialty}
+                      viewDetails={t('common', 'viewDetails')}
+                    />
                   </div>
                 </CarouselItem>
               ))}
