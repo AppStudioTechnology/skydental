@@ -17,4 +17,13 @@ export default defineConfig({
     // Avoid "Some chunks are larger than 500 kB" warning (large deps: MUI, Radix, motion, etc.)
     chunkSizeWarningLimit: 1100,
   },
+  server: {
+    proxy: {
+      // When running locally, forward /api/* to the deployed API (beta or live) so forms work
+      '/api': {
+        target: process.env.VITE_API_PROXY_TARGET || 'https://beta.skydc.ae',
+        changeOrigin: true,
+      },
+    },
+  },
 })

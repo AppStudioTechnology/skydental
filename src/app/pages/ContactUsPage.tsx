@@ -48,7 +48,7 @@ export default function ContactUsPage() {
     e.preventDefault()
     setSubmitError(null)
     setIsSubmitting(true)
-    const apiUrl = import.meta.env.VITE_CONTACT_API_URL || `${window.location.origin}/api/send-contact-message`
+    const apiUrl = import.meta.env.VITE_CONTACT_API_URL || `${window.location.origin}/api/send-contact-message.php`
     try {
       const res = await fetch(apiUrl, {
         method: 'POST',
@@ -63,7 +63,8 @@ export default function ContactUsPage() {
       })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setSubmitError(data?.message || data?.error || "Failed to send message. Please try again or email smile@skydc.ae.")
+        const msg = data?.message || data?.error || (res.status === 404 ? 'Contact API not found. Ensure api/send-contact-message.php is deployed.' : `Request failed (${res.status}). Please try again or email smile@skydc.ae.`)
+        setSubmitError(msg)
         setIsSubmitting(false)
         return
       }
