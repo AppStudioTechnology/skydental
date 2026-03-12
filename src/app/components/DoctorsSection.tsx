@@ -64,7 +64,7 @@ export default function DoctorsSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: shouldReduceMotion ? 0 : 0.6 }}
-          className="relative px-10 md:px-14"
+          className="relative px-14 md:px-16 lg:px-20"
         >
           <Carousel
             opts={{
@@ -81,7 +81,7 @@ export default function DoctorsSection() {
               {doctorsData.map((doctor) => (
                 <CarouselItem
                   key={doctor.id}
-                  className="pl-3 md:pl-4 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25%-0.75rem)]"
+                  className="pl-3 md:pl-4 basis-[calc(50%-0.375rem)] sm:basis-[calc(50%-0.5rem)] lg:basis-[calc(33.333%-0.5rem)] xl:basis-[calc(25%-0.5625rem)]"
                 >
                   <DoctorCard
                     doctor={{
@@ -97,11 +97,11 @@ export default function DoctorsSection() {
               ))}
             </CarouselContent>
             <CarouselPrevious
-              className="-left-2 md:-left-4 border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 disabled:pointer-events-auto"
+              className="-left-12 md:-left-14 top-1/2 -translate-y-1/2 z-20 size-10 md:size-11 border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 shadow-lg hover:shadow-xl transition-shadow"
               aria-label="Previous doctor"
             />
             <CarouselNext
-              className="-right-2 md:-right-4 border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 disabled:pointer-events-auto"
+              className="-right-12 md:-right-14 top-1/2 -translate-y-1/2 z-20 size-10 md:size-11 border-2 border-[#0C0060] bg-white text-[#0C0060] hover:bg-[#0C0060] hover:text-white disabled:opacity-40 shadow-lg hover:shadow-xl transition-shadow"
               aria-label="Next doctor"
             />
           </Carousel>

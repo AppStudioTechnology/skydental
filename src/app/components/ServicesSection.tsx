@@ -47,7 +47,7 @@ function ServiceCard({ service, title, description, learnMore, index }: { servic
 
       {/* Content - Takes up remaining space */}
       <div className="flex flex-col flex-grow min-h-0">
-        <h3 className="text-xl md:text-xl font-['Gilda_Display'] font-bold text-black mb-3 flex-shrink-0">
+        <h3 className="text-xl md:text-xl font-['Gilda_Display'] font-extrabold text-black mb-3 flex-shrink-0">
           {title}
         </h3>
         <p className="text-sm md:text-sm text-black/80 font-['Arial'] leading-relaxed flex-grow min-h-0">

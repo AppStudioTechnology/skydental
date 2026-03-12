@@ -53,7 +53,7 @@ export const translations = {
       reliefUrgentCare: 'Relief & Urgent Care',
       protectRestore: 'Protect & Restore',
       smileAesthetics: 'Smile Aesthetics',
-      description: 'Sky Dental is a modern multi-specialty dental clinic designed for long-term, generational care. We combine strong clinical expertise, advanced treatments, and a young, welcoming energy to deliver dentistry that evolves with each patient over time.',
+      description: 'Sky Dental is a modern multi-specialty dental clinic designed for long-term, generational care. We combine strong clinical expertise, advanced treatments, and a young, welcoming energy to deliver dentistry that evolves with you over time.',
       hours: '10am - 10pm, 7 Days a week',
       rights: 'All rights reserved.',
     },
