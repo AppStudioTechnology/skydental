@@ -62,6 +62,7 @@ function ServiceCard({ service, index }: { service: any; index: number }) {
 export default function ServiceDetailPage() {
   const { serviceId } = useParams()
   const service = getServiceById(serviceId || '')
+  const { openBookingSidebar } = useBooking()
   const shouldReduceMotion = useReducedMotion()
   usePageSEO(service?.title, service ? `${service.shortDescription} Sky Dental Center Abu Dhabi.` : undefined)
 

@@ -5,9 +5,13 @@ import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../context/LanguageContext'
 import { generateBookingPdf } from '../utils/generateBookingPdf'
+import { doctorsData } from '../data/doctorsData'
 import imgImage10 from '../../assets/6b7905bb93d0f824d8be0a8badf26d7ebf6ec721.webp'
 
 const LOADING_LOGO_URL = '/logos/loading-logo.webp'
+
+// All doctors for selection (same as homepage carousel: exclude Dr. Arwa)
+const allDoctors = doctorsData.filter((d) => d.id !== 'dr-arwa-rashed').map((d) => d.name)
 
 // Services list (sub-categories from document: Relief & Urgent Care, Protect & Restore, Smile Aesthetics, Pediatric)
 const services = [
@@ -29,25 +33,6 @@ const services = [
   'Pediatric Dentistry'
 ]
 
-// Service to Doctor mapping (based on actual doctors in DoctorsSection)
-const serviceToDoctors: Record<string, string[]> = {
-  'Emergency exam & pain management': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Toothache / infection treatment': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Elias Hanna'],
-  'Extractions (simple / surgical)': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi'],
-  'Gum pain / abscess management': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi'],
-  'Root canal treatment': ['Dr. Elias Hanna'],
-  'Fillings & restorations': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Crowns / bridges': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Implants': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Dentures': ['Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Deep cleaning / gum treatment': ['Dr. Saif Eldin Tawakul', 'Dr. Basma Alrawi', 'Dr. Claude Istanbouli', 'Dr. Elias Hanna'],
-  'Teeth whitening': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
-  'Veneers': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
-  'Smile design': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
-  'Invisalign / clear aligners': ['Dr. Saif Eldin Tawakul'],
-  'Cosmetic bonding / contouring': ['Dr. Basma Alrawi', 'Dr. Claude Istanbouli'],
-  'Pediatric Dentistry': ['Dr. Basma Alrawi']
-}
 
 // Phone length rules by country code (national number, digits only)
 const countryPhoneRules: Record<string, { min: number; max: number }> = {
@@ -129,14 +114,10 @@ export default function ContactSection() {
   const logoNaturalWidthRef = useRef<number>(1)
   const logoNaturalHeightRef = useRef<number>(1)
 
-  // Update available doctors when service changes
+  // Show all doctors when service is selected (no filtering by service)
   useEffect(() => {
-    if (formData.service && serviceToDoctors[formData.service]) {
-      setAvailableDoctors(serviceToDoctors[formData.service])
-      // Reset doctor selection if current doctor is not available for new service
-      if (!serviceToDoctors[formData.service].includes(formData.doctor)) {
-        setFormData(prev => ({ ...prev, doctor: '', date: '', time: '' }))
-      }
+    if (formData.service) {
+      setAvailableDoctors(allDoctors)
     } else {
       setAvailableDoctors([])
       setFormData(prev => ({ ...prev, doctor: '', date: '', time: '' }))
