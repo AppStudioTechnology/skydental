@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { ArrowUpRight, Home, ChevronRight, Phone, Calendar, CheckCircle } from 'lucide-react'
+import { ArrowUpRight, Phone, Calendar, CheckCircle } from 'lucide-react'
 import { getDoctorById } from '../data/doctorsData'
 import { useBooking } from '../context/BookingContext'
 import { usePageSEO } from '../hooks/usePageSEO'
@@ -57,7 +57,7 @@ export default function DoctorDetailPage() {
         className="min-h-[480px] pt-28 lg:pt-36 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-12"
         style={{ background: 'linear-gradient(180deg, #e0f4ff 0%, #d4edff 50%, #e8f7fc 100%)' }}
       >
-        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
+        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-8">
         {/* Doctor image - left on desktop, top on mobile */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
@@ -79,18 +79,6 @@ export default function DoctorDetailPage() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="flex-1 min-w-0 flex flex-col justify-center px-0 lg:pl-0 text-center lg:text-left"
         >
-          {/* Breadcrumbs - directly above the name */}
-          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 text-sm text-gray-600 font-['Arial'] mb-1.5">
-            <Link to="/" className="flex items-center gap-1 hover:text-gray-800">
-              <Home className="w-4 h-4" />
-              Home
-            </Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <Link to="/our-doctors" className="hover:text-gray-800">Doctors</Link>
-            <ChevronRight className="w-4 h-4 text-gray-400" />
-            <span className="text-[#0C0060] font-medium">{doctor.name}</span>
-          </div>
-
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-['Gilda_Display'] font-bold text-black mb-2 tracking-tight">
             {doctor.name}
           </h1>
