@@ -54,10 +54,10 @@ export default function DoctorDetailPage() {
       {/* Hero: Mobile = image then breadcrumbs+details. Desktop = image left, content right. Centered block, max-width */}
       <section
         ref={heroRef}
-        className="min-h-[480px] pt-28 lg:pt-36 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-12"
+        className="min-h-[480px] pt-32 lg:pt-40 pb-16 lg:pb-24 px-6 lg:px-10 xl:px-12"
         style={{ background: 'linear-gradient(180deg, #e0f4ff 0%, #d4edff 50%, #e8f7fc 100%)' }}
       >
-        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-8">
+        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-10">
         {/* Doctor image - left on desktop, top on mobile */}
         <motion.div
           initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
