@@ -138,6 +138,7 @@ export default function DoctorDetailPage() {
             </motion.a>
           </div>
         </motion.div>
+        </div>
       </section>
 
       {/* About Section - anchor for in-page nav; main bio is in hero right column */}
